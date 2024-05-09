@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* fonts: lucinda */
+
+@font-face {
+    font-family: handwriting;
+    src: url(../public/css/lucidahandwriting.ttf);
+  }
+.font-hand {
+    font-family: handwriting;
+  }
