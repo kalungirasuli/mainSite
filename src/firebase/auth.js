@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { auth, db } from "./config";
 import { GoogleAuthProvider, OAuthProvider } from "firebase/auth/cordova";
 import { doc, setDoc } from "firebase/firestore";
@@ -62,5 +62,13 @@ const useSignInWithEmailAndPassword = async (email, password) => {
     }
   };
 
- 
-  export { useSignInWithEmailAndPassword, useCreateUserWithEmailAndPassword, useSignInWithGoogle,updateUserProfile,useSignInWithApple };
+  const useSignOut = async () => {
+    try {
+      await signOut(auth);
+      console.log("User signed out successfully.");
+    } catch (e) {
+      console.error("Error signing out: ", e);
+      throw e;
+    }
+  };
+  export { useSignInWithEmailAndPassword, useCreateUserWithEmailAndPassword, useSignInWithGoogle,updateUserProfile,useSignInWithApple,useSignOut };
