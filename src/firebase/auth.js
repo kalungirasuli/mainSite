@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { auth } from "./config";
+import { auth, db } from "./config";
 import { GoogleAuthProvider } from "firebase/auth/cordova";
+import { doc, setDoc } from "firebase/firestore";
 
 const useSignInWithEmailAndPassword = async (email, password) => {
     try {
@@ -35,5 +36,17 @@ const useSignInWithEmailAndPassword = async (email, password) => {
       throw e; 
     }
   };
-  
-  export { useSignInWithEmailAndPassword, useCreateUserWithEmailAndPassword, useSignInWithGoogle };
+  const updateUserProfile = async (userId, specialties, availability) => {
+    try {
+      const userRef = doc(db, "users", userId); 
+      await setDoc(userRef, {
+        specialties: specialties,
+        availability: availability,
+      }, { merge: true }); 
+      console.log("User profile updated successfully.");
+    } catch (e) {
+      console.error("Error updating user profile: ", e);
+      throw e; 
+    }
+  };
+  export { useSignInWithEmailAndPassword, useCreateUserWithEmailAndPassword, useSignInWithGoogle,updateUserProfile };
