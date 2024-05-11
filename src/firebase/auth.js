@@ -1,6 +1,6 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, db } from "./config";
-import { GoogleAuthProvider } from "firebase/auth/cordova";
+import { GoogleAuthProvider, OAuthProvider } from "firebase/auth/cordova";
 import { doc, setDoc } from "firebase/firestore";
 
 const useSignInWithEmailAndPassword = async (email, password) => {
@@ -49,4 +49,18 @@ const useSignInWithEmailAndPassword = async (email, password) => {
       throw e; 
     }
   };
-  export { useSignInWithEmailAndPassword, useCreateUserWithEmailAndPassword, useSignInWithGoogle,updateUserProfile };
+
+  const useSignInWithApple = async () => {
+    const provider = new OAuthProvider('apple.com');
+    try {
+      const res = await signInWithPopup(auth, provider);
+      console.log("Signed in with Apple: ", res);
+      return res;
+    } catch (e) {
+      console.error(e);
+      throw e; 
+    }
+  };
+
+ 
+  export { useSignInWithEmailAndPassword, useCreateUserWithEmailAndPassword, useSignInWithGoogle,updateUserProfile,useSignInWithApple };
