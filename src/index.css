@@ -6,9 +6,9 @@
 /* fonts: lucinda */
 
 @font-face {
-    font-family: handwriting;
-    src: url(../public/css/lucidahandwriting.ttf);
+    font-family: lucidahandwriting;
+    src: url(../public/css/fonts/lucidahandwriting.ttf);
   }
 .font-hand {
-    font-family: handwriting;
+    font-family: lucidahandwriting;
   }
