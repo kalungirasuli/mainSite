@@ -12,3 +12,16 @@
 .font-hand {
     font-family: lucidahandwriting;
   }
+  .icon{
+    font-size: 20px;
+}
+@media screen and (min-width:768px) {
+    .icon{
+        font-size: 25px;
+    }
+}
+@media screen and (min-width:1280px) {
+  .icon{
+    font-size: 35px;
+  }
+}

@@ -1,5 +1,6 @@
 import Pageload from "./components/microcomponents/Pageload"
 import { Routes,Route,BrowserRouter} from "react-router-dom"
+import HomeTemp from "./components/marcocompoonents/HomeTemp"
 import Temp from "./components/marcocompoonents/Temp"
 import Discission from "./components/marcocompoonents/Discission"
 import Mother from "./components/marcocompoonents/mother"
@@ -17,6 +18,7 @@ function App() {
     <Pageload />
     <BrowserRouter>
     <Routes>
+      <Route path="/" element={<HomeTemp/>}></Route>
       <Route path="User" element={<Temp/>}>
               <Route path="choose_user_role"  element={<Discission/>}></Route>
               <Route path="sign-up-mother" element={<Mother/>}></Route>

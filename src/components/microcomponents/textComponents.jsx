@@ -11,7 +11,7 @@ export function Alt(props){
         </>
     )
 }
-export const styles=' lg:bg-white lg:shadow-xl lg:rounded-[20px] lg:p-[50px] lg:w-[max-content] lg:m-auto lg:mt-[20] xl:mt-5'
+export const styles=' lg:bg-white lg:shadow-xl lg:rounded-[20px] lg:p-[50px] lg:w-[max-content] lg:m-auto lg:mt-[20%] xl:mt-5'
 export const buttonStyle='w-[300px] m-auto pt-[20px] md:w-[450px]'
 export function Input(props) {
     return (

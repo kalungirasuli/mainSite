@@ -1,4 +1,4 @@
-import { GiSlicingArrow } from "react-icons/gi"
+import { FaAngleLeft} from "react-icons/fa6"
 
 
 export default function HeaderLogo(props){
@@ -8,7 +8,7 @@ export default function HeaderLogo(props){
     return(
         <>
         <div className="div header-control sticky bg-white top-0 z-[500] p-3 lg:hidden">
-                <GiSlicingArrow style={style}/>
+                <FaAngleLeft style={style}/>
             </div>
             <div className="top mt-[10px] md:mt-[30px] lg:mt-[50px] xl:mt-[30px]" >
             <div className="div logo w-[70px] m-auto md:w-[100px]">
