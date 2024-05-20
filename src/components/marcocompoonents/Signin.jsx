@@ -5,7 +5,7 @@ import { buttonStyle ,Alt} from "../microcomponents/textComponents"
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CreateUserWithEmailAndPassword } from "../../firebase/auth";
+import { CreateUserWithEmailAndPassword, SignInWithEmailAndPassword } from "../../firebase/auth";
 export default function SignIn(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -25,8 +25,8 @@ export default function SignIn(){
         try {
             console.log(email);
             console.log(password);
-            await CreateUserWithEmailAndPassword(email, password)
-            navigate('/User/choose_user_role')
+            await  SignInWithEmailAndPassword(email, password)
+            navigate('/')
         
         } catch (error) {
             console.log(error);

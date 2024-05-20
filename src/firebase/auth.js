@@ -3,7 +3,7 @@ import { auth, db } from "./config";
 import { GoogleAuthProvider, OAuthProvider } from "firebase/auth/cordova";
 import { doc, setDoc } from "firebase/firestore";
 
-const useSignInWithEmailAndPassword = async (email, password) => {
+const SignInWithEmailAndPassword = async (email, password) => {
     try {
       const res = await signInWithEmailAndPassword(auth, email, password);
       console.log("Signed in User ", res);
@@ -71,4 +71,4 @@ const useSignInWithEmailAndPassword = async (email, password) => {
       throw e;
     }
   };
-  export { useSignInWithEmailAndPassword, CreateUserWithEmailAndPassword, useSignInWithGoogle,updateUserProfile,useSignInWithApple,useSignOut };
+  export { SignInWithEmailAndPassword, CreateUserWithEmailAndPassword, useSignInWithGoogle,updateUserProfile,useSignInWithApple,useSignOut };

@@ -3,14 +3,15 @@ import { styles,Input} from "../microcomponents/textComponents"
 import HeaderLogo from "../microcomponents/HeaderLogo"
 import RoundedButton from "../microcomponents/RoundedButton"
 import { buttonStyle,Alt} from "../microcomponents/textComponents"
-import { signInWithEmailAndPassword } from "firebase/auth";
-import RoundedButtonTwo from '../microcomponents/RoundedButtonSubmit';
+
+import { CreateUserWithEmailAndPassword } from '../../firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignUp(){
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+const navigate = useNavigate();
     const handleChange = (e) => {
         if (e.target.name === 'email') {
             setEmail(e.target.value);
@@ -21,14 +22,15 @@ export default function SignUp(){
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // try {
-        //     console.log(email);
-        //     console.log(password);
-        //     await signInWithEmailAndPassword(email, password)
+        try {
+            console.log(email);
+            console.log(password);
+            await CreateUserWithEmailAndPassword(email, password)
+            navigate('/User/choose_user_role')
         
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        } catch (error) {
+            console.log(error);
+        }
 
         console.log('submitting email')
     };
