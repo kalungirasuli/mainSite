@@ -19,7 +19,7 @@ const navigate = useNavigate();
             setPassword(e.target.value);
         }
     };
-
+//function for creatinga new user or registering a new user with email and password
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {

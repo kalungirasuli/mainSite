@@ -20,6 +20,8 @@ export default function SignIn(){
             setPassword(e.target.value);
         }
     };
+
+    // function for login a user that has already has an account
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
