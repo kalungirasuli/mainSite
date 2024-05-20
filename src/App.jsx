@@ -4,9 +4,11 @@ import Temp from "./components/marcocompoonents/Temp"
 import Discission from "./components/marcocompoonents/Discission"
 import Mother from "./components/marcocompoonents/mother"
 import Doctor from "./components/marcocompoonents/doctors"
-import Signin from "./components/marcocompoonents/Signin"
+
 import Waitingvarification from "./components/marcocompoonents/Waitingvarification"
-import SignUp from "./components/marcocompoonents/Signin"
+import SignIn from "./components/marcocompoonents/Signin"
+import SignUp from "./components/marcocompoonents/SignUp"
+
 function App() {
   
   return (
@@ -19,8 +21,8 @@ function App() {
               <Route path="choose_user_role"  element={<Discission/>}></Route>
               <Route path="sign-up-mother" element={<Mother/>}></Route>
               <Route path="sign-up-pedetricain" element={<Doctor/>}></Route>
-              <Route path="sign-in" element={<Signin/>}></Route>
-              <Route path="sign-Up" element={<SignUp/>}></Route>
+              <Route path="sign-in" element={<SignIn/>}></Route>
+              <Route path="sign-up" element={<SignUp/>}></Route>
               <Route path='verification' element={<Waitingvarification/>}></Route>
       </Route>
       

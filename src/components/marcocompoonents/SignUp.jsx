@@ -4,8 +4,9 @@ import HeaderLogo from "../microcomponents/HeaderLogo"
 import RoundedButton from "../microcomponents/RoundedButton"
 import { buttonStyle,Alt} from "../microcomponents/textComponents"
 import { signInWithEmailAndPassword } from "firebase/auth";
+import RoundedButtonTwo from '../microcomponents/RoundedButtonSubmit';
 
-export default function Signin(){
+export default function SignUp(){
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -20,11 +21,16 @@ export default function Signin(){
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        try {
-            await signInWithEmailAndPassword(email, password)
-        } catch (error) {
-            console.log(error);
-        }
+        // try {
+        //     console.log(email);
+        //     console.log(password);
+        //     await signInWithEmailAndPassword(email, password)
+        
+        // } catch (error) {
+        //     console.log(error);
+        // }
+
+        console.log('submitting email')
     };
 
     return(
@@ -35,9 +41,9 @@ export default function Signin(){
                 <Input type='text' ids='email' for='email' label='Email address' name='email' placeholder='Enter email address' onChange={handleChange} value={email} classes='bg-white' />
                 <Input type='password' ids='Password' for='password' label='Password' name='password' placeholder='Enter password' onChange={handleChange} value={password} classes='bg-white' />
                <div className={`${buttonStyle}`}>
-                    <RoundedButton text='Sign-Up' type='submit' />
+                    <RoundedButton text='Sign-Up' type='Submit' onClick={()=> console.log('clicked')}/>
                     <Alt endText='Forgot password' />
-                     <Alt highlightText='Sign-up' endText='instead'link= '/User/choose_user_role' />
+                     <Alt highlightText='Sign In ' endText='Already have an account 'link= '/User/sign-up' />
                     
                </div>
             </form>

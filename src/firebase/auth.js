@@ -14,7 +14,7 @@ const useSignInWithEmailAndPassword = async (email, password) => {
     }
   };
   
-  const useCreateUserWithEmailAndPassword = async (email, password) => {
+  const CreateUserWithEmailAndPassword = async (email, password) => {
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
       console.log("User signed up: ", res);
@@ -71,4 +71,4 @@ const useSignInWithEmailAndPassword = async (email, password) => {
       throw e;
     }
   };
-  export { useSignInWithEmailAndPassword, useCreateUserWithEmailAndPassword, useSignInWithGoogle,updateUserProfile,useSignInWithApple,useSignOut };
+  export { useSignInWithEmailAndPassword, CreateUserWithEmailAndPassword, useSignInWithGoogle,updateUserProfile,useSignInWithApple,useSignOut };
