@@ -13,7 +13,7 @@ export default function Signin(){
            <div className={`${buttonStyle}`}>
             <RoundedButton text='Sign-in'/>
             <Alt endText='Forgot password' />
-             <Alt highlightText='Sign-up' endText='instead' />
+             <Alt highlightText='Sign-up' endText='instead'link= '/User/choose_user_role' />
             
            </div>
             </form>

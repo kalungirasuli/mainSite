@@ -3,16 +3,18 @@ import HeaderLogo from "../microcomponents/HeaderLogo"
 import RoundedButton from "../microcomponents/RoundedButton"
 import { buttonStyle ,Alt} from "../microcomponents/textComponents"
 export default function Mother(){
+    const handleSubmit = () => {};
+
     return(
         <>
          <div className={`${styles}`}>
             <HeaderLogo text='Welcome to Neonates, sign-up' head='Mothers'/>
-            <form action="">
+            <form onSubmit={handleSubmit}>
             <Input type='text' id='firstname' for='firstname' label='First Name' name='firstName' placeholder='Enter first name' ids='firstname' classes='bg-white' />
             <Input type='text' id='secondname' for='secondname' label='Second Name' name='secondName' placeholder='Enter second name' ids='secondname' classes='bg-white' />
             <Input type='text' id='email' for='email' label='Email address' name='email' placeholder='Enter email address' ids='email' classes='bg-white' />
            <div className={`${buttonStyle}`}>
-            <RoundedButton text='Sign-up' type='sumbit'/>
+            <RoundedButton text='Sign-up' type='sumbit'onClick={()=> console.log('clicked em ')}  />
              <Alt highlightText='Sign-in' endText='instead' />
            </div>
             </form>

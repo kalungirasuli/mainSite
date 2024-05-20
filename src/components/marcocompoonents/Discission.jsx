@@ -4,7 +4,10 @@ import RoundedButton from "../microcomponents/RoundedButton"
 import {Alt} from "../microcomponents/textComponents"
 import HeaderLogo from "../microcomponents/HeaderLogo"
 import { styles } from "../microcomponents/textComponents"
+import { useNavigate } from "react-router-dom"
+import RoundedButtonTwo from "../microcomponents/RoundedButtonSubmit"
 export default function Discission(){
+    const navigate = useNavigate();
     const style={
         fontSize:'20px'
     }
@@ -23,6 +26,19 @@ export default function Discission(){
    const doctor=()=>{
     setvary(1)
    }
+
+   const handleContinue = () => {
+    console.log("Continue");
+
+    // Potential redirection issues addressed:
+    // 1. Ensure correct path:
+    const targetPath = vary === 0 ? "/User/sign-up-mother" : "/User/sign-up-pedetricain";
+    console.log("Target path: " + targetPath)
+
+    
+
+   return  navigate(targetPath);
+  };
     return(
         <>
          <div className={`${styles}`}>
@@ -47,8 +63,8 @@ export default function Discission(){
                 
             </div>
             <div className="continue w-[240px] m-auto pt-[20px] md:w-[450px]">
-            <RoundedButton text='CONTINUE'/>
-            <Alt highlightText='Sign-in' endText='instead'/>
+            <RoundedButtonTwo text='CONTINUE' onClick={ handleContinue }/>
+            <Alt highlightText='Sign-in' endText='instead' link= '/User/sign-in'/>
             </div>
             
          </div>
