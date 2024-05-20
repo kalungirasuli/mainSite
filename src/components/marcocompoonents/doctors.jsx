@@ -15,7 +15,7 @@ export default function Doctor(){
             <File type='file' for='cert' label='Academic qualificatons' name='cert' ids='cert' classes='bg-white' />
            <div className={`${buttonStyle}`}>
             <RoundedButton text='Sign-up' type='submit'/>
-             <Alt highlightText='Sign-in' endText='instead' />
+             <Alt highlightText='Sign-in' endText='instead'  link= '/User/sign-in'/>
            </div>
             </form>
          </div>

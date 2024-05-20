@@ -15,7 +15,7 @@ export default function Mother(){
             <Input type='text' id='email' for='email' label='Email address' name='email' placeholder='Enter email address' ids='email' classes='bg-white' />
            <div className={`${buttonStyle}`}>
             <RoundedButton text='Sign-up' type='sumbit'onClick={()=> console.log('clicked em ')}  />
-             <Alt highlightText='Sign-in' endText='instead' />
+             <Alt highlightText='Sign-in' endText='instead' link= '/User/sign-in' />
            </div>
             </form>
          </div>
