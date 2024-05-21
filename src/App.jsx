@@ -7,6 +7,7 @@ import Mother from "./components/marcocompoonents/mother"
 import Doctor from "./components/marcocompoonents/doctors"
 
 import Waitingvarification from "./components/marcocompoonents/Waitingvarification"
+import Home from "./components/marcocompoonents/Home"
 import SignIn from "./components/marcocompoonents/Signin"
 import SignUp from "./components/marcocompoonents/SignUp"
 
@@ -18,7 +19,9 @@ function App() {
     <Pageload />
     <BrowserRouter>
     <Routes>
-      <Route path="/" element={<HomeTemp/>}></Route>
+      <Route path="/" element={<HomeTemp/>}>
+              <Route path="/" element={<Home/>}></Route>
+      </Route>
       <Route path="User" element={<Temp/>}>
               <Route path="choose_user_role"  element={<Discission/>}></Route>
               <Route path="sign-up-mother" element={<Mother/>}></Route>
