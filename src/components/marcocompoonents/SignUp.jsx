@@ -4,13 +4,13 @@ import HeaderLogo from "../microcomponents/HeaderLogo";
 import RoundedButton from "../microcomponents/RoundedButton";
 import { buttonStyle, Alt } from "../microcomponents/textComponents";
 import { useNavigate } from 'react-router-dom';
-
+import { auth} from "../../firebase/config"
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebase/config';
 
 export default function SignUp() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(''); 
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -21,19 +21,32 @@ export default function SignUp() {
         }
     };
 
-    // Function for creating a new user or registering a new user with email and password
+    const validateEmail = (email) => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setError(''); 
+
+        if (!validateEmail(email)) {
+            setError('Invalid email address');
+            return;
+        }
+
+        if (password.length < 6) {
+            setError('Password should be at least 6 characters');
+            return;
+        }
+
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            setEmail('')
-            setPassword('')
             console.log('User registered successfully:', userCredential.user);
-            // Navigate to a different page after successful registration
-            navigate('/User/choose_user_role');
+            navigate('/User/choose_user_role'); 
         } catch (error) {
             console.error('Error registering user:', error.message);
-           
+            setError(error.message); // Display the error message
         }
     };
 
@@ -42,10 +55,31 @@ export default function SignUp() {
             <div className={`${styles}`}>
                 <HeaderLogo text='Welcome to Neonates, sign-up' head='Neonates' />
                 <form onSubmit={handleSubmit}>
-                    <Input type='text' ids='email' for='email' label='Email address' name='email' placeholder='Enter email address' onChange={handleChange} value={email} classes='bg-white' />
-                    <Input type='password' ids='Password' for='password' label='Password' name='password' placeholder='Enter password' onChange={handleChange} value={password} classes='bg-white' />
+                    {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display the error message */}
+                    <Input 
+                        type='text' 
+                        ids='email' 
+                        for='email' 
+                        label='Email address' 
+                        name='email' 
+                        placeholder='Enter email address' 
+                        onChange={handleChange} 
+                        value={email} 
+                        classes='bg-white' 
+                    />
+                    <Input 
+                        type='password' 
+                        ids='password' 
+                        for='password' 
+                        label='Password' 
+                        name='password' 
+                        placeholder='Enter password' 
+                        onChange={handleChange} 
+                        value={password} 
+                        classes='bg-white' 
+                    />
                     <div className={`${buttonStyle}`}>
-                        <RoundedButton text='Sign-Up' onClick={handleSubmit} />
+                        <RoundedButton text='Sign-Up' type='Submit' onClick={handleSubmit} />
                         <Alt endText='Forgot password' />
                         <Alt highlightText='Sign In ' endText='Already have an account ' link='/User/sign-up' />
                     </div>
