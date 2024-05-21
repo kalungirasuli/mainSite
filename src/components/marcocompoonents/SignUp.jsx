@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { styles,Input} from "../microcomponents/textComponents"
-import HeaderLogo from "../microcomponents/HeaderLogo"
-import RoundedButton from "../microcomponents/RoundedButton"
-import { buttonStyle,Alt} from "../microcomponents/textComponents"
-
-import { CreateUserWithEmailAndPassword } from '../../firebase/auth';
+import { styles, Input } from "../microcomponents/textComponents";
+import HeaderLogo from "../microcomponents/HeaderLogo";
+import RoundedButton from "../microcomponents/RoundedButton";
+import { buttonStyle, Alt } from "../microcomponents/textComponents";
 import { useNavigate } from 'react-router-dom';
 
-export default function SignUp(){
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase/config';
 
+export default function SignUp() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-const navigate = useNavigate();
+    const navigate = useNavigate();
+
     const handleChange = (e) => {
         if (e.target.name === 'email') {
             setEmail(e.target.value);
@@ -19,37 +20,37 @@ const navigate = useNavigate();
             setPassword(e.target.value);
         }
     };
-//function for creatinga new user or registering a new user with email and password
+
+    // Function for creating a new user or registering a new user with email and password
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            console.log(email);
-            console.log(password);
-            await CreateUserWithEmailAndPassword(email, password)
-            navigate('/User/choose_user_role')
-        
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            setEmail('')
+            setPassword('')
+            console.log('User registered successfully:', userCredential.user);
+            // Navigate to a different page after successful registration
+            navigate('/User/choose_user_role');
         } catch (error) {
-            console.log(error);
+            console.error('Error registering user:', error.message);
+           
         }
-
-        console.log('submitting email')
     };
 
-    return(
+    return (
         <>
-         <div className={`${styles}`}>
-            <HeaderLogo text='Welcome to Neonates, sign-up' head='Neonates'/>
-            <form onSubmit={handleSubmit}>
-                <Input type='text' ids='email' for='email' label='Email address' name='email' placeholder='Enter email address' onChange={handleChange} value={email} classes='bg-white' />
-                <Input type='password' ids='Password' for='password' label='Password' name='password' placeholder='Enter password' onChange={handleChange} value={password} classes='bg-white' />
-               <div className={`${buttonStyle}`}>
-                    <RoundedButton text='Sign-Up' type='Submit' onClick={()=> console.log('clicked')}/>
-                    <Alt endText='Forgot password' />
-                     <Alt highlightText='Sign In ' endText='Already have an account 'link= '/User/sign-up' />
-                    
-               </div>
-            </form>
-         </div>
+            <div className={`${styles}`}>
+                <HeaderLogo text='Welcome to Neonates, sign-up' head='Neonates' />
+                <form onSubmit={handleSubmit}>
+                    <Input type='text' ids='email' for='email' label='Email address' name='email' placeholder='Enter email address' onChange={handleChange} value={email} classes='bg-white' />
+                    <Input type='password' ids='Password' for='password' label='Password' name='password' placeholder='Enter password' onChange={handleChange} value={password} classes='bg-white' />
+                    <div className={`${buttonStyle}`}>
+                        <RoundedButton text='Sign-Up' onClick={handleSubmit} />
+                        <Alt endText='Forgot password' />
+                        <Alt highlightText='Sign In ' endText='Already have an account ' link='/User/sign-up' />
+                    </div>
+                </form>
+            </div>
         </>
-    )
+    );
 }

@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom"
 
 
-export default function RoundedButton(props){
+export default function RoundedButton({link,text,onClick,type}){
     return(
         <>
-        <Link to={props.link} className="w-full p-0">
+        <Link to={link} className="w-full p-0">
             <div className="div w-full p-0">
             
-            <button type={props.type} onClick={props.onClick} className="text-white bg-blue p-3 rounded-[30px] w-full text-[20px]">{props.text}</button>
+            <button type={type} onClick={onClick} className="text-white bg-blue p-3 rounded-[30px] w-full text-[20px]">{text}</button>
              
             </div>
             </Link>

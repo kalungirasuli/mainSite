@@ -13,16 +13,23 @@ export function Alt(props){
 }
 export const styles=' lg:bg-white lg:shadow-xl lg:rounded-[20px] lg:p-[50px] lg:w-[max-content] lg:m-auto lg:mt-[20] xl:mt-5'
 export const buttonStyle='w-[300px] m-auto pt-[20px] md:w-[450px]'
-export function Input(props){
-    return(
-        <>
+export function Input(props) {
+    return (
         <div className="div flex flex-col gap-2 w-[300px] m-auto pt-[20px] md:w-[450px]">
             <label htmlFor={props.for} className="text-[15px] text-greytextdark text-left pl-3">{props.label}</label>
-            <input type={props.type} placeholder={props.placeholder} id={props.ids} defaultValue={props.value} name={props.name} className={`${props.classes} rounded-[10px] p-3 shadow-md w-[100%] text-center`} />
+            <input 
+                type={props.type} 
+                placeholder={props.placeholder} 
+                id={props.ids} 
+                value={props.value} 
+                name={props.name} 
+                className={`${props.classes} rounded-[10px] p-3 shadow-md w-[100%] text-center`} 
+                onChange={props.onChange}
+            />
         </div>
-        </>
-    )
+    );
 }
+
 export function File(props){
     return(
         <>
