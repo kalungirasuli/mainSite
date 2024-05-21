@@ -138,7 +138,7 @@ export default function Doctor() {
                         onChange={handleChange}
                     />
                     <div className={`${buttonStyle}`}>
-                        <RoundedButton text='Sign-up' type='submit' />
+                        <RoundedButton text='Sign-up' type='Submit' onClick={handleSubmit}  />
                         <Alt highlightText='Sign-in' endText='instead' link='/User/sign-in' />
                     </div>
                 </form>
