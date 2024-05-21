@@ -30,13 +30,19 @@ export function Input(props) {
     );
 }
 
-export function File(props){
-    return(
-        <>
-        <div className="div flex flex-col gap-2 w-[300px] m-auto pt-[20px] md:w-[450px]">
-            <label htmlFor={props.for} className="text-[15px] text-greytextdark text-left pl-3">{props.label}</label>
-            <input type={props.type} placeholder={props.placeholder} id={props.ids} defaultValue={props.value} name={props.name} className={`${props.classes} rounded-[10px] p-3 shadow-md w-[100%] `} />
+export function File(props) {
+    return (
+        <div className="flex flex-col gap-2 w-[300px] m-auto pt-[20px] md:w-[450px]">
+            <label htmlFor={props.for} className="text-[15px] text-greytextdark text-left pl-3">
+                {props.label}
+            </label>
+            <input
+                type={props.type}
+                id={props.ids}
+                name={props.name}
+                className={`${props.classes} rounded-[10px] p-3 shadow-md w-[100%]`}
+                onChange={props.onChange}
+            />
         </div>
-        </>
-    )
+    );
 }

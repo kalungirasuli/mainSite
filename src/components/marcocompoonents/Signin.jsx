@@ -35,7 +35,7 @@ export default function SignIn(){
             <Input type='text' ids='email' for='email' label='Email address' name='email' placeholder='Enter email address' onChange={handleChange} value={email} classes='bg-white' />
                 <Input type='password' ids='Password' for='password' label='Password' name='password' placeholder='Enter password' onChange={handleChange} value={password} classes='bg-white' />
            <div className={`${buttonStyle}`}>
-            <RoundedButton text='Sign-in' type='Submit' onClick={()=> handleSubmit()}  />
+            <RoundedButton text='Sign-in' type='Submit' onClick={ handleSubmit}  />
             <Alt endText='Forgot password' />
              <Alt highlightText='Sign-up' endText='Dont have an account 'link= '/User/sign-in' />
             
