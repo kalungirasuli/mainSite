@@ -5,8 +5,8 @@ import { RotatingLines } from "react-loader-spinner";
 import React from 'react';
 import {Img} from 'react-image'
 import VisibilitySensor from 'react-visibility-sensor'
-import videojs from 'video.js';
-import 'video.js/dist/video-js.css';
+// import videojs from 'video.js';
+// import 'video.js/dist/video-js.css';
 import { LiaCommentSolid } from "react-icons/lia";
 import { CiShare1 } from "react-icons/ci";
 
