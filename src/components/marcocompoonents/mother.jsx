@@ -45,11 +45,12 @@ export default function Mother() {
       await sendEmailVerification(user);
 
       // Store additional user data in Firestore
-      await addDoc(collection(db, "mothers"), {
+      await addDoc(collection(db, "users"), {
         uid: user.uid,
         firstName: formData.firstName,
         secondName: formData.secondName,
         email: formData.email,
+        role: 'mother' // Add the role of the user
       });
 
       // Redirect or navigate to the verification page

@@ -5,6 +5,8 @@ import { buttonStyle ,Alt} from "../microcomponents/textComponents"
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase/config";
 
 export default function SignIn(){
     const [email, setEmail] = useState('');
@@ -25,12 +27,20 @@ export default function SignIn(){
     const handleSubmit = async (event) => {
         event.preventDefault();
        
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            console.log('User registered successfully:', userCredential.user);
+            navigate('/User/choose_user_role'); 
+        } catch (error) {
+            console.error('Error registering user:', error.message);
+            setError(error.message); // Display the error message
+        }
     };
 
     return(
         <>
          <div className={`${styles}`}>
-            <HeaderLogo text='Welcome Back to Neonates, sign-In' head='Neonates'/>
+            <HeaderLogo text='Welcome to Neonates, sign-In' head='Neonates'/>
             <form onSubmit={handleSubmit(e)}>
             <Input type='text' ids='email' for='email' label='Email address' name='email' placeholder='Enter email address' onChange={handleChange} value={email} classes='bg-white' />
                 <Input type='password' ids='Password' for='password' label='Password' name='password' placeholder='Enter password' onChange={handleChange} value={password} classes='bg-white' />
