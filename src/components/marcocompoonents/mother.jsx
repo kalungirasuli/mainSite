@@ -34,6 +34,9 @@ export default function Mother() {
             // Access the user data
             const user = userCredential.user;
 
+            // Send email verification
+            await user.sendEmailVerification();
+
             // Store additional user data in Firestore
             await addDoc(collection(db, 'mothers'), {
                 uid: user.uid,
@@ -42,8 +45,9 @@ export default function Mother() {
                 email: formData.email
             });
 
-            // Redirect or navigate to the desired page
-            navigate('/desired-route'); // Replace '/desired-route' with the route you want to navigate to after successful signup
+            // Redirect or navigate to the verification page
+            navigate('/User/verification'); 
+            
         } catch (error) {
             setError(error.message);
         }

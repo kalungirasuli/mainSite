@@ -48,7 +48,8 @@ export default function Doctor() {
             
            // Access the user data
            const user = userCredential.user;
-
+           await user.sendEmailVerification();
+           
             const licenseRef = ref(storage, `licenses/${user.uid}/${license.name}`);
             const certificateRef = ref(storage, `certificates/${user.uid}/${certificate.name}`);
 
@@ -70,7 +71,8 @@ export default function Doctor() {
             });
 
             console.log('Data submitted successfully');
-            navigate('/dashboard'); // Redirect to the desired route after successful submission
+            navigate('/User/verification'); 
+            // Redirect to the desired route after successful submission
         } catch (error) {
             console.error('Error submitting data:', error.message);
             setError(error.message);
