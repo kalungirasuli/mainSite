@@ -39,18 +39,15 @@ export default function Doctor() {
         event.preventDefault();
         setError('');
 
-        const { firstName, secondName, email, license, certificate } = formData;
-        if (!firstName || !secondName || !email || !license || !certificate) {
-            setError('All fields are required');
-            return;
-        }
+        const { firstName, secondName, email, license, certificate,password } = formData;
+       
 
         try {
-            const user = auth.currentUser;
-            if (!user) {
-                setError('No authenticated user found');
-                return;
-            }
+           // Create the user account with email and password
+           const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+            
+           // Access the user data
+           const user = userCredential.user;
 
             const licenseRef = ref(storage, `licenses/${user.uid}/${license.name}`);
             const certificateRef = ref(storage, `certificates/${user.uid}/${certificate.name}`);
@@ -118,6 +115,18 @@ export default function Doctor() {
                         classes='bg-white'
                         onChange={handleChange}
                         value={formData.email}
+                    />
+                       <Input
+                        type='password'
+                        id='password'
+                        for='password'
+                        label='Password'
+                        name='password'
+                        placeholder='Enter password'
+                        ids='password'
+                        classes='bg-white'
+                        onChange={handleChange}
+                        value={formData.password}
                     />
                     <File
                         type='file'
