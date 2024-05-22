@@ -7,6 +7,7 @@ import { auth, db } from '../../firebase/config'; // Import Firebase auth and Fi
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { addDoc, collection } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 
 export default function Doctor() {
     const [formData, setFormData] = useState({
@@ -44,11 +45,11 @@ export default function Doctor() {
 
         try {
            // Create the user account with email and password
-           const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+           const userCredential = await createUserWithEmailAndPassword(auth,email, password);
             
            // Access the user data
            const user = userCredential.user;
-           await user.sendEmailVerification();
+           await sendEmailVerification(user);
            
             const licenseRef = ref(storage, `licenses/${user.uid}/${license.name}`);
             const certificateRef = ref(storage, `certificates/${user.uid}/${certificate.name}`);
