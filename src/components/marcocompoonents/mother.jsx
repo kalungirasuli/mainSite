@@ -11,7 +11,8 @@ export default function Mother() {
     const [formData, setFormData] = useState({
         firstName: '',
         secondName: '',
-        email: ''
+        email: '',
+        password: ''
     });
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -25,32 +26,25 @@ export default function Mother() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setError('');
-
-        const { firstName, secondName, email } = formData;
-        if (!firstName || !secondName || !email) {
-            setError('All fields are required');
-            return;
-        }
 
         try {
-            const user = auth.currentUser;
-            if (!user) {
-                setError('No authenticated user found');
-                return;
-            }
+            // Create the user account with email and password
+            const userCredential = await auth.createUserWithEmailAndPassword(formData.email, formData.password);
+            
+            // Access the user data
+            const user = userCredential.user;
 
-            await addDoc(collection(db, "mothers"), {
+            // Store additional user data in Firestore
+            await addDoc(collection(db, 'mothers'), {
                 uid: user.uid,
-                firstName,
-                secondName,
-                email
+                firstName: formData.firstName,
+                secondName: formData.secondName,
+                email: formData.email
             });
 
-            console.log('Data submitted successfully');
-            navigate('/'); 
+            // Redirect or navigate to the desired page
+            navigate('/desired-route'); // Replace '/desired-route' with the route you want to navigate to after successful signup
         } catch (error) {
-            console.error('Error submitting data:', error.message);
             setError(error.message);
         }
     };
@@ -98,8 +92,20 @@ export default function Mother() {
                         onChange={handleChange}
                         value={formData.email}
                     />
+                    <Input
+                        type='password'
+                        id='password'
+                        for='password'
+                        label='Password'
+                        name='password'
+                        placeholder='Enter password'
+                        ids='password'
+                        classes='bg-white'
+                        onChange={handleChange}
+                        value={formData.password}
+                    />
                     <div className={`${buttonStyle}`}>
-                    <RoundedButton text='   CONTINUE' type='Submit' onClick={handleSubmit} />
+                        <RoundedButton text='   CONTINUE' type='submit' />
                         <Alt highlightText='Sign-in' endText='instead' link='/User/sign-in' />
                     </div>
                 </form>
