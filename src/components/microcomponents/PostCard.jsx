@@ -9,7 +9,9 @@ import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 import { LiaCommentSolid } from "react-icons/lia";
 import { CiShare1 } from "react-icons/ci";
-
+import { IoSend,IoAttachSharp, IoCheckmark } from "react-icons/io5";
+import { AiOutlineAudio } from "react-icons/ai";
+import { Link } from "react-router-dom";
 // the image component
 const Loader=()=>{
     return(
@@ -90,12 +92,76 @@ const Image =(props)=>{
   );
 }
 
+
+// the message cards
+
+const MessageDoctor=(props)=>{
+  const style={
+    fontSize:'20px',
+    color:'#3b8aff'
+}
+const style2={
+  fontSize:'20px',
+  color:'#3d4652'
+
+}
+  return(
+      <>
+      <div className="header flex flex-row justify-normal px-3 gap-3 w-[max-content] max-w-[90%] md:max-w-[80%] ">
+              <div className="img rounded-[50%] w-[40px] h-[40px]  m-0 ">
+                 <Link to={props.profileLink} className='rounded-[50%] w-[40px] h-[40px]  m-0'>
+                 <img src={props.ChatsenderPicture}  className={`p-0  w-full h-full  rounded-[50%] `}/>
+                 </Link>
+              </div>
+              <div className="detailes w-full bg-gray-50 rounded-b-[20px] rounded-se-[20px] p-2 ">
+                  <div className="controls flex flex-row justify-between">
+                     <ul className="flex flex-row justify-between w-auto">
+                          <li className=" w-[max-content] text-[15px] text-greytextdark font-bold">
+                          {props.ChatsenderName}
+                          </li>
+                          
+                          {props.Chatsenderrole=='doctor'|| props.Chatsenderrole=='admin'?<li className="w-[max-content]"><div className="verified"><MdVerifiedUser style={style} color={'#3b8aff'} /></div></li>:''}
+                      
+                          <li className=" w-[max-content] text-[15px] text-greytextfade">
+                          {props.Cahttime}
+                          </li>
+                     </ul>
+                     <div className="postOperaions">
+                      <ul className="">
+                          {/* {props.ChatSent ?<li className="w-[max-content] hover:bg-greytextfade p-2 "><RiUserFollowLine style={style}  className="icon-small"/></li>: <li className="w-[max-content] p-2 hover:bg-greytextfade"><IoCheckmark style={style} color="#726F6F"/></li>} */}
+                          {!props.ChatSent ?<li className="w-[max-content]  "><RiUserFollowLine style={style}  className="icon-small"/></li>: <li className="w-[max-content] p-2 "><IoCheckmark style={style} color="#726F6F"/></li>}
+                         
+                      </ul>
+                     </div>
+                  </div>
+                  <div className="postText w-full">
+                      <p className="m-0 pb-2 text-[13px] lg:text-black lg:text-[15px]">{props.Chattext}</p>
+                  </div>
+                  {props.Chatfile ?  <div className="postFile w-full rounded-[15px] border-[1px] border-greytextfade py-3 px-2">{props.ChatfileType=='image'? <Image src={props.ChatimageSrc}  />:<VideoJS options={{autoplay: false,controls: true,responsive: true,fluid: true,sources: [{src :props.ChatvideoSrc,type: props.ChatvideoType}]}}  onReady={handlePlayerReady} />}</div>:''}
+            
+                  <div className="postcontrol flex flex-row justify-end gap-4 p-3">
+                  <LiaCommentSolid style={style2} className="icon-small"/>
+                  <RiDeleteBin4Line style={style2} className="icon-small"/>
+                  </div>
+                  
+              </div>
+              
+              
+          </div>
+      </>
+  )
+}
+
 export default function PostCard(props){
  const style={
         fontSize:'25px',
         color:'#3b8aff'
     }
+const style2={
+  fontSize:'30px',
+  color:'#3d4652'
 
+}
   const playerRef = React.useRef(null);
 
   const videoJsOptions = {
@@ -118,7 +184,9 @@ export default function PostCard(props){
         <div className="border-y-[1px] border-x-greytextfade pt-5  w-full -z-50">
             <div className="header flex flex-row justify-normal px-3 gap-3 ">
                 <div className="img rounded-[50%] w-[40px] h-[40px]  m-0 ">
-                    <img src={props.Profilesrc}  className="p-0  w-full h-full  rounded-[50%]" />
+                <Link to={props.profileLink} className='rounded-[50%] w-[40px] h-[40px]  m-0'>
+                 <img src={props.Profilesrc}  className={`p-0  w-full h-full  rounded-[50%] `}/>
+                 </Link>
                 </div>
                 <div className="detailes w-full">
                     <div className="controls flex flex-row justify-between">
@@ -141,20 +209,32 @@ export default function PostCard(props){
                        </div>
                     </div>
                     <div className="postText w-full">
-                        <p className="m-0 p-0 text-[13px] lg:text-black text-[15px]">{props.text}</p>
+                        <p className="m-0 p-0 text-[13px] lg:text-black lg:text-[15px]">{props.text}</p>
                     </div>
-                    {props.file ?  <div className="postFile w-full rounded-[15px] border border-[1px] border-greytextfade py-3 px-2">{props.fileType=='image'? <Image src={props.imageSrc}  />:<VideoJS options={{autoplay: true,controls: true,responsive: true,fluid: true,sources: [{src :props.videoSrc,type: props.videoType}]}}  onReady={handlePlayerReady} />}</div>:''}
+                    {props.file ?  <div className="postFile w-full rounded-[15px] border-[1px] border-greytextfade py-3 px-2">{props.fileType=='image'? <Image src={props.imageSrc}  />:<VideoJS options={{autoplay: false,controls: true,responsive: true,fluid: true,sources: [{src :props.videoSrc,type: props.videoType}]}}  onReady={handlePlayerReady} />}</div>:''}
               
                     <div className="postcontrol flex flex-row justify-between p-3">
-                    <LiaCommentSolid style={style} className="icon-small"/>
-                    <CiShare1 style={style} className="icon-small"/>
-                    <RiAccountPinBoxLine style={style} className="icon-small"/>
-                    <RiDeleteBin4Line style={style} className="icon-small"/>
+                    <LiaCommentSolid style={style2} className="icon-small"/>
+                    <CiShare1 style={style2} className="icon-small"/>
+                    <RiAccountPinBoxLine style={style2} className="icon-small"/>
+                    <RiDeleteBin4Line style={style2} className="icon-small"/>
                     </div>
+                    
                 </div>
                 
+                
             </div>
-            
+            <div className="comments w-full h-[500px] md:h-[600px] border-t-[1px] border-t-greytextfade">
+                      <div className="chats p-3 h-[440px] md:h-[540px] overflow-y-auto overflow-x-hidden">
+                         <MessageDoctor Chattext={props.Chattext} ChatsenderName={props.ChatsenderName} ChatSent={props.ChatSent} Chatfile={props.Chatfile} ChatimageSrc={props.ChatimageSrc} ChatvideoSrc={props.ChatvideoSrc} ChatvideoType={props.ChatvideoType} ChatfileType={props.ChatfileType} ChatsenderPicture={props.ChatsenderPicture} Cahttime={props.Cahttime} Chatsenderrole={props.Chatsenderrole}/>
+                      </div>
+                      <div className="input p-3  flex flex-row justify-between w-full  bg-gray-100 ">
+                          <span className="h-[max-content] m-auto"><IoAttachSharp style={style2}/></span>
+                            <input type="text" className="w-[75%] rounded-[20px] h-[45px] px-3 text-gray-800 "/>
+                           <span className="h-[max-content] m-auto" > <AiOutlineAudio style={style2}/></span>
+                           <span className="h-[max-content] m-auto"  >  <IoSend style={style2}/></span>        
+                      </div>
+                    </div>
             
         </div>
         </>
