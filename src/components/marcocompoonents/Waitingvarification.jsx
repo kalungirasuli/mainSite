@@ -15,7 +15,7 @@ export default function Waitingvarification(){
         out:'Sign out of this account',
         in:'Sign in with another account'
      }
-     let userturned='mother'
+     let userturned='doctor'
      const[user,setUser]=useState('')
      const[color,setColor]=useState('')
      const[bg,setBg]=useState('')

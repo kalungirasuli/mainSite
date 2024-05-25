@@ -5,12 +5,10 @@ import Temp from "./components/marcocompoonents/Temp"
 import Discission from "./components/marcocompoonents/Discission"
 import Mother from "./components/marcocompoonents/mother"
 import Doctor from "./components/marcocompoonents/doctors"
-
 import Waitingvarification from "./components/marcocompoonents/Waitingvarification"
 import Home from "./components/marcocompoonents/Home"
 import SignIn from "./components/marcocompoonents/Signin"
 import SignUp from "./components/marcocompoonents/SignUp"
-
 function App() {
   
   return (
@@ -20,10 +18,10 @@ function App() {
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<HomeTemp/>}>
-              <Route path="/" element={<Home/>}></Route>
+              <Route index element={<Home/>}></Route>
       </Route>
       <Route path="User" element={<Temp/>}>
-              <Route path="choose_user_role"  element={<Discission/>}></Route>
+              <Route index  element={<Discission/>}></Route>
               <Route path="sign-up-mother" element={<Mother/>}></Route>
               <Route path="sign-up-pedetricain" element={<Doctor/>}></Route>
               <Route path="sign-in" element={<SignIn/>}></Route>
