@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import { IoIosSearch } from "react-icons/io"
 export function Alt(props){
     return(
         <>
@@ -47,3 +48,22 @@ export function File(props) {
     );
 }
 
+export function Search(props) {
+    return(
+        <>
+        <div className="flex flex-row w-[80%] m-auto  bg-white shadow-lg-smoke ">
+        <button className=" rounded-[10px] p-2 text-white  w-[30px]"><IoIosSearch/></button>
+            <input 
+                type={props.type} 
+                placeholder={props.placeholder} 
+                id={props.ids} 
+                value={props.value} 
+                name={props.name} 
+                className={`${props.classes} rounded-[10px] p-3 shadow-md w-full border-0 text-left text-[15px] `} 
+                onChange={props.onChange}
+            />
+            
+        </div>
+        </>
+    )
+}
