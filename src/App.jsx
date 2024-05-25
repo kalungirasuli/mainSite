@@ -9,6 +9,8 @@ import Waitingvarification from "./components/marcocompoonents/Waitingvarificati
 import Home from "./components/marcocompoonents/Home"
 import SignIn from "./components/marcocompoonents/Signin"
 import SignUp from "./components/marcocompoonents/SignUp"
+import Appointments from "./components/marcocompoonents/Appointments"
+import DoctorAll from "./components/marcocompoonents/DoctorAll"
 function App() {
   
   return (
@@ -19,6 +21,9 @@ function App() {
     <Routes>
       <Route path="/" element={<HomeTemp/>}>
               <Route index element={<Home/>}></Route>
+              <Route path="appointment" element={<Appointments/>}>
+                  <Route index element={DoctorAll}></Route>
+              </Route>
       </Route>
       <Route path="User" element={<Temp/>}>
               <Route index  element={<Discission/>}></Route>
