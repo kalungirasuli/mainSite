@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { styles, Input, File } from "../microcomponents/textComponents";
 import HeaderLogo from "../microcomponents/HeaderLogo";
 import RoundedButton from "../microcomponents/RoundedButton";
@@ -8,6 +8,8 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { addDoc, collection } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../redux/authSlice';
 
 export default function Doctor() {
     const [formData, setFormData] = useState({
@@ -20,6 +22,7 @@ export default function Doctor() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const storage = getStorage(); 
+    const dispatch = useDispatch();
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
@@ -72,6 +75,16 @@ export default function Doctor() {
             });
 
             console.log('Data submitted successfully');
+
+            // Dispatch user data to Redux store
+        // Dispatch user data to Redux store
+        dispatch(setUser({
+            user: {
+              uid: user.uid,
+              email: user.email,
+            },
+            role: 'doctor',
+          }));
             navigate('/User/verification'); 
             // Redirect to the desired route after successful submission
         } catch (error) {

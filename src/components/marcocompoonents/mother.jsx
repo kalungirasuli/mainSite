@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { styles, Input } from "../microcomponents/textComponents";
 import HeaderLogo from "../microcomponents/HeaderLogo";
 import RoundedButton from "../microcomponents/RoundedButton";
@@ -10,6 +10,8 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/authSlice";
 
 export default function Mother() {
   const [formData, setFormData] = useState({
@@ -20,6 +22,8 @@ export default function Mother() {
   });
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 
   const handleChange = (e) => {
     setFormData({
@@ -50,9 +54,17 @@ export default function Mother() {
         firstName: formData.firstName,
         secondName: formData.secondName,
         email: formData.email,
-        role: 'mother' // Add the role of the user
+        role: 'mother'
       });
 
+        // Dispatch user data to Redux store
+        dispatch(setUser({
+          user: {
+            uid: user.uid,
+            email: user.email,
+          },
+          role: 'mother', 
+        }));
       // Redirect or navigate to the verification page
       navigate("/User/verification");
     } catch (error) {

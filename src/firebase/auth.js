@@ -2,6 +2,8 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithP
 import { auth, db } from "./config";
 import { GoogleAuthProvider, OAuthProvider } from "firebase/auth/cordova";
 import { doc, setDoc } from "firebase/firestore";
+import { clearUser } from "../redux/authSlice";
+import store from "../redux/store";
 
 const SignInWithEmailAndPassword = async (email, password) => {
     try {
@@ -62,13 +64,13 @@ const SignInWithEmailAndPassword = async (email, password) => {
     }
   };
 
-  const useSignOut = async () => {
+  const signOutUser = async () => {
     try {
       await signOut(auth);
-      console.log("User signed out successfully.");
-    } catch (e) {
-      console.error("Error signing out: ", e);
-      throw e;
+      store.dispatch(clearUser());
+    } catch (error) {
+      console.error('Error signing out:', error);
     }
   };
-  export { SignInWithEmailAndPassword, CreateUserWithEmailAndPassword, useSignInWithGoogle,updateUserProfile,useSignInWithApple,useSignOut };
+
+  export { SignInWithEmailAndPassword, CreateUserWithEmailAndPassword, useSignInWithGoogle,updateUserProfile,useSignInWithApple,signOutUser };
