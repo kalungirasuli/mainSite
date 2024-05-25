@@ -1,7 +1,8 @@
-// src/firebaseFunctions.js
-import { auth, db, storage } from './firebase';
+
+
 import { addDoc, collection, serverTimestamp, query, orderBy, onSnapshot, getDocs } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { auth, db, storage } from './config';
 
 // Create a new post
 export const createPost = async (content, imageFile) => {
