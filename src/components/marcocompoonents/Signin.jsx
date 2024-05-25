@@ -33,7 +33,7 @@ export default function SignIn(){
             navigate('/User/choose_user_role'); 
         } catch (error) {
             console.error('Error registering user:', error.message);
-            setError(error.message); // Display the error message
+           
         }
     };
 
@@ -41,7 +41,7 @@ export default function SignIn(){
         <>
          <div className={`${styles}`}>
             <HeaderLogo text='Welcome to Neonates, sign-In' head='Neonates'/>
-            <form onSubmit={handleSubmit(e)}>
+            <form onSubmit={handleSubmit}>
             <Input type='text' ids='email' for='email' label='Email address' name='email' placeholder='Enter email address' onChange={handleChange} value={email} classes='bg-white' />
                 <Input type='password' ids='Password' for='password' label='Password' name='password' placeholder='Enter password' onChange={handleChange} value={password} classes='bg-white' />
            <div className={`${buttonStyle}`}>
