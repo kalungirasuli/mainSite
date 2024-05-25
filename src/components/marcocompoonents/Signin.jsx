@@ -3,7 +3,7 @@ import HeaderLogo from "../microcomponents/HeaderLogo"
 import RoundedButton from "../microcomponents/RoundedButton"
 import { buttonStyle ,Alt} from "../microcomponents/textComponents"
 
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/config";
@@ -47,7 +47,7 @@ export default function SignIn(){
            <div className={`${buttonStyle}`}>
             <RoundedButton text='Sign-in' type='Submit' onClick={ handleSubmit}  />
             <Alt endText='Forgot password' />
-             <Alt highlightText='Sign-up' endText='Dont have an account 'link= '/User/sign-in' />
+             <Alt highlightText='Sign-up' endText='instead 'link= '/User/sign-in' />
             
            </div>
             </form>

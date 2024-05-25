@@ -11,7 +11,9 @@ import { LiaCommentSolid } from "react-icons/lia";
 import { CiShare1 } from "react-icons/ci";
 import { IoSend,IoAttachSharp, IoCheckmark } from "react-icons/io5";
 import { AiOutlineAudio } from "react-icons/ai";
+import { BsImage } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { FaVideo } from "react-icons/fa6";
 // the image component
 const Loader=()=>{
     return(
@@ -105,9 +107,17 @@ const style2={
   color:'#3d4652'
 
 }
+const largeicons={
+  fontSize:'50px',
+  color:'#D9D9D9'
+}
+//this function checks if the sent message is from the same user
+//then it will return the message card with the user profile picture
+//else it will return the message card without the user profile picture
+const ChatID=props.ChatSent?'ChatID':'ChatID2'
   return(
       <>
-      <div className="header flex flex-row justify-normal px-3 gap-3 w-[max-content] max-w-[90%] md:max-w-[80%] ">
+      <div className="header flex flex-row justify-normal px-3 gap-3 w-[max-content] max-w-[90%] md:max-w-[80%] " id={ChatID}>
               <div className="img rounded-[50%] w-[40px] h-[40px]  m-0 ">
                  <Link to={props.profileLink} className='rounded-[50%] w-[40px] h-[40px]  m-0'>
                  <img src={props.ChatsenderPicture}  className={`p-0  w-full h-full  rounded-[50%] `}/>
@@ -134,6 +144,23 @@ const style2={
                       </ul>
                      </div>
                   </div>
+                  {/* this only appears when the users is refferanced the message in the comment */}
+                  <Link to={props.ChatRef} className="postText w-full border-l-blue border-l-3 ">
+                    <ul className="flex w-auto">
+                            <li className=" w-[max-content] text-[15px] text-greytextdark font-bold">
+                            {props.ChatsenderName}
+                            </li>
+                            
+                            {props.Chatsenderrole=='doctor'|| props.Chatsenderrole=='admin'?<li className="w-[max-content]"><div className="verified"><MdVerifiedUser style={style} color={'#3b8aff'} /></div></li>:''}
+                        
+                            <li className=" w-[max-content] text-[15px] text-greytextfade">
+                            {props.Cahttime}
+                            </li>
+                      </ul>
+                      <p className="m-0 pb-2 text-[13px] lg:text-black lg:text-[15px]">{props.ChatrefText?ChatrefText.subString(0,20):''}</p>
+                     {props.ChatrefFile ?  <div className="postFile w-full rounded-[15px] border-[1px] border-greytextfade py-3 px-2">{props.ChatrefFileType=='image'?<img src={props.ChatRefimage} />:<video src={props.ChatRefvideo} type={Chat}></video>}</div>:''}
+                  </Link>
+                  {/* end of the refferance */}
                   <div className="postText w-full">
                       <p className="m-0 pb-2 text-[13px] lg:text-black lg:text-[15px]">{props.Chattext}</p>
                   </div>
@@ -152,7 +179,31 @@ const style2={
   )
 }
 
+const RefShowInput=(props)=>{
+  return(
+    <>
+     <div to={props.ChatRef} className="postText w-full p-4 border-l-blue border-l-[5px] bg-white ">
+                            <ul className="flex w-auto">
+                                    <li className=" w-[max-content] text-[15px] text-greytextdark font-bold">
+                                    {props.ChatsenderName}
+                                    </li>
+                                    
+                                    {props.Chatsenderrole=='doctor'|| props.Chatsenderrole=='admin'?<li className="w-[max-content]"><div className="verified"><MdVerifiedUser style={style} color={'#3b8aff'} /></div></li>:''}
+                                
+                                    <li className=" w-[max-content] text-[15px] text-greytextfade">
+                                    {props.Cahttime}
+                                    </li>
+                              </ul>
+                             {props.ChatrefFile && props.ChatrefFileType=='image'?<div className="flex flex-row"> <span className="w-full"><BsImage ></BsImage></span><img src={props.ChatRefimage} className="w-[30%] h-[60px]"/>:</div>:''}
+                             {props.ChatrefFile && props.ChatrefFileType=='video'?<div className="flex flex-row"> <span className="w-full"><FaVideo></FaVideo></span><video src={props.ChatRefvideo} type={ChatRefvideoType}></video>:</div>:''}
+                             {props.ChatRefText?<p className="m-0 pb-2 text-[13px] lg:text-black lg:text-[15px]">{props.ChatrefText?ChatrefText.subString(0,20):''}</p>:''}
+                      </div>
+    </>
+  )
+}
 export default function PostCard(props){
+//the check state of clicked icon
+const [refferance,setRefferance]=React.useState(false)
  const style={
         fontSize:'25px',
         color:'#3b8aff'
@@ -163,10 +214,6 @@ const style2={
 
 }
   const playerRef = React.useRef(null);
-
-  const videoJsOptions = {
-   
-  };
   const handlePlayerReady = (player) => {
     playerRef.current = player;
 
@@ -228,6 +275,10 @@ const style2={
                       <div className="chats p-3 h-[440px] md:h-[540px] overflow-y-auto overflow-x-hidden">
                          <MessageDoctor Chattext={props.Chattext} ChatsenderName={props.ChatsenderName} ChatSent={props.ChatSent} Chatfile={props.Chatfile} ChatimageSrc={props.ChatimageSrc} ChatvideoSrc={props.ChatvideoSrc} ChatvideoType={props.ChatvideoType} ChatfileType={props.ChatfileType} ChatsenderPicture={props.ChatsenderPicture} Cahttime={props.Cahttime} Chatsenderrole={props.Chatsenderrole}/>
                       </div>
+                      {/* this only appears when the users is refferaning the message in the comment */}
+
+                       {refferance?<RefShowInput ChatRef={props.ChatRef} ChatRefimage={props.ChatRefimage} ChatRefvideo={props.ChatRefvideo} ChatrefText={props.ChatrefText} ChatrefFile={props.ChatrefFile} ChatrefFileType={props.ChatrefFileType} ChatRefimage={props.ChatRefimage} ChatRefvideo={props.ChatRefvideo} ChatRefvideoType={props.ChatRefvideoType}/>:''}     
+                      {/* end of the refferancing */} 
                       <div className="input p-3  flex flex-row justify-between w-full  bg-gray-100 ">
                           <span className="h-[max-content] m-auto"><IoAttachSharp style={style2}/></span>
                             <input type="text" className="w-[75%] rounded-[20px] h-[45px] px-3 text-gray-800 "/>

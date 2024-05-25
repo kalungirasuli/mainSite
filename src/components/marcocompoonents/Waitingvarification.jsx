@@ -1,3 +1,42 @@
+import { styles,buttonStyle } from "../microcomponents/textComponents"
+import { Button3 } from "../microcomponents/RoundedButton"
+import HeaderLogo from "../microcomponents/HeaderLogo"
+import { useState,useEffect } from "react"
+export default function Waitingvarification(){
+     const message={
+        mother:"To ensure your account's security and enable us to communicate effectively, please verify your email address. Check your inbox for our verification email. if not received, check spam.",
+        doctor:"Your documents are currently under verififcation. We appreciate your patience and we will responde by sending you an email soon. Thank you"
+     }
+     const buttontext={
+        mother:'Resend message',
+        doctor:'Cancel submission'
+     }
+     const altbuttontext={
+        out:'Sign out of this account',
+        in:'Sign in with another account'
+     }
+     let userturned='doctor'
+     const[user,setUser]=useState('')
+     const[color,setColor]=useState('')
+     const[bg,setBg]=useState('')
+     const[text,setText]=useState('')
+     const check=()=>{
+            if(userturned=='doctor'){
+                setUser(userturned)
+                setColor('text-white')
+                setText(buttontext.doctor)
+                setBg('bg-redlight')
+            }else{
+                setUser(userturned)
+                setColor('text-blue')
+                setText(buttontext.mother)
+                setBg('bg-bluebutton')
+            }
+     } 
+     useEffect(()=>{
+        check()
+     },[])
+    return(
 import { styles, buttonStyle } from "../microcomponents/textComponents";
 import { Button3 } from "../microcomponents/RoundedButton";
 import HeaderLogo from "../microcomponents/HeaderLogo";
