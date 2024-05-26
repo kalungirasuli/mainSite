@@ -82,6 +82,9 @@ export default function Doctor() {
             user: {
               uid: user.uid,
               email: user.email,
+              firstName,
+              secondName,
+
             },
             role: 'doctor',
           }));

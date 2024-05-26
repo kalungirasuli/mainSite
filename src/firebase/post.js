@@ -1,6 +1,6 @@
 
 
-import { addDoc, collection, serverTimestamp, query, orderBy, onSnapshot, getDocs } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp, query, orderBy, onSnapshot, getDocs, getDoc, doc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { auth, db, storage } from './config';
 
@@ -9,10 +9,25 @@ export const createPost = async (content, imageFile) => {
   const user = auth.currentUser;
   if (!user) throw new Error('User not authenticated');
 
+  // Determine user type and fetch user details
+  let userDetails;
+  const mothersDoc = await getDoc(doc(db, 'mothers', user.uid));
+  const doctorsDoc = await getDoc(doc(db, 'doctors', user.uid));
+
+  if (mothersDoc.exists()) {
+    userDetails = mothersDoc.data();
+  } else if (doctorsDoc.exists()) {
+    userDetails = doctorsDoc.data();
+  } else {
+    throw new Error('User details not found');
+  }
+
   let post = {
     uid: user.uid,
     content: content,
-    timestamp: serverTimestamp()
+    firstName: userDetails.firstName,
+    secondName: userDetails.secondName,
+    timestamp: serverTimestamp(),
   };
 
   if (imageFile) {
@@ -30,13 +45,28 @@ export const addComment = async (postId, comment) => {
   const user = auth.currentUser;
   if (!user) throw new Error('User not authenticated');
 
+  // Determine user type and fetch user details
+  let userDetails;
+  const mothersDoc = await getDoc(doc(db, 'mothers', user.uid));
+  const doctorsDoc = await getDoc(doc(db, 'doctors', user.uid));
+
+  if (mothersDoc.exists()) {
+    userDetails = mothersDoc.data();
+  } else if (doctorsDoc.exists()) {
+    userDetails = doctorsDoc.data();
+  } else {
+    throw new Error('User details not found');
+  }
+
   const commentData = {
     uid: user.uid,
+    firstName: userDetails.firstName,
+    secondName: userDetails.secondName,
     comment: comment,
-    timestamp: serverTimestamp()
+    timestamp: serverTimestamp(),
   };
 
-  await addDoc(collection(db, `posts/${postId}/comments`), commentData);
+  await addDoc(collection(db, 'posts', postId, 'comments'), commentData);
 };
 
 // Fetch posts with comments
@@ -56,3 +86,5 @@ export const fetchPostsWithComments = (callback) => {
     callback(posts);
   });
 };
+
+
