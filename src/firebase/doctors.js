@@ -1,5 +1,6 @@
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
-import { db } from "./config";
+import { addDoc, collection, doc, getDoc, getDocs, serverTimestamp } from "firebase/firestore";
+import { auth, db, storage } from "./config";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 // Function to get a specific doctor's details by their UID
 export const getDoctorById = async (doctorId) => {
@@ -17,7 +18,7 @@ export const getDoctorById = async (doctorId) => {
       throw error;
     }
   };
-
+// function for getting all the doctors 
   export const getAllDoctors = async () => {
     try {
       const doctorsCollection = collection(db, 'doctors');
@@ -30,3 +31,29 @@ export const getDoctorById = async (doctorId) => {
       throw new Error('Failed to fetch doctors');
     }
   }
+  //function for booking a doctor
+
+  export const bookAppointment = async (firstName, secondName, description, time, day, documentFile) => {
+    const user = auth.currentUser;
+    if (!user) throw new Error('User not authenticated');
+  
+    let booking = {
+      uid: user.uid,
+      firstName: firstName,
+      secondName: secondName,
+      description: description,
+      time: time,
+      day: day,
+      timestamp: serverTimestamp()
+    };
+  
+    if (documentFile) {
+      const storageRef = ref(storage, `documents/${documentFile.name}`);
+      const snapshot = await uploadBytes(storageRef, documentFile);
+      const url = await getDownloadURL(snapshot.ref);
+      booking.documentUrl = url;
+    }
+  
+    await addDoc(collection(db, 'bookings'), booking);
+  };
+  
