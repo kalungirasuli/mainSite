@@ -16,15 +16,15 @@ export default function Home() {
             {posts.map((post) => (
               <PostCard 
                 key={post.id}
-                Profilesrc={post.Profilesrc || '../../../public/images/doctor.png'} 
+                Profilesrc={post.imageUrl|| '../../../public/images/doctor.png'} 
                 videoSrc={post.videoSrc || '../../../public/videos/hello.mp4'} 
                 ChatsenderName={post.ChatsenderName || 'Opinni Isaac'} 
                 Chattext={post.Chattext || 'This is the first chat message on the app and it is a doctor commenting on a post of another doctor'}  
                 ChatSent={post.ChatSent || true} 
-                Chatfile={post.Chatfile || '../../../public/images/doctor.png'} 
+                Chatfile={post.imageUrl || '../../../public/images/doctor.png'} 
                 ChatfileType={post.ChatfileType || 'image'} 
                 ChatsenderPicture={post.ChatsenderPicture || '../../../public/images/doctor.png'} 
-                ChatimageSrc={post.ChatimageSrc || '../../../public/images/doctor.png'} 
+                ChatimageSrc={post.imageUrl || '../../../public/images/doctor.png'} 
                 Cahttime={post.Cahttime || '2h'} 
                 Chatsenderrole={post.Chatsenderrole || 'doctor'}  
                 author={post.firstName + " " + post.secondName || 'Kalungi Rasuli'} 
