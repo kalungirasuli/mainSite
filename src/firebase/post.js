@@ -1,8 +1,8 @@
 
 
-import { addDoc, collection, serverTimestamp, query, orderBy, onSnapshot, getDocs, getDoc, doc, where } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp, query, orderBy, onSnapshot, getDocs, where } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { auth, db, storage } from './config';
+import {db, storage } from './config';
 
 export const createPost = async (userUid, content, imageFile) => {
   // Fetch user details based on userUid from both 'doctors' and 'mothers'
@@ -48,25 +48,33 @@ export const createPost = async (userUid, content, imageFile) => {
 };
 
 // Add a comment to a post
-export const addComment = async (postId, comment) => {
-  const user = auth.currentUser;
-  if (!user) throw new Error('User not authenticated');
+export const addComment = async (  userUid, postId, comment) => {
+ 
 
-  // Determine user type and fetch user details
+   // Fetch user details based on userUid from both 'doctors' and 'mothers'
   let userDetails;
-  const mothersDoc = await getDoc(doc(db, 'mothers', user.uid));
-  const doctorsDoc = await getDoc(doc(db, 'doctors', user.uid));
 
-  if (mothersDoc.exists()) {
-    userDetails = mothersDoc.data();
-  } else if (doctorsDoc.exists()) {
-    userDetails = doctorsDoc.data();
+  // Query to check if userUid exists in 'doctors' collection
+  const doctorsQuery = query(collection(db, 'doctors'), where("uid", "==", userUid));
+  const doctorsSnapshot = await getDocs(doctorsQuery);
+
+  // Query to check if userUid exists in 'mothers' collection
+  const mothersQuery = query(collection(db, 'mothers'), where("uid", "==", userUid));
+  const mothersSnapshot = await getDocs(mothersQuery);
+
+  // Check if userUid was found in either collection
+  if (!doctorsSnapshot.empty &&!mothersSnapshot.empty) {
+    throw new Error('User details not found');
+  } else if (!doctorsSnapshot.empty) {
+    userDetails = doctorsSnapshot.docs[0].data();
+  } else if (!mothersSnapshot.empty) {
+    userDetails = mothersSnapshot.docs[0].data();
   } else {
     throw new Error('User details not found');
   }
 
   const commentData = {
-    uid: user.uid,
+    uid: userUid,
     firstName: userDetails.firstName,
     secondName: userDetails.secondName,
     comment: comment,
@@ -79,17 +87,14 @@ export const addComment = async (postId, comment) => {
 // Fetch posts with comments
 export const fetchPostsWithComments = (callback) => {
   const q = query(collection(db, 'posts'), orderBy('timestamp', 'desc'));
-  onSnapshot(q, (snapshot) => {
+  onSnapshot(q, async (snapshot) => {
     const posts = [];
-    snapshot.forEach(async (doc) => {
+    for (const doc of snapshot.docs) {
       const post = { ...doc.data(), id: doc.id };
       const commentsSnapshot = await getDocs(collection(db, `posts/${post.id}/comments`));
-      post.comments = [];
-      commentsSnapshot.forEach(commentDoc => {
-        post.comments.push({ ...commentDoc.data(), id: commentDoc.id });
-      });
+      post.comments = commentsSnapshot.docs.map(commentDoc => ({ ...commentDoc.data(), id: commentDoc.id }));
       posts.push(post);
-    });
+    }
     callback(posts);
   });
 };
