@@ -204,7 +204,7 @@ const RefShowInput=(props)=>{
 }
 export default function PostCard(props){
 //the check state of clicked icon
-const [refferance,setRefferance]=React.useState(false)
+const [refferance,setRefferance]=React.useState(true)
  const style={
         fontSize:'25px',
         color:'#3b8aff'

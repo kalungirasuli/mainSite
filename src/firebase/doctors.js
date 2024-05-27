@@ -18,6 +18,8 @@ export const getDoctorById = async (doctorId) => {
       throw error;
     }
   };
+
+  
 // function for getting all the doctors 
   export const getAllDoctors = async () => {
     try {
