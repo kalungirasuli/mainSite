@@ -53,15 +53,15 @@ export function File(props) {
 export function Search(props) {
     return(
         <>
-        <div className="flex flex-row w-[80%] m-auto  bg-white shadow-lg-smoke rounded-[10px m-auto] ">
-        <button className=" rounded-[10px] p-2 text-white  w-[30px]"><IoIosSearch/></button>
+        <div className="flex flex-row w-[80%] m-auto  bg-white shadow-lg shadow-smoke rounded-[10px] ">
+        <button className=" rounded-[10px] p-2 text-white  w-[30px]"><IoIosSearch className="fill-greytextdark " style={{fontSize:'25px'}}/></button>
             <input 
                 type={props.type} 
                 placeholder={props.placeholder} 
                 id={props.ids} 
                 value={props.value} 
                 name={props.name} 
-                className={`${props.classes} rounded-[10px] p-3 shadow-md w-full border-0 text-left text-[15px] `} 
+                className={`${props.classes} rounded-[10px] p-3  w-full border-0 text-left text-[15px] `} 
                 onChange={props.onChange}
             />
             

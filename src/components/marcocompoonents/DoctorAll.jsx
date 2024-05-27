@@ -1,5 +1,6 @@
 import DoctorListcard from "../microcomponents/DoctorListcard"
 import HeadWithBack from "../microcomponents/HeadWithBack"
+import { Search } from "../microcomponents/textComponents"
 
 export default function DoctorAll(){
     return(
@@ -7,7 +8,12 @@ export default function DoctorAll(){
         <div className="div">
             <HeadWithBack heading='Pedetriciations list'/>
             <div className="div">
-                <DoctorListcard/>
+            <div className="div p-3 h-auto">
+                <Search type='text' placeholder='Search a pedetriciation' ids='search' classes='rounded-[10px] p-3 w-full border-0 text-left text-[15px] outline-none'/>
+            </div>
+              <div className="div w-[90%] m-auto">
+              <DoctorListcard/>
+              </div>
             </div>  
         </div>
         </>
