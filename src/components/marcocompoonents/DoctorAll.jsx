@@ -11,7 +11,8 @@ export default function DoctorAll(){
             <div className="div p-3 h-auto">
                 <Search type='text' placeholder='Search a pedetriciation' ids='search' classes='rounded-[10px] p-3 w-full border-0 text-left text-[15px] outline-none'/>
             </div>
-              <div className="div w-[90%] m-auto">
+              <div className="div w-[90%] m-auto flex flex-wrap justify-between gap-[10px] pt-5">
+                {/* the props are, name, work, link, image, online is aboolean */}
               <DoctorListcard/>
               </div>
             </div>  
