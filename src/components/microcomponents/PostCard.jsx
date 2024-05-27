@@ -159,7 +159,7 @@ const ChatID=props.ChatUserId==props.ChatUserCurrent?true:false
                             </li>
                       </ul>
                       <p className="m-0 pb-2 text-[13px] lg:text-black lg:text-[15px]">{props.ChatrefText?ChatrefText.subString(0,20):''}</p>
-                     {props.ChatrefFile ?  <div className="postFile w-full rounded-[15px] border-[1px] border-greytextfade py-3 px-2">{props.ChatrefFileType=='image'?<img src={props.ChatRefimage} />:<video src={props.ChatRefvideo} type={Chat}></video>}</div>:''}
+                     {props.ChatrefFile ?  <div className="postFile w-full rounded-[15px] border-[1px] border-greytextfade py-3 px-2">{props.ChatrefFileType=='image'?<img src={props.ChatRefimage} loading="lazy" />:<video src={props.ChatRefvideo} type={Chat}></video>}</div>:''}
                   </Link>
                   {/* end of the refferance */}
                   <div className="postText w-full">

@@ -1,5 +1,5 @@
 import DoctorListcard from "../microcomponents/DoctorListcard"
-
+import HeadWithBack from "../microcomponents/HeadWithBack"
 
 export default function DoctorAll(){
     return(

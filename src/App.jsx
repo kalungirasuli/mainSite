@@ -11,6 +11,7 @@ import SignIn from "./components/marcocompoonents/Signin"
 import SignUp from "./components/marcocompoonents/SignUp"
 import Appointments from "./components/marcocompoonents/Appointments"
 import DoctorAll from "./components/marcocompoonents/DoctorAll"
+import AddPost from "./components/marcocompoonents/AddPost"
 function App() {
   
   return (
@@ -21,6 +22,7 @@ function App() {
     <Routes>
       <Route path="/" element={<HomeTemp/>}>
               <Route index element={<Home/>}></Route>
+              <Route path="add-post" element={<AddPost/>}></Route>
               <Route path="appointment" element={<Appointments/>}>
                   <Route index element={DoctorAll}></Route>
               </Route>

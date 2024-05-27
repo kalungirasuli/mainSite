@@ -159,7 +159,7 @@ export default function Doctor() {
                     <File
                         type='file'
                         for='certificate'
-                        label='Academic Qualifications'
+                        label='Academic Qualifications (zip if many)'
                         name='certificate'
                         ids='certificate'
                         classes='bg-white'

@@ -28,12 +28,12 @@ export default function Discission(){
    }
 
    const handleContinue = () => {
-    console.log("Continue");
+    // console.log("Continue");
 
     // Potential redirection issues addressed:
     // 1. Ensure correct path:
     const targetPath = vary === 0 ? "/User/sign-up-mother" : "/User/sign-up-pedetricain";
-    console.log("Target path: " + targetPath)
+    // console.log("Target path: " + targetPath)
 
     
 

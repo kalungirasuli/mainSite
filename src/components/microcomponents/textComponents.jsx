@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom"
 import { IoIosSearch } from "react-icons/io"
+import { FaRegFileImage, FaTrash } from "react-icons/fa";
+import { useState } from "react";
 export function Alt(props){
     return(
         <>
@@ -51,7 +53,7 @@ export function File(props) {
 export function Search(props) {
     return(
         <>
-        <div className="flex flex-row w-[80%] m-auto  bg-white shadow-lg-smoke ">
+        <div className="flex flex-row w-[80%] m-auto  bg-white shadow-lg-smoke rounded-[10px m-auto] ">
         <button className=" rounded-[10px] p-2 text-white  w-[30px]"><IoIosSearch/></button>
             <input 
                 type={props.type} 
@@ -66,4 +68,84 @@ export function Search(props) {
         </div>
         </>
     )
+}
+
+// textarea
+export function TextArea(props) {
+    return (
+        <div className="flex flex-col gap-2 w-[90%] m-auto pt-[20px]">
+            <label htmlFor={props.for} className="text-[15px] text-greytextdark text-left pl-3">
+                {props.label}
+            </label>
+            <textarea
+                type={props.type}
+                placeholder={props.placeholder}
+                id={props.ids}
+                name={props.name}
+                className={`${props.classes} rounded-[10px] p-3 shadow-md w-[100%] h-[250px]`}
+                onChange={props.onChange}
+            />
+        </div>
+    );
+}
+
+
+// file picker
+
+export function FilePicker() {
+  const [files, setFiles] = useState([]);
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    if (!selectedFile) return;
+
+    // Check file type (image or video)
+    const fileType = selectedFile.type.split('/')[0];
+    if (fileType !== 'image' && fileType !== 'video') {
+      alert('Please select an image or video file.');
+      return;
+    }
+
+    // Add file to the list
+    setFiles([...files, selectedFile]);
+  };
+
+  const handleRemoveFile = (event,index) => {
+    const updatedFiles = files.filter((_, i) => i !== index);
+    setFiles(updatedFiles);
+    event.preventDefault()
+  };
+
+  return (
+    <div className="p-4">
+      <label htmlFor="fileInput" className="cursor-pointer w-[80%] m-auto flex items-center space-x-2 p-2 border-2 border-dashed border-gray-400 rounded-md hover:border-gray-600">
+        <FaRegFileImage className="text-2xl" />
+        <span>{files.length === 0 ? 'Select File' : 'Add Another File'}</span>
+        <input
+          type="file"
+          id="fileInput"
+          accept="image/*, video/*"
+          onChange={handleFileChange}
+          className="hidden"
+        />
+      </label>
+      <div className="mt-4 flex flex-wrap md:flex-nowrap overflow-x-auto p-4">
+        {files.map((file, index) => (
+          <div key={index} className="relative w-full md:w-80 h-80 md:h-96 m-2 border rounded-[20px] overflow-hidden flex-shrink-0">
+            {file.type.startsWith('image') ? (
+              <img src={URL.createObjectURL(file)} alt={`Image ${index}`} className="w-full h-full object-cover rounded-[20px]" />
+            ) : (
+              <video controls src={URL.createObjectURL(file)} className="w-[contain] h-full object-cover rounded-[20px]" />
+            )}
+            <button
+              onClick={() => handleRemoveFile(event,index)}
+              className="absolute top-2 right-2 text-white bg-red-600 rounded-full p-1 hover:bg-red-800"
+            >
+              <FaTrash />
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }

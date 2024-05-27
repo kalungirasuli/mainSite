@@ -47,16 +47,16 @@ export default function HomeTemp(){
                         <IoSearchSharp className='icon'/>
                     </li>
                 </Link>
-                <Link to="" className="p-0 w-[max-content] m-auto absolute bottom-[50px] right-[10px] md:static xl:w-full xl:m-0 xl:block">
+                <Link to="/add-post" className="p-0 w-[max-content] m-auto absolute bottom-[50px] right-[10px] md:static xl:w-full xl:m-0 xl:block">
                     <li className="py-3 max-w-[200px]">
                         <div className="w-[max-content] bg-blue p-4 rounded-[50%] xl:hidden">
                         <IoAddSharp className="icon white" />
                         </div>
                   
-                    <Button3 type='button' bg='bg-blue' color='text-white' text='Post' rounded='w-[100px] hidden xl:block'/> 
+                    <Button3 type='button' bg='bg-blue' color='text-white' link='/add-post' text='Post' rounded='w-[100px] hidden xl:block'/> 
                     </li>
                 </Link>
-            
+             <div className=""></div>
               
             </ul>
             </div>

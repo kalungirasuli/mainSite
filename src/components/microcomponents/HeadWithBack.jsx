@@ -13,7 +13,7 @@ export default function HeadWithBack(props){
                 <IoIosArrowBack className='fill-black text-[25px]' onClick={handleBack}/>
              </span>
              <div className="heading w-full">
-                <p className='text-center-p-0 text-[20px] text-greytextdark'>
+                <p className='text-center p-0 text-[20px] text-greytextdark'>
                     {
                         props.heading
                     }
