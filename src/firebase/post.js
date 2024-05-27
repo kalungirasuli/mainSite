@@ -1,29 +1,36 @@
 
 
-import { addDoc, collection, serverTimestamp, query, orderBy, onSnapshot, getDocs, getDoc, doc } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp, query, orderBy, onSnapshot, getDocs, getDoc, doc, where } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { auth, db, storage } from './config';
 
-// Create a new post
-export const createPost = async (content, imageFile) => {
-  const user = auth.currentUser;
-  if (!user) throw new Error('User not authenticated');
-
-  // Determine user type and fetch user details
+export const createPost = async (userUid, content, imageFile) => {
+  // Fetch user details based on userUid from both 'doctors' and 'mothers'
   let userDetails;
-  const mothersDoc = await getDoc(doc(db, 'mothers', user.uid));
-  const doctorsDoc = await getDoc(doc(db, 'doctors', user.uid));
 
-  if (mothersDoc.exists()) {
-    userDetails = mothersDoc.data();
-  } else if (doctorsDoc.exists()) {
-    userDetails = doctorsDoc.data();
+  // Query to check if userUid exists in 'doctors' collection
+  const doctorsQuery = query(collection(db, 'doctors'), where("uid", "==", userUid));
+  const doctorsSnapshot = await getDocs(doctorsQuery);
+
+  // Query to check if userUid exists in 'mothers' collection
+  const mothersQuery = query(collection(db, 'mothers'), where("uid", "==", userUid));
+  const mothersSnapshot = await getDocs(mothersQuery);
+
+  // Check if userUid was found in either collection
+  if (!doctorsSnapshot.empty &&!mothersSnapshot.empty) {
+    throw new Error('User details not found');
+  } else if (!doctorsSnapshot.empty) {
+    userDetails = doctorsSnapshot.docs[0].data();
+  } else if (!mothersSnapshot.empty) {
+    userDetails = mothersSnapshot.docs[0].data();
   } else {
     throw new Error('User details not found');
   }
 
+  console.log('User details:', userDetails);
+
   let post = {
-    uid: user.uid,
+    uid: userUid,
     content: content,
     firstName: userDetails.firstName,
     secondName: userDetails.secondName,

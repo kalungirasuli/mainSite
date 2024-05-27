@@ -8,7 +8,7 @@ import Doctor from "./components/marcocompoonents/doctors"
 import Waitingvarification from "./components/marcocompoonents/Waitingvarification"
 import Home from "./components/marcocompoonents/Home"
 import SignIn from "./components/marcocompoonents/Signin"
-import SignUp from "./components/marcocompoonents/SignUp"
+
 import Appointments from "./components/marcocompoonents/Appointments"
 import DoctorAll from "./components/marcocompoonents/DoctorAll"
 import AddPost from "./components/marcocompoonents/AddPost"
@@ -32,7 +32,7 @@ function App() {
               <Route path="sign-up-mother" element={<Mother/>}></Route>
               <Route path="sign-up-pedetricain" element={<Doctor/>}></Route>
               <Route path="sign-in" element={<SignIn/>}></Route>
-              <Route path="sign-up" element={<SignUp/>}></Route>
+             
               <Route path='verification' element={<Waitingvarification/>}></Route>
       </Route>
       
