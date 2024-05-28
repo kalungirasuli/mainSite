@@ -5,24 +5,23 @@ import { createPost } from "../../firebase/post";
 import RoundedButton from "../microcomponents/RoundedButton";
 import { useSelector } from "react-redux";
 
-
 export default function AddPost() {
-    const userUid = useSelector((state) => state.auth.user);
+  const userUid = useSelector((state) => state.auth.user);
   const [content, setContent] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
-  const handleFileChange = (file) => {
-    setSelectedFile(file);
+  const handleFileChange = (files) => {
+    setSelectedFiles(files);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("user uiid is " + userUid);
     try {
-      await createPost(userUid,content, selectedFile);
+      await createPost(userUid, content, selectedFiles);
       alert("Post created successfully!");
       setContent("");
-      setSelectedFile(null);
+      setSelectedFiles([]);
     } catch (error) {
       console.error("Error creating post:", error);
       alert("Failed to create post");
@@ -43,7 +42,7 @@ export default function AddPost() {
               onChange={(e) => setContent(e.target.value)}
             />
             <FilePicker onFileChange={handleFileChange} />
-            <RoundedButton text="Post" onClick={handleSubmit}/>
+            <RoundedButton text="Post" onClick={handleSubmit} />
           </form>
         </div>
       </div>

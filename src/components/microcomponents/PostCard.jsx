@@ -159,16 +159,16 @@ const ChatID=props.ChatUserId==props.ChatUserCurrent?true:false
                             </li>
                       </ul>
                       <p className="m-0 pb-2 text-[13px] lg:text-black lg:text-[15px]">{props.ChatrefText?ChatrefText.subString(0,20):''}</p>
-                     {props.ChatrefFile ?  <div className="postFile w-full rounded-[15px] border-[1px] border-greytextfade py-3 px-2 bg-slate-100">{props.ChatrefFileType=='image'?<img src={props.ChatRefimage} loading="lazy" />:<video src={props.ChatRefvideo} type={Chat}></video>}</div>:''}
+                     {props.ChatrefFile ?  <div className="postFile w-full rounded-[15px] border-[1px] border-greytextfade py-3 px-2">{props.ChatrefFileType=='image'?<img src={props.ChatRefimage} loading="lazy" />:<video src={props.ChatRefvideo} type={Chat}></video>}</div>:''}
                   </Link>
                   {/* end of the refferance */}
                   <div className="postText w-full">
                       <p className="m-0 pb-2 text-[13px] lg:text-black lg:text-[15px]">{props.Chattext}</p>
                   </div>
-                  {props.Chatfile ?  <div className="postFile w-[contain] rounded-[15px] border-[1px] border-greytextfade py-3 px-2">{props.ChatfileType=='image'? <img src={props.ChatimageSrc} className="w-auto min-h-[100px] max-h-[450px] md:max-h-[500px] m-auto rounded-[10px]"  />:<VideoJS options={{autoplay: false,controls: true,responsive: true,fluid: true,sources: [{src :props.ChatvideoSrc,type: props.ChatvideoType}]}}  onReady={handlePlayerReady} />}</div>:''}
+                  {props.Chatfile ?  <div className="postFile w-full rounded-[15px] border-[1px] border-greytextfade py-3 px-2">{props.ChatfileType=='image'? <Image src={props.ChatimageSrc}  />:<VideoJS options={{autoplay: false,controls: true,responsive: true,fluid: true,sources: [{src :props.ChatvideoSrc,type: props.ChatvideoType}]}}  onReady={handlePlayerReady} />}</div>:''}
             
                   <div className="postcontrol flex flex-row justify-end gap-4 p-3">
-                  <LiaCommentSolid style={style2} className="icon-small"/> 
+                  <LiaCommentSolid style={style2} className="icon-small"/>
                   <RiDeleteBin4Line style={style2} className="icon-small"/>
                   </div>
                   
@@ -279,7 +279,7 @@ const style2={
             </div>
             {/* the comment section */}
             {/* this should only appear when the user clicks the comment icon on the post */}
-            <div className="comments w-full h-[500px] md:h-[650px] border-t-[1px] border-t-greytextfade">
+            <div className="comments w-full h-[500px] md:h-[600px] border-t-[1px] border-t-greytextfade">
                       <div className="chats p-3 h-[440px] md:h-[540px] overflow-y-auto overflow-x-hidden">
                          <MessageDoctor Chattext={props.Chattext} ChatsenderName={props.ChatsenderName} ChatSent={props.ChatSent} Chatfile={props.Chatfile} ChatimageSrc={props.ChatimageSrc} ChatvideoSrc={props.ChatvideoSrc} ChatvideoType={props.ChatvideoType} ChatfileType={props.ChatfileType} ChatsenderPicture={props.ChatsenderPicture} Cahttime={props.Cahttime} Chatsenderrole={props.Chatsenderrole}/>
                       </div>

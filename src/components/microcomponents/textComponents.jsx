@@ -91,41 +91,63 @@ export function TextArea(props) {
 }
 
 
-
-// file picker
 export function FilePicker({ onFileChange }) {
-  const [fileName, setFileName] = useState("");
+  const [files, setFiles] = useState([]);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     if (!selectedFile) return;
 
     // Check file type (image or video)
-    const fileType = selectedFile.type.split("/")[0];
-    if (fileType !== "image" && fileType !== "video") {
-      alert("Please select an image or video file.");
+    const fileType = selectedFile.type.split('/')[0];
+    if (fileType !== 'image' && fileType !== 'video') {
+      alert('Please select an image or video file.');
       return;
     }
 
-    setFileName(selectedFile.name);
-    onFileChange(selectedFile);
+    // Add file to the list
+    const updatedFiles = [...files, selectedFile];
+    setFiles(updatedFiles);
+    onFileChange(updatedFiles);
+  };
+
+  const handleRemoveFile = (event, index) => {
+    event.preventDefault();
+    const updatedFiles = files.filter((_, i) => i !== index);
+    setFiles(updatedFiles);
+    onFileChange(updatedFiles);
   };
 
   return (
-    <div className="flex flex-col gap-2 w-[90%] m-auto pt-[20px]">
-      <input
-        type="file"
-        accept="image/*,video/*"
-        onChange={handleFileChange}
-        className="hidden"
-        id="filePicker"
-      />
-      <label
-        htmlFor="filePicker"
-        className="bg-gray-200 p-2 rounded-[10px] cursor-pointer"
-      >
-        {fileName || "Choose a file"}
+    <div className="p-4">
+      <label htmlFor="fileInput" className="cursor-pointer w-[80%] m-auto flex items-center space-x-2 p-2 border-2 border-dashed border-gray-400 rounded-md hover:border-gray-600">
+        <FaRegFileImage className="text-2xl" />
+        <span>{files.length === 0 ? 'Select File' : 'Add Another File'}</span>
+        <input
+          type="file"
+          id="fileInput"
+          accept="image/*, video/*"
+          onChange={handleFileChange}
+          className="hidden"
+        />
       </label>
+      <div className="mt-4 flex flex-wrap md:flex-nowrap overflow-x-auto p-4">
+        {files.map((file, index) => (
+          <div key={index} className="relative w-full md:w-80 h-80 md:h-96 m-2 border rounded-[20px] overflow-hidden flex-shrink-0">
+            {file.type.startsWith('image') ? (
+              <img src={URL.createObjectURL(file)} alt={`Image ${index}`} className="w-full h-full object-cover rounded-[20px]" />
+            ) : (
+              <video controls src={URL.createObjectURL(file)} className="w-[contain] h-full object-cover rounded-[20px]" />
+            )}
+            <button
+              onClick={(event) => handleRemoveFile(event, index)}
+              className="absolute top-2 right-2 text-white bg-red-600 rounded-full p-1 hover:bg-red-800"
+            >
+              <FaTrash />
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

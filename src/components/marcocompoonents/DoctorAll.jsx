@@ -13,7 +13,7 @@ export default function DoctorAll() {
     const fetchDoctors = async () => {
       try {
         const doctorsList = await getAllDoctors();
-        console.log(doctorsList)
+        console.log("the doctors list are"+ doctorsList)
         setDoctors(doctorsList);
         console.log(doctors)
       } catch (error) {
