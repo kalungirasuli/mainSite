@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchPostsWithComments } from "../../firebase/post";
 import PostCard from "../microcomponents/PostCard"
-import { Img } from "react-image";
 
 export default function Home() {
     const [posts, setPosts] = useState([]);
@@ -25,8 +24,7 @@ export default function Home() {
                 Chatfile={post.imageUrl || '../../../public/images/doctor.png'} 
                 ChatfileType={post.ChatfileType || 'image'} 
                 ChatsenderPicture={post.ChatsenderPicture || '../../../public/images/doctor.png'} 
-                // fire base loadin and offloading the image
-                ChatimageSrc={post.imageUrl || 'https://picsum.photos/200/300'} 
+                ChatimageSrc={post.imageUrl || '../../../public/images/doctor.png'} 
                 Cahttime={post.Cahttime || '2h'} 
                 Chatsenderrole={post.Chatsenderrole || 'doctor'}  
                 author={post.firstName + " " + post.secondName || 'Kalungi Rasuli'} 
@@ -39,9 +37,6 @@ export default function Home() {
                 videoType={post.videoType || 'video/mp4'}
               />
             ))}
-{
-  posts.map((post,index)=>(console.log(post.imageUrl)))
-}
         </div>
     );
 }
