@@ -159,16 +159,16 @@ const ChatID=props.ChatUserId==props.ChatUserCurrent?true:false
                             </li>
                       </ul>
                       <p className="m-0 pb-2 text-[13px] lg:text-black lg:text-[15px]">{props.ChatrefText?ChatrefText.subString(0,20):''}</p>
-                     {props.ChatrefFile ?  <div className="postFile w-full rounded-[15px] border-[1px] border-greytextfade py-3 px-2">{props.ChatrefFileType=='image'?<img src={props.ChatRefimage} loading="lazy" />:<video src={props.ChatRefvideo} type={Chat}></video>}</div>:''}
+                     {props.ChatrefFile ?  <div className="postFile w-full rounded-[15px] border-[1px] border-greytextfade py-3 px-2 bg-slate-100">{props.ChatrefFileType=='image'?<img src={props.ChatRefimage} loading="lazy" />:<video src={props.ChatRefvideo} type={Chat}></video>}</div>:''}
                   </Link>
                   {/* end of the refferance */}
                   <div className="postText w-full">
                       <p className="m-0 pb-2 text-[13px] lg:text-black lg:text-[15px]">{props.Chattext}</p>
                   </div>
-                  {props.Chatfile ?  <div className="postFile w-full rounded-[15px] border-[1px] border-greytextfade py-3 px-2">{props.ChatfileType=='image'? <Image src={props.ChatimageSrc}  />:<VideoJS options={{autoplay: false,controls: true,responsive: true,fluid: true,sources: [{src :props.ChatvideoSrc,type: props.ChatvideoType}]}}  onReady={handlePlayerReady} />}</div>:''}
+                  {props.Chatfile ?  <div className="postFile w-[contain] rounded-[15px] border-[1px] border-greytextfade py-3 px-2">{props.ChatfileType=='image'? <img src={props.ChatimageSrc} className="w-auto min-h-[100px] max-h-[450px] md:max-h-[500px] m-auto rounded-[10px]"  />:<VideoJS options={{autoplay: false,controls: true,responsive: true,fluid: true,sources: [{src :props.ChatvideoSrc,type: props.ChatvideoType}]}}  onReady={handlePlayerReady} />}</div>:''}
             
                   <div className="postcontrol flex flex-row justify-end gap-4 p-3">
-                  <LiaCommentSolid style={style2} className="icon-small"/>
+                  <LiaCommentSolid style={style2} className="icon-small"/> 
                   <RiDeleteBin4Line style={style2} className="icon-small"/>
                   </div>
                   
@@ -236,7 +236,7 @@ const style2={
                 {/* this send you to the posters profile they are doctor only and users cant view others profile accept doctors profiles */}
                 <Link to={props.profileLink} className='rounded-[50%] w-[40px] h-[40px]  m-0'>
                  <img src={props.Profilesrc}  className={`p-0  w-full h-full  rounded-[50%] `}/>
-                 </Link>
+                </Link>
                 </div>
                 <div className="detailes w-full">
                     <div className="controls flex flex-row justify-between">
@@ -260,8 +260,8 @@ const style2={
                        </div>
                     </div>
                     {/* this is the posted text for the user */}
-                    <div className="postText w-full">
-                        <p className="m-0 p-0 text-[13px] lg:text-black lg:text-[15px]">{props.text}</p>
+                    <div className="postText">
+                        <p className="m-0 p-0 text-[13px] break-words lg:text-black lg:text-[15px]">{props.text}</p>
                     </div>
                     {/* the file will only appear if the data returned has a file and the file type is an image or video */}
                     {props.file ?  <div className="postFile w-full rounded-[15px] border-[1px] border-greytextfade py-3 px-2">{props.fileType=='image'? <Image src={props.imageSrc}  />:<VideoJS options={{autoplay: false,controls: true,responsive: true,fluid: true,sources: [{src :props.videoSrc,type: props.videoType}]}}  onReady={handlePlayerReady} />}</div>:''}
@@ -279,7 +279,7 @@ const style2={
             </div>
             {/* the comment section */}
             {/* this should only appear when the user clicks the comment icon on the post */}
-            <div className="comments w-full h-[500px] md:h-[600px] border-t-[1px] border-t-greytextfade">
+            <div className="comments w-full h-[500px] md:h-[650px] border-t-[1px] border-t-greytextfade">
                       <div className="chats p-3 h-[440px] md:h-[540px] overflow-y-auto overflow-x-hidden">
                          <MessageDoctor Chattext={props.Chattext} ChatsenderName={props.ChatsenderName} ChatSent={props.ChatSent} Chatfile={props.Chatfile} ChatimageSrc={props.ChatimageSrc} ChatvideoSrc={props.ChatvideoSrc} ChatvideoType={props.ChatvideoType} ChatfileType={props.ChatfileType} ChatsenderPicture={props.ChatsenderPicture} Cahttime={props.Cahttime} Chatsenderrole={props.Chatsenderrole}/>
                       </div>

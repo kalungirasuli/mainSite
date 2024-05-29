@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import { IoIosSearch } from "react-icons/io"
 import { FaRegFileImage, FaTrash } from "react-icons/fa";
 import { useState } from "react";
+import { CgFormatSlash } from "react-icons/cg";
 export function Alt(props){
     return(
         <>
@@ -150,4 +151,27 @@ export function FilePicker({ onFileChange }) {
       </div>
     </div>
   );
+}
+
+export function Date(props){
+  return(
+    <>
+    <div className="div w-full flex flex-row justify-between gap-[10px]" >
+    <select name="" id="" className="p-3 shadow-sm rounded-[10px] outline-none w-full">
+     {props.days?props.days.map((day,index)=>(<option key={index} value={day.day}>{day.day}</option>)):<option>NULL</option>}
+    </select>
+    <span>
+      <CgFormatSlash className="fill-greytextdark" style={{fontSize:'30px'}}/>
+    </span>
+    <div className="div p-3 rounded-[10px] w-full">
+      {props.month?props.month.map((month,index)=>(<p key={index} className="text-[15px] text-center text-greytextdark">{month.month}</p>)):<p className="text-[15px] text-center text-greytextdark">Null</p>}
+    </div>
+    <CgFormatSlash className="fill-greytextdark" style={{fontSize:'30px'}}/>
+    <div className="div p-3 rounded-[10px] w-full">
+      {props.year?props.year.map((year,index)=>(<p key={index} className="text-[15px] text-center text-greytextdark">{year.year}</p>)):<p className="text-[15px] text-center text-greytextdark">Null</p>}
+    </div>
+    </div>
+    
+    </>
+  )
 }

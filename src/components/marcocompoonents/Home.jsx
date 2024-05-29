@@ -17,7 +17,7 @@ export default function Home() {
             {posts.map((post) => (
               <PostCard 
                 key={post.id}
-                Profilesrc={post.imageUrl|| '../../../public/images/doctor.png'} 
+                Profilesrc={ '../../../public/images/doctor.png'} 
                 videoSrc={post.videoSrc || '../../../public/videos/hello.mp4'} 
                 ChatsenderName={post.ChatsenderName || 'Opinni Isaac'} 
                 Chattext={post.Chattext || 'This is the first chat message on the app and it is a doctor commenting on a post of another doctor'}  
