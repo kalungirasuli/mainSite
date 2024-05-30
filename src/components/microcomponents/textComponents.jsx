@@ -156,6 +156,7 @@ export function FilePicker({ onFileChange }) {
 export function Date(props){
   return(
     <>
+<<<<<<< Updated upstream
     <div className="div w-full m-auto text-left">
     <label htmlFor={props.for} className="text-[15px] text-greytextdark text-left pl-3">
                 {props.label}
@@ -177,12 +178,27 @@ export function Date(props){
     <CgFormatSlash className="fill-greytextfade" style={{fontSize:'35px'}}/>
     </span>
     <div className="div p-3 shadow-md rounded-[10px] w-full cursor-not-allowed">
+=======
+    <div className="div w-full flex flex-row justify-between gap-[10px]" >
+    <select name="" id="" className="p-3 shadow-sm rounded-[10px] outline-none w-full">
+     {props.days?props.days.map((day,index)=>(<option key={index} value={day.day}>{day.day}</option>)):<option>NULL</option>}
+    </select>
+    <span>
+      <CgFormatSlash className="fill-greytextdark" style={{fontSize:'30px'}}/>
+    </span>
+    <div className="div p-3 rounded-[10px] w-full">
+      {props.month?props.month.map((month,index)=>(<p key={index} className="text-[15px] text-center text-greytextdark">{month.month}</p>)):<p className="text-[15px] text-center text-greytextdark">Null</p>}
+    </div>
+    <CgFormatSlash className="fill-greytextdark" style={{fontSize:'30px'}}/>
+    <div className="div p-3 rounded-[10px] w-full">
+>>>>>>> Stashed changes
       {props.year?props.year.map((year,index)=>(<p key={index} className="text-[15px] text-center text-greytextdark">{year.year}</p>)):<p className="text-[15px] text-center text-greytextdark">Null</p>}
     </div>
     </div>
     
     </>
   )
+<<<<<<< Updated upstream
 }
 
 export function Time(props){
@@ -201,4 +217,6 @@ export function Time(props){
     </div>
     </>
   )
+=======
+>>>>>>> Stashed changes
 }
