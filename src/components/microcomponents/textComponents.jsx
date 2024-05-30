@@ -156,22 +156,49 @@ export function FilePicker({ onFileChange }) {
 export function Date(props){
   return(
     <>
-    <div className="div w-full flex flex-row justify-between gap-[10px]" >
-    <select name="" id="" className="p-3 shadow-sm rounded-[10px] outline-none w-full">
+    <div className="div w-full m-auto text-left">
+    <label htmlFor={props.for} className="text-[15px] text-greytextdark text-left pl-3">
+                {props.label}
+            </label>
+    </div>
+    <div className="div w-full flex flex-row justify-between gap-[10px] mt-5" >
+    <span className="w-full p-3 shadow-md rounded-[10px]">
+    <select name="" id="" className="  rounded-[10px] outline-none w-full bg-white text-center cursor-pointer ">
      {props.days?props.days.map((day,index)=>(<option key={index} value={day.day}>{day.day}</option>)):<option>NULL</option>}
     </select>
-    <span>
+    </span>
+    <span className="p-3">
       <CgFormatSlash className="fill-greytextdark" style={{fontSize:'30px'}}/>
     </span>
-    <div className="div p-3 rounded-[10px] w-full">
+    <div className="div p-3 shadow-md rounded-[10px] w-full cursor-not-allowed">
       {props.month?props.month.map((month,index)=>(<p key={index} className="text-[15px] text-center text-greytextdark">{month.month}</p>)):<p className="text-[15px] text-center text-greytextdark">Null</p>}
     </div>
-    <CgFormatSlash className="fill-greytextdark" style={{fontSize:'30px'}}/>
-    <div className="div p-3 rounded-[10px] w-full">
+    <span className="p-3">
+    <CgFormatSlash className="fill-greytextfade" style={{fontSize:'35px'}}/>
+    </span>
+    <div className="div p-3 shadow-md rounded-[10px] w-full cursor-not-allowed">
       {props.year?props.year.map((year,index)=>(<p key={index} className="text-[15px] text-center text-greytextdark">{year.year}</p>)):<p className="text-[15px] text-center text-greytextdark">Null</p>}
     </div>
     </div>
     
+    </>
+  )
+}
+
+export function Time(props){
+  
+  return(
+    <>
+    <div className="div mt-5 w-full">
+    <label htmlFor={props.for} className="text-[15px] text-greytextdark text-left  mb-3">
+                {props.label}
+            </label>
+    <div className="div  p-3 shadow-md rounded-[10px] ">
+    <select name="" id="" className="  rounded-[10px] outline-none w-full bg-white text-center cursor-pointer ">
+     {props.time?props.time.map((hour,index)=>(<option key={index} value={hour}>{hour}</option>)):null}
+    </select>
+    </div>
+    </div>
     </>
   )
 }
