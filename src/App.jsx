@@ -31,7 +31,7 @@ function App() {
               <Route path="add-post" element={<AddPost/>}></Route>
               <Route path="appointment" element={<Appointments/>}>
                   <Route index element={<DoctorAll/>}></Route>
-                  <Route path="doctor/summary" element={<DoctorDesc/>}></Route>
+                  <Route path="doctor/:id" element={<DoctorDesc/>}></Route>
                   <Route path="doctor/checkout" element={<Checkout/>}></Route>
                   <Route path="booking" element={<Booking/>}></Route>
               </Route>
