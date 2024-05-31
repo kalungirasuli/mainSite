@@ -1,11 +1,6 @@
 import HeadWithBack from "../microcomponents/HeadWithBack"
-<<<<<<< Updated upstream
 import { Date,Time ,File, TextArea} from "../microcomponents/textComponents"
 import { Button3 } from "../microcomponents/RoundedButton"
-=======
-import { Date } from "../microcomponents/textComponents"
->>>>>>> Stashed changes
-
 export default function Booking(){
     const days=[
         {
@@ -37,7 +32,6 @@ export default function Booking(){
             hours:['20:30-22:30','23:30-00:00']
         },
     ]
-<<<<<<< Updated upstream
     const mode=['Physical','Online']
     return(
         <>
@@ -63,14 +57,6 @@ export default function Booking(){
                     <div className="div w-[90%] p-5 m-auto mt-10">
                     <Button3 text='Continue' bg='bg-blue' color='text-white' rounded='rounded-[10px]' width='w-[90%] m-auto'/>
                     </div>
-=======
-    return(
-        <>
-        <HeadWithBack heading="Booking ppointment"/>
-        <div className="div">
-            <form action="">
-                    <Date days={days}/>
->>>>>>> Stashed changes
             </form>
         </div>
         </>

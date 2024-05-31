@@ -13,11 +13,8 @@ import Appointments from "./components/marcocompoonents/Appointments"
 import DoctorAll from "./components/marcocompoonents/DoctorAll"
 import DoctorDesc from "./components/marcocompoonents/DoctorDesc"
 import Booking from "./components/marcocompoonents/Booking"
-<<<<<<< Updated upstream
 import Checkout from "./components/marcocompoonents/Checkout"
-=======
 
->>>>>>> Stashed changes
 
 import AddPost from "./components/marcocompoonents/AddPost"
 
@@ -35,12 +32,8 @@ function App() {
               <Route path="appointment" element={<Appointments/>}>
                   <Route index element={<DoctorAll/>}></Route>
                   <Route path="doctor/summary" element={<DoctorDesc/>}></Route>
-<<<<<<< Updated upstream
-                  <Route path="doctor/booking" element={<Booking/>}></Route>
                   <Route path="doctor/checkout" element={<Checkout/>}></Route>
-=======
                   <Route path="booking" element={<Booking/>}></Route>
->>>>>>> Stashed changes
               </Route>
       </Route>
       <Route path="User" element={<Temp/>}>
