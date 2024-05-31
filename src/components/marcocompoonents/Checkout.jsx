@@ -2,10 +2,11 @@ import HeadWithBack from "../microcomponents/HeadWithBack"
 import { Input } from "../microcomponents/textComponents"
 import { Button3 } from "../microcomponents/RoundedButton"
 import { doc } from "firebase/firestore"
+import { useSelector } from "react-redux";
 export default function Checkout(){
-
+    const selectedDoctor = useSelector(state => state.user.selectedDoctor);
     const  data={
-        doctor:'John Doe',
+        doctor: `${selectedDoctor.firstName} ${selectedDoctor.secondName}`,
         mode:'Online',
         time:'22:00-23-00',
         date:'Tue/04/2024'
