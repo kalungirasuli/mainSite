@@ -47,10 +47,11 @@ export default function DoctorAll() {
             {filteredDoctors.map(doctor => (
               <DoctorListcard
                 key={doctor.id}
-                name={doctor.firstName + ' ' + doctor.secondName
-                }
+                name={doctor.firstName + ' ' + doctor.secondName}
+                firstName={doctor.firstName}
+                secondName={doctor.secondName}
                 work={doctor.work}
-                link={`/doctor/${doctor.id}`}
+                link={`/appointment/doctor/${doctor.id}`}
                 image={doctor.image}
                 online={doctor.online}
               />

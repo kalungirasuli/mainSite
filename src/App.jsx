@@ -33,7 +33,7 @@ function App() {
                   <Route index element={<DoctorAll/>}></Route>
                   <Route path="doctor/:id" element={<DoctorDesc/>}></Route>
                   <Route path="doctor/checkout" element={<Checkout/>}></Route>
-                  <Route path="booking" element={<Booking/>}></Route>
+                  <Route path="doctor/booking" element={<Booking/>}></Route>
               </Route>
       </Route>
       <Route path="User" element={<Temp/>}>

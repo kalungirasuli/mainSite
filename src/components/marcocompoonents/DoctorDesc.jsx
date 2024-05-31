@@ -27,7 +27,7 @@ export default function DoctorDesc(){
 
   const handleSubmit = () =>{
      console.log("cliked me ")
-    return navigate('/appointment/doctor/booking'); 
+    return navigate('/booking'); 
   }
 
   if (!doctor) {
