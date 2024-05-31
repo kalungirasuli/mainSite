@@ -5,6 +5,8 @@ import { Button3 } from "../microcomponents/RoundedButton";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setBookingDetails } from "../../redux/userSlice";
 
 export default function Booking() {
   const navigate = useNavigate();
@@ -13,7 +15,18 @@ export default function Booking() {
   const [selectedMode, setSelectedMode] = useState('');
   const [file, setFile] = useState(null);
   const [description, setDescription] = useState('');
-
+  const dispatch = useDispatch();
+ 
+  
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const timeSlots = [
+    '08:00-08:30', '08:30-09:00', '09:00-09:30', '09:30-10:00',
+    '10:00-10:30', '10:30-11:00', '11:00-11:30', '11:30-12:00',
+    '12:00-12:30', '12:30-13:00', '13:00-13:30', '13:30-14:00',
+    '14:00-14:30', '14:30-15:00', '15:00-15:30', '15:30-16:00',
+    '16:00-16:30', '16:30-17:00'
+  ];
+  const modes = ['Physical', 'Online'];
   const handleBooking = async (event) => {
     event.preventDefault();
 
@@ -26,45 +39,21 @@ export default function Booking() {
         description: description,
       });
       alert("Booking successful!");
+      dispatch(setBookingDetails({
+        day: selectedDay,
+        time: selectedTime,
+        mode: selectedMode,
+        file: file? file.name : '',
+        description: description,
+      }));
       navigate('/appointment/doctor/checkout');
     } catch (e) {
       console.error("Error adding document: ", e);
     }
   };
 
-  const days = [
-    {
-      day: 'Sun',
-      hours: ['20:30-22:30', '23:30-00:00']
-    },
-    {
-      day: 'Mon',
-      hours: ['20:30-22:30', '23:30-00:00']
-    },
-    {
-      day: 'Tue',
-      hours: ['20:30-22:30', '23:30-00:00,']
-    },
-    {
-      day: 'Wed',
-      hours: ['23:30-00:00']
-    },
-    {
-      day: 'Thur',
-      hours: ['20:30-22:30', '23:30-00:00']
-    },
-    {
-      day: 'Fri',
-      hours: ['20:30-22:30', '23:30-00:00', '24:01-00:30', '01:30-02:00']
-    },
-    {
-      day: 'Sat',
-      hours: ['20:30-22:30', '23:30-00:00']
-    },
-  ];
 
-  const modes = ['Physical', 'Online'];
-
+ 
   return (
     <>
       <HeadWithBack heading="Booking Appointment" />
@@ -76,11 +65,12 @@ export default function Booking() {
         </div>
         <form onSubmit={handleBooking} className="w-full">
           <div className="div w-[90%] m-auto">
-            <Date days={days} label='Select a day' onChange={(e) => setSelectedDay(e.target.value)} />
+          <Time options={days} label='Select a day' onChange={(e) => setSelectedDay(e.target.value)} />
+
           </div>
           <div className="div flex flex-col md:flex-row justify-between gap-[30px] w-[90%] m-auto">
-            <Time time={days[5].hours} label='Select time' onChange={(e) => setSelectedTime(e.target.value)} />
-            <Time time={modes} label='Select a mode' onChange={(e) => setSelectedMode(e.target.value)} />
+          <Time options={timeSlots} label='Select time' onChange={(e) => setSelectedTime(e.target.value)} />
+            <Time options={modes} label='Select a mode' onChange={(e) => setSelectedMode(e.target.value)} />
           </div>
           <div className="duv w-[90%] m-auto">
             <File label='Attach medical files (if there is any)' type='file' onChange={(e) => setFile(e.target.files[0])} />

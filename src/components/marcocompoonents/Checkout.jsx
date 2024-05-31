@@ -5,12 +5,13 @@ import { doc } from "firebase/firestore"
 import { useSelector } from "react-redux";
 export default function Checkout(){
     const selectedDoctor = useSelector(state => state.user.selectedDoctor);
-    const  data={
+    const bookingDetails = useSelector(state => state.user.bookingDetails);
+    const data = {
         doctor: `${selectedDoctor.firstName} ${selectedDoctor.secondName}`,
-        mode:'Online',
-        time:'22:00-23-00',
-        date:'Tue/04/2024'
-    }
+        mode: bookingDetails.mode,
+        time: bookingDetails.time,
+        date: bookingDetails.day,
+      };
     return(
         <>
 <div className="div">

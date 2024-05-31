@@ -184,20 +184,24 @@ export function Date(props){
   )
 }
 
-export function Time(props){
-  
-  return(
-    <>
+export function Time(props) {
+  return (
     <div className="div mt-5 w-full">
-    <label htmlFor={props.for} className="text-[15px] text-greytextdark text-left  mb-3">
-                {props.label}
-            </label>
-    <div className="div  p-3 shadow-md rounded-[10px] ">
-    <select name="" id="" className="  rounded-[10px] outline-none w-full bg-white text-center cursor-pointer ">
-     {props.time?props.time.map((hour,index)=>(<option key={index} value={hour}>{hour}</option>)):null}
-    </select>
+      <label htmlFor={props.for} className="text-[15px] text-greytextdark text-left mb-3">
+        {props.label}
+      </label>
+      <div className="div p-3 shadow-md rounded-[10px]">
+        <select
+          name=""
+          id=""
+          className="rounded-[10px] outline-none w-full bg-white text-center cursor-pointer"
+          onChange={props.onChange}
+        >
+          {props.options ? props.options.map((option, index) => (
+            <option key={index} value={option}>{option}</option>
+          )) : null}
+        </select>
+      </div>
     </div>
-    </div>
-    </>
-  )
+  );
 }
