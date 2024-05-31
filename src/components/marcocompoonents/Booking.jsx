@@ -1,7 +1,28 @@
 import HeadWithBack from "../microcomponents/HeadWithBack"
 import { Date,Time ,File, TextArea} from "../microcomponents/textComponents"
 import { Button3 } from "../microcomponents/RoundedButton"
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../firebase/config";
+import { useNavigate } from "react-router-dom";
 export default function Booking(){
+    const navigate = useNavigate();
+    const handleBooking = async (event) => {
+        event.preventDefault();
+       
+    
+        try {
+          await addDoc(collection(db, "bookings"), {
+            mode: "test",
+            day: "test",
+            time: "test",
+          });
+          alert("Booking successful!");
+          navigate('/appointment/doctor/checkout'); 
+        
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        }
+      };
     const days=[
         {
             day:'Sun',
@@ -55,7 +76,7 @@ export default function Booking(){
                    </div>
                     <TextArea placeholder='Describe your issue to the doctor in less than 300 words' />
                     <div className="div w-[90%] p-5 m-auto mt-10">
-                    <Button3 text='Continue' bg='bg-blue' color='text-white' rounded='rounded-[10px]' width='w-[90%] m-auto'/>
+                    <Button3 text='Continue' bg='bg-blue' color='text-white' rounded='rounded-[10px]' width='w-[90%] m-auto' onClick={handleBooking}/>
                     </div>
             </form>
         </div>
