@@ -13,6 +13,7 @@ import { AiOutlineAudio } from "react-icons/ai";
 import { BsImage } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { FaVideo } from "react-icons/fa6";
+import {useState} from "react";
 // the image component
 const Loader=()=>{
     return(
@@ -227,6 +228,10 @@ const style2={
       videojs.log('player will dispose');
     });
   };
+  const [comment,setComm]=useState(false)
+  const setcomment=()=>{
+    comment?setComm(false):setComm(true)
+  }
     return(
         <>
         {/* the post card component */}
@@ -267,7 +272,7 @@ const style2={
                     {props.file ?  <div className="postFile w-full rounded-[15px] border-[1px] border-greytextfade py-3 px-2">{props.fileType=='image'? <Image src={props.imageSrc}  />:<VideoJS options={{autoplay: false,controls: true,responsive: true,fluid: true,sources: [{src :props.videoSrc,type: props.videoType}]}}  onReady={handlePlayerReady} />}</div>:''}
               
                     <div className="postcontrol flex flex-row justify-between p-3">
-                    <LiaCommentSolid style={style2} className="icon-small"/>
+                    <LiaCommentSolid style={style2} className="icon-small" onClick={setcomment}/>
                     <CiShare1 style={style2} className="icon-small"/>
                     <RiAccountPinBoxLine style={style2} className="icon-small"/>
                     <RiDeleteBin4Line style={style2} className="icon-small"/>
@@ -279,20 +284,21 @@ const style2={
             </div>
             {/* the comment section */}
             {/* this should only appear when the user clicks the comment icon on the post */}
-            <div className="comments w-full h-[500px] md:h-[650px] border-t-[1px] border-t-greytextfade">
-                      <div className="chats p-3 h-[440px] md:h-[540px] overflow-y-auto overflow-x-hidden">
-                         <MessageDoctor Chattext={props.Chattext} ChatsenderName={props.ChatsenderName} ChatSent={props.ChatSent} Chatfile={props.Chatfile} ChatimageSrc={props.ChatimageSrc} ChatvideoSrc={props.ChatvideoSrc} ChatvideoType={props.ChatvideoType} ChatfileType={props.ChatfileType} ChatsenderPicture={props.ChatsenderPicture} Cahttime={props.Cahttime} Chatsenderrole={props.Chatsenderrole}/>
-                      </div>
-                      {/* this only appears when the users is refferaning the message in the comment */}
-                       {refferance?<RefShowInput ChatRef={props.ChatRef} ChatRefimage={props.ChatRefimage} ChatRefvideo={props.ChatRefvideo} ChatrefText={props.ChatrefText} ChatrefFile={props.ChatrefFile} ChatrefFileType={props.ChatrefFileType} ChatRefimage={props.ChatRefimage} ChatRefvideo={props.ChatRefvideo} ChatRefvideoType={props.ChatRefvideoType}/>:''}     
-                      {/* end of the refferancing */} 
-                      <div className="input p-3  flex flex-row justify-between w-full  bg-gray-100 ">
-                          <span className="h-[max-content] m-auto"><IoAttachSharp style={style2}/></span>
-                            <input type="text" className="w-[75%] rounded-[20px] h-[45px] px-3 text-gray-800 "/>
-                           <span className="h-[max-content] m-auto" > <AiOutlineAudio style={style2}/></span>
-                           <span className="h-[max-content] m-auto"  >  <IoSend style={style2}/></span>        
-                      </div>
-                    </div>
+           {
+            comment? <div className="comments w-full h-[500px] align-middle md:h-[650px] border-t-[1px] border-t-greytextfade">
+            <div className="chats w-[90%] m-auto p-3 h-[440px] md:h-[540px] overflow-y-auto overflow-x-hidden">
+               <MessageDoctor Chattext={props.Chattext} ChatsenderName={props.ChatsenderName} ChatSent={props.ChatSent} Chatfile={props.Chatfile} ChatimageSrc={props.ChatimageSrc} ChatvideoSrc={props.ChatvideoSrc} ChatvideoType={props.ChatvideoType} ChatfileType={props.ChatfileType} ChatsenderPicture={props.ChatsenderPicture} Cahttime={props.Cahttime} Chatsenderrole={props.Chatsenderrole}/>
+            </div>
+            {/* this only appears when the users is refferaning the message in the comment */}
+             {refferance?<RefShowInput ChatRef={props.ChatRef} ChatRefimage={props.ChatRefimage} ChatRefvideo={props.ChatRefvideo} ChatrefText={props.ChatrefText} ChatrefFile={props.ChatrefFile} ChatrefFileType={props.ChatrefFileType} ChatRefimage={props.ChatRefimage} ChatRefvideo={props.ChatRefvideo} ChatRefvideoType={props.ChatRefvideoType}/>:''}     
+            {/* end of the refferancing */} 
+            <div className="input p-3  flex flex-row justify-between w-full  bg-gray-100 ">
+                <span className="h-[max-content] m-auto"><IoAttachSharp style={style2}/></span>
+                  <input type="text" className="w-[75%] rounded-[20px] h-[45px] px-3 text-gray-800 "/>
+                 <span className="h-[max-content] m-auto"  >  <IoSend style={style2}/></span>        
+            </div>
+          </div>:""
+           }
             
         </div>
         {/* end of comment section */}

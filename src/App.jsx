@@ -15,6 +15,8 @@ import DoctorDesc from "./components/marcocompoonents/DoctorDesc"
 import Booking from "./components/marcocompoonents/Booking"
 import Checkout from "./components/marcocompoonents/Checkout"
 
+import Message from "./components/marcocompoonents/Messages"
+import Discussion from "./components/marcocompoonents/Discussion"
 
 import AddPost from "./components/marcocompoonents/AddPost"
 
@@ -34,6 +36,10 @@ function App() {
                   <Route path="doctor/:id" element={<DoctorDesc/>}></Route>
                   <Route path="doctor/checkout" element={<Checkout/>}></Route>
                   <Route path="doctor/booking" element={<Booking/>}></Route>
+              </Route>
+              <Route path="Message" element={<Message/>}>
+                  {/* <Route index element={<Discission/>}></Route> */}
+                  <Route index element={<Discussion/>}></Route>
               </Route>
       </Route>
       <Route path="User" element={<Temp/>}>

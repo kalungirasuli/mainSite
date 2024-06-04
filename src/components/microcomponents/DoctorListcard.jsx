@@ -14,7 +14,7 @@ export default function DoctorListcard(props) {
       firstName: props.firstName,
       secondName: props.secondName,
       work: props.work,
-      image: props.image,
+     
       online: props.online,
     }));
     navigate(props.link);
