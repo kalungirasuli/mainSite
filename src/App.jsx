@@ -20,6 +20,7 @@ import Discussion from "./components/marcocompoonents/Discussion"
 
 import AddPost from "./components/marcocompoonents/AddPost"
 
+import Profile from "./components/marcocompoonents/Profile"
 function App() {
   
   return (
@@ -41,6 +42,7 @@ function App() {
                   {/* <Route index element={<Discission/>}></Route> */}
                   <Route index element={<Discussion/>}></Route>
               </Route>
+              <Route path="profile" element={<Profile/>}></Route>
       </Route>
       <Route path="User" element={<Temp/>}>
               <Route index  element={<Discission/>}></Route>

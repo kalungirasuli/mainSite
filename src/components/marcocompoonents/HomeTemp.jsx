@@ -36,7 +36,7 @@ export default function HomeTemp(){
                         <span className="text-center hidden text-[20px] xl:block">Notifications</span>
                     </li>
                 </Link>
-                <Link to="" className="p-0 w-[max-content] m-auto xl:w-full xl:m-0">
+                <Link to="/profile" className="p-0 w-[max-content] m-auto xl:w-full xl:m-0">
                     <li className="p-3 w-[max-content] rounded-[30px] hover:bg-greytextfade  flex flex-row gap-5">
                         <IoPerson className="icon"/>
                         <span className="text-center hidden text-[20px] xl:block">Profile</span>

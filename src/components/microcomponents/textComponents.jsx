@@ -3,6 +3,8 @@ import { IoIosSearch } from "react-icons/io"
 import { FaRegFileImage, FaTrash } from "react-icons/fa";
 import { useState } from "react";
 import { CgFormatSlash } from "react-icons/cg";
+import { FiEdit } from "react-icons/fi";
+import { IoPersonCircleOutline } from "react-icons/io5";
 export function Alt(props){
     return(
         <>
@@ -43,6 +45,7 @@ export function File(props) {
             <input
                 type={props.type}
                 id={props.ids}
+                multiple
                 name={props.name}
                 className={`${props.classes} rounded-[10px] p-3 shadow-md w-[100%]`}
                 onChange={props.onChange}
@@ -121,13 +124,13 @@ export function FilePicker({ onFileChange }) {
 
   return (
     <div className="p-4">
-      <label htmlFor="fileInput" className="cursor-pointer w-[80%] m-auto flex items-center space-x-2 p-2 border-2 border-dashed border-gray-400 rounded-md hover:border-gray-600">
-        <FaRegFileImage className="text-2xl" />
+      <label htmlFor="fileInput" className="cursor-pointer border-solid border-[1px] border-greytextfade rounded-full p-2">
+        <FiEdit lassName="text-lg" />
         <span>{files.length === 0 ? 'Select File' : 'Add Another File'}</span>
         <input
           type="file"
           id="fileInput"
-          accept="image/*, video/*"
+          accept="image/*"
           onChange={handleFileChange}
           className="hidden"
         />
@@ -152,6 +155,98 @@ export function FilePicker({ onFileChange }) {
     </div>
   );
 }
+
+
+
+
+export function ProfileImage(props) {
+  const [files, setFiles] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    if (!selectedFile) return;
+
+    // Check file type (image)
+    const fileType = selectedFile.type.split('/')[0];
+    if (fileType !== 'image') return;
+
+    // Add file to the list and show popup
+    const updatedFiles = [selectedFile];
+    setFiles(updatedFiles);
+    setShowPopup(true);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Implement your form submission logic here
+    setShowPopup(false); // Hide the popup on form submission
+  };
+
+  const handleCancel = () => {
+    setFiles([]);
+    setShowPopup(false);
+  };
+
+  const handleOutsideClick = (event) => {
+    if (event.target.id === 'popup-overlay') {
+      handleCancel();
+    }
+  };
+
+  return (
+    <div className=" ">
+      <form onSubmit={handleSubmit} className="w-[max-content]relative w-[max-content] -z-50">
+        <label htmlFor="fileInput" className="cursor-pointer flex items-center space-x-2 w-[max-content]">
+          <FiEdit className="text-lg" />
+        
+          <input
+            type="file"
+            id="fileInput"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="hidden"
+          />
+        </label>
+        {showPopup && (
+          <div
+            id="popup-overlay"
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+            onClick={handleOutsideClick}
+          >
+            <div className="bg-white shadow-lg rounded-lg p-4 -z-50 relative w-11/12 sm:w-9/12 md:w-7/12 lg:w-1/2 xl:w-2/5">
+              {files.map((file, index) => (
+                <div key={index} className="w-full mb-4 max-h-[50vh] overflow-hidden flex justify-center items-center">
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt={`Image ${index}`}
+                    className="max-h-full rounded-lg object-contain"
+                  />
+                </div>
+              ))}
+              <div className="flex justify-end space-x-2">
+                <button
+                  type="button"
+                  className="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600"
+                  onClick={handleCancel}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-blue text-white py-2 px-4 rounded hover:bg-blue-600"
+                >
+                  Upload
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </form>
+    </div>
+  );
+}
+
 
 export function Date(props){
   return(
