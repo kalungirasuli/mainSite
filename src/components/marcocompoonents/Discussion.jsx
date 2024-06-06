@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, where, getDocs } from 'firebase/firestore';
 import { HeadWithProfile } from "../microcomponents/HeadWithBack";
 import { IoSend } from "react-icons/io5";
-import { db } from '../../firebase/config';
+import { db, auth } from '../../firebase/config';  
 
 const classes = {
   mother: 'rounded-l-[10px] rounded-b-[10px] w-[max-content] max-w-[80%] bg-smoke text-black',
@@ -32,10 +32,40 @@ function MessageHolder({ message }) {
 export default function Discussion() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const [userType, setUserType] = useState('');  
   const inputRef = useRef(null);
+  const messageEndRef = useRef(null);
 
   useEffect(() => {
     inputRef.current.focus();
+
+    // Function to determine user type
+    const determineUserType = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const uid = user.uid;
+        
+        // Check if the user is a doctor
+        const doctorQuery = query(collection(db, 'doctors'), where('uid', '==', uid));
+        const doctorSnapshot = await getDocs(doctorQuery);
+
+        if (!doctorSnapshot.empty) {
+          setUserType('doctor');
+          return;
+        }
+
+        // Check if the user is a mother
+        const motherQuery = query(collection(db, 'mothers'), where('uid', '==', uid));
+        const motherSnapshot = await getDocs(motherQuery);
+
+        if (!motherSnapshot.empty) {
+          setUserType('mother');
+        }
+      }
+    };
+
+    determineUserType();
+
     const q = query(collection(db, "messages"), orderBy("timestamp"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const msgs = [];
@@ -48,11 +78,18 @@ export default function Discussion() {
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+    // Scroll to the bottom when messages change
+    if (messageEndRef.current) {
+      messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
+
   const sendMessage = async (e) => {
     e.preventDefault();
-    if (newMessage.trim()) {
+    if (newMessage.trim() && userType) {
       await addDoc(collection(db, "messages"), {
-        sender: 'doctor', 
+        sender: userType,
         text: newMessage,
         timestamp: serverTimestamp(),
       });
@@ -69,6 +106,7 @@ export default function Discussion() {
           {messages.map((msg) => (
             <MessageHolder key={msg.id} message={msg} />
           ))}
+          <div ref={messageEndRef}></div>
         </div>
         <form onSubmit={sendMessage} className="input flex gap-[10px] w-full bg-gray-500 p-2 absolute bottom-0">
           <input
