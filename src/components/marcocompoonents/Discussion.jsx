@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, where, getDocs } from 'firebase/firestore';
 import { HeadWithProfile } from "../microcomponents/HeadWithBack";
 import { IoSend } from "react-icons/io5";
-import { db, auth } from '../../firebase/config';  
+import { db, auth } from '../../firebase/config';  // Import auth if you have configured Firebase Authentication
 
 const classes = {
   mother: 'rounded-l-[10px] rounded-b-[10px] w-[max-content] max-w-[80%] bg-smoke text-black',
@@ -32,7 +32,7 @@ function MessageHolder({ message }) {
 export default function Discussion() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-  const [userType, setUserType] = useState('');  
+  const [userType, setUserType] = useState('');  // State to store user type
   const inputRef = useRef(null);
   const messageEndRef = useRef(null);
 
@@ -81,7 +81,7 @@ export default function Discussion() {
   useEffect(() => {
     // Scroll to the bottom when messages change
     if (messageEndRef.current) {
-      messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      messageEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
     }
   }, [messages]);
 
@@ -102,7 +102,7 @@ export default function Discussion() {
     <>
       <HeadWithProfile heading='Messages' />
       <div className="div w-full space-y-4 h-full relative -z-50">
-        <div className="message p-5 h-full overflow-y-auto">
+        <div className="message p-5 h-full overflow-y-auto pb-20">  {/* Add padding-bottom here */}
           {messages.map((msg) => (
             <MessageHolder key={msg.id} message={msg} />
           ))}
