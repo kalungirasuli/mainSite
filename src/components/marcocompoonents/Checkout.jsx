@@ -1,38 +1,46 @@
-import HeadWithBack from "../microcomponents/HeadWithBack"
-import { Input } from "../microcomponents/textComponents"
-import { Button3 } from "../microcomponents/RoundedButton"
-import { doc } from "firebase/firestore"
-import { useSelector } from "react-redux";
-export default function Checkout(){
+import React from 'react';
+import { useSelector } from 'react-redux';
+import HeadWithBack from "../microcomponents/HeadWithBack";
+import { Input } from "../microcomponents/textComponents";
+import { Button3 } from "../microcomponents/RoundedButton";
+
+export default function Checkout() {
     const selectedDoctor = useSelector(state => state.user.selectedDoctor);
     const bookingDetails = useSelector(state => state.user.bookingDetails);
+
     const data = {
         doctor: `${selectedDoctor.firstName} ${selectedDoctor.secondName}`,
         mode: bookingDetails.mode,
         time: bookingDetails.time,
         date: bookingDetails.day,
-      };
-    return(
+    };
+
+    const handleClick = () => {
+        window.location.href = 'http://localhost:3001';
+    };
+
+    return (
         <>
-<div className="div">
-   <HeadWithBack heading='Check out appoinment'/> 
-   <div className="div w-[90%] m-auto mt-10 shadow-lg rounded-lg pt-5">
-{/* summary of the booking */}
-        <h2 className="w-[max-content] text-greytextafade m-auto text-[20px]">Booking summary</h2>
-   <p className="flex flex-row text-greytextdark text-[20px] p-4 justify-evenly" ><span className="font-bold text-greytextdark text-left">Pedetriciation  </span>:<span>{data.doctor}</span></p>
-    <p className="flex flex-row text-greytextdark text-[20px] p-4 justify-evenly"><span className="font-bold text-greytextdark text-left "> Mode </span>:<span>{data.mode}</span></p>
-    <p className="flex flex-row text-greytextdark text-[25px] p-4 justify-evenly"><span className="font-bold text-greytextdark text-left ">Time : </span>:<span>{data.time}</span></p>
-    <p className="flex flex-row text-greytextdark text-[20px] p-4 justify-evenly"><span className="font-bold text-greytextdark  text-left ">Date : </span>:<span>{data.date}</span></p>
-   </div>
-   <form action=" w-[90%] m-auto mt-[50px] pt-[100px]">
-     <div className="div pt-[50px]">
-         <Input label='MTN Phone number' placeholder='Enter phone number (MTN)'/>
-    </div>
-      <div className="div mt-5 w-full">
-            <Button3 text='Check out' bg='bg-blue' color='text-white' rounded='rounded-[10px]' width='w-[90%] m-auto'/>
-      </div>
-   </form>
-</div>
+            <div className="div">
+                <HeadWithBack heading='Check out appointment' />
+                <div className="div w-[90%] m-auto mt-10 shadow-lg rounded-lg pt-5">
+                    {/* summary of the booking */}
+                    <h2 className="w-[max-content] text-greytextafade m-auto text-[20px]">Booking summary</h2>
+                    <p className="flex flex-row text-greytextdark text-[20px] p-4 justify-evenly"><span className="font-bold text-greytextdark text-left">Pediatrician</span>:<span>{data.doctor}</span></p>
+                    <p className="flex flex-row text-greytextdark text-[20px] p-4 justify-evenly"><span className="font-bold text-greytextdark text-left">Mode</span>:<span>{data.mode}</span></p>
+                    <p className="flex flex-row text-greytextdark text-[25px] p-4 justify-evenly"><span className="font-bold text-greytextdark text-left">Time</span>:<span>{data.time}</span></p>
+                    <p className="flex flex-row text-greytextdark text-[20px] p-4 justify-evenly"><span className="font-bold text-greytextdark text-left">Date</span>:<span>{data.date}</span></p>
+                </div>
+                <form className="w-[90%] m-auto mt-[50px] pt-[100px]">
+                    <div className="div pt-[50px]">
+                        <Input label='MTN Phone number' placeholder='Enter phone number (MTN)' />
+                    </div>
+                    <div className="div mt-5 w-full">
+                        <Button3 text='Check out' bg='bg-blue' color='text-white' rounded='rounded-[10px]' width='w-[90%] m-auto' onClick={handleClick} />
+                    </div>
+                </form>
+            </div>
         </>
-    )
+    );
 }
+
