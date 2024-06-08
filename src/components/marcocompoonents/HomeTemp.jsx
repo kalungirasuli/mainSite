@@ -53,19 +53,17 @@ export default function HomeTemp(){
                         <IoAddSharp className="icon white" />
                         </div>
                   
-                    <Button3 type='button' bg='bg-blue' color='text-white' link='/add-post' text='Post' rounded='w-[100px] hidden xl:block'/> 
+                    <Button3 type='button' bg='bg-blue'  color='text-white' link='/add-post' text='Post' rounded='w-[100px] rounded-[30px] hidden xl:block'/> 
                     </li>
                 </Link>
              <div className=""></div>
               
             </ul>
             </div>
-            <div className="main w-full py-5 pb-[120px]  md:w-[80%]  md:border-r-[1px] md:border-r-greytextfade xl:w-[50%]">
+            <div className="main w-full pb-[120px] overflow-y-auto overflow-x-hidden md:w-[80%]  md:border-r-[1px] md:border-r-greytextfade xl:w-[50%]">
                 <Outlet/>
                 
             </div>
-            <div className="right hidden lg:block lg:w-[27%]"></div>
-         </div>
-        </>
-    )
-}
+            </div>
+            </>
+    )}

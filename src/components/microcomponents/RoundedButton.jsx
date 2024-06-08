@@ -21,7 +21,7 @@ export function Button3(props) {
         <>
             <div className={` ${props.width} p-0`}>
                 <Link to={props.link} className="w-full p-0">
-                    <button type={props.type} onClick={props.onClick} className={` ${props.bg} ${props.color} p-3 rounded-[30px] ${props.rounded} w-full text-[15px] md:text-[20px]`}>
+                    <button type={props.type} onClick={props.onClick} className={` ${props.bg} ${props.color}  ${props.rounded?props.rounded:'rounded-[30px]'} p-3 w-full text-[15px] md:text-[20px]`}>
                         {props.text}
                     </button>
                 </Link>

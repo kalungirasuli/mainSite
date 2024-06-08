@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom"
 import { IoIosSearch } from "react-icons/io"
-import { FaRegFileImage, FaTrash } from "react-icons/fa";
+import {FaTrash } from "react-icons/fa";
 import { useState } from "react";
 import { CgFormatSlash } from "react-icons/cg";
 import { FiEdit } from "react-icons/fi";
-import { IoPersonCircleOutline } from "react-icons/io5";
+
+
+
 export function Alt(props){
     return(
         <>
@@ -17,8 +19,13 @@ export function Alt(props){
         </>
     )
 }
+
 export const styles=' lg:bg-white lg:shadow-xl lg:rounded-[20px] lg:p-[50px] lg:w-[max-content] lg:m-auto lg:mt-[20%] xl:mt-5'
 export const buttonStyle='w-[300px] m-auto pt-[20px] md:w-[450px]'
+
+
+
+
 export function Input(props) {
     return (
         <div className="div flex flex-col gap-2 w-[300px] m-auto pt-[20px] md:w-[450px]">
@@ -29,7 +36,7 @@ export function Input(props) {
                 id={props.ids} 
                 value={props.value} 
                 name={props.name} 
-                className={`${props.classes} rounded-[10px] p-3 shadow-md w-[100%] text-center`} 
+                className={`${props.classes} rounded-[10px] p-3 shadow-md w-[100%] text-left`} 
                 onChange={props.onChange}
             />
         </div>
@@ -195,7 +202,7 @@ export function ProfileImage(props) {
   };
 
   return (
-    <div className=" ">
+    <div className="">
       <form onSubmit={handleSubmit} className="w-[max-content]relative w-[max-content] -z-50">
         <label htmlFor="fileInput" className="cursor-pointer flex items-center space-x-2 w-[max-content]">
           <FiEdit className="text-lg" />

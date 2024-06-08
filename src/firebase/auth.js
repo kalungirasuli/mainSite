@@ -38,6 +38,7 @@ const SignInWithEmailAndPassword = async (email, password) => {
       throw e; 
     }
   };
+   
   const updateUserProfile = async (userId, specialties, availability) => {
     try {
       const userRef = doc(db, "users", userId); 
