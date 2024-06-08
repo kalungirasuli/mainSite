@@ -101,8 +101,8 @@ export default function Discussion() {
   return (
     <>
       <HeadWithProfile heading='Messages' />
-      <div className="div w-full space-y-4 h-full relative -z-50">
-        <div className="message p-5 h-full overflow-y-auto pb-20">  {/* Add padding-bottom here */}
+      <div className="div w-full space-y-4 h-full flex justify-between relative overflow-hidden ">
+        <div className="message p-5 h-full w-full overflow-y-auto pb-20">  {/* Add padding-bottom here */}
           {messages.map((msg) => (
             <MessageHolder key={msg.id} message={msg} />
           ))}
@@ -111,7 +111,7 @@ export default function Discussion() {
         <form onSubmit={sendMessage} className="input flex gap-[10px] w-full bg-gray-500 p-2 absolute bottom-0">
           <input
             type="text"
-            ref={inputRef}
+            ref={inputRef}z
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             className="w-full h-[45px] rounded-[10px] p-2 outline-0"

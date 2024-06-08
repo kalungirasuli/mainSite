@@ -12,7 +12,7 @@ export default function Home() {
       });
     }, []);
     return (
-        <div className="post w-full">
+        <div className="post w-full h-full overflow-y-auto">
             {posts.map((post) => (
               <PostCard 
                 key={post.id}

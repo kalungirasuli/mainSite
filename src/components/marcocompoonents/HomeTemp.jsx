@@ -60,7 +60,7 @@ export default function HomeTemp(){
               
             </ul>
             </div>
-            <div className="main w-full pb-[120px] overflow-y-auto overflow-x-hidden md:w-[80%]  md:border-r-[1px] md:border-r-greytextfade xl:w-[50%]">
+            <div className="main w-full pb-[120px] overflow-x-hidden md:w-[80%] md:pb-0  md:border-r-[1px] md:border-r-greytextfade xl:w-[50%]">
                 <Outlet/>
                 
             </div>

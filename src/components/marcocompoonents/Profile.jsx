@@ -97,7 +97,8 @@ const Doctor = () => {
   
   return (
     <>
-      <div className="img w-[50px] -z-50 h-[50px] relative m-auto mt-[50px] md:w-[100px] md:h-[100px]">
+    <div className="div overflow-y-auto pb-[120px]">
+    <div className="img w-[50px] -z-50 h-[50px]  relative m-auto mt-[50px] md:w-[100px] md:h-[100px]">
         <div className="div absolute bottom-0 right-[10px] bg-white p-2 rounded-full w-[max-content]">
           <ProfileImage />
         </div>
@@ -130,6 +131,7 @@ const Doctor = () => {
           <RoundedButton text="Save" />
         </div>
       </form>
+    </div>
     </>
   );
 };
@@ -138,7 +140,7 @@ const Doctor = () => {
 function Mother(){
     return(
         <>
-        <div className="img w-[50px] h-[50px]  relative m-auto mt-[50px] md:w-[100px] md:h-[100px]">
+        <div className="img overflow-y-auto  w-[50px] h-[50px]  relative m-auto mt-[50px] md:w-[100px] md:h-[100px] ">
                 <div className="div absolute bottom-0 right-[10px]  bg-white p-2 rounded-full w-[max-content]"><ProfileImage/></div>
                     <img src="https://picsum.photos/200/300" alt="" className="w-full h-full rounded-full" />
                     
@@ -163,7 +165,7 @@ export default function DoctorProfile() {
     return (
         <>
             <HeadWithBack heading=" Profile" />
-            {user==='doctor'?<Doctor/>:<Mother/>}
+           {user==='doctor'?<Doctor/>:<Mother/>}
            
         </>
     );
