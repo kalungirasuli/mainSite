@@ -5,7 +5,11 @@ import { Button3, } from "../microcomponents/RoundedButton";
 import RoundedButton from "../microcomponents/RoundedButton";
 import { useEffect, useState } from "react";
 import DatesAval from "../microcomponents/DateSelector";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { db } from "../../firebase/config";
+import { setUserId } from "firebase/analytics";
+import { useNavigate } from "react-router-dom";
 
 const DoctorAvailabilityForm = () => {
   const [daysChecked, setDaysChecked] = useState({
@@ -91,27 +95,73 @@ const DoctorAvailabilityForm = () => {
 };
 }
 const Doctor = () => {
-  const submit=(event)=>{
-  event.preventDefault
-    console.log('submitted')
-  }
-  
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    bio: "",
+  });
+  const [profileImage, setProfileImage] = useState(null);
+  const user = useSelector((state) => state.auth.user); // Assuming user data is in Redux
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setProfileImage(e.target.files[0]);
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      // Query to find the document where uid matches the user
+      const doctorQuery = query(collection(db, "doctors"), where("uid", "==", user));
+      const querySnapshot = await getDocs(doctorQuery);
+      if (!querySnapshot.empty) {
+        const docId = querySnapshot.docs[0].id;
+        const userDoc = doc(db, "doctors", docId);
+        await updateDoc(userDoc, {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          bio: formData.bio,
+        });
+
+        // Handle profile image upload if needed
+        if (profileImage) {
+          // Add your image upload logic here if required
+        }
+
+        alert('updated your profile')
+      } else {
+        console.error("No matching documents.");
+      }
+    } catch (error) {
+      console.error("Error updating profile: ", error);
+    }
+  };
+
   return (
-    <>
-    <div className="div overflow-y-auto pb-[120px]">
-    <div className="img w-[50px] -z-50 h-[50px]  relative m-auto mt-[50px] md:w-[100px] md:h-[100px]">
-        <div className="div absolute bottom-0 right-[10px] bg-white p-2 rounded-full w-[max-content]">
+    <div className="overflow-y-auto pb-[120px]">
+      <div className="w-[50px] h-[50px] relative m-auto mt-[50px] md:w-[100px] md:h-[100px]">
+        <div className="absolute bottom-0 right-[10px] bg-white p-2 rounded-full w-[max-content]">
           <ProfileImage />
         </div>
         <img
-          src="https://picsum.photos/200/300"
+          src={profileImage ? URL.createObjectURL(profileImage) : "https://picsum.photos/200/300"}
           alt=""
           className="w-full h-full rounded-full"
         />
       </div>
-      <form action='' onSubmit={(e)=>submit(e)}>
-        <Input label="Edit First name" placeholder="enter name" />
-        <Input label="Edit Last name" placeholder="enter name" />
+      <form onSubmit={handleSubmit}>
+        <Input label="Edit First name" name="firstName" placeholder="Enter name" value={formData.firstName} onChange={handleChange} />
+        <Input label="Edit Last name" name="lastName" placeholder="Enter name" value={formData.lastName} onChange={handleChange} />
         <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
           <Button3
             bg="bg-bluebutton"
@@ -121,21 +171,20 @@ const Doctor = () => {
           />
         </div>
         <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
-          <DatesAval/>
+          <DatesAval />
         </div>
-        <File label="Edit Profile Picture" type="file" />
-
-        <div className="div w-[340px] m-auto pt-[20px] md:w-[500px]">
-          <TextArea label="Edit Bio" placeholder="enter bio" />
+        <File label="Edit Profile Picture" type="file" onChange={handleImageChange} />
+        <div className="w-[340px] m-auto pt-[20px] md:w-[500px]">
+          <TextArea label="Edit Bio" name="bio" placeholder="Enter bio" value={formData.bio} onChange={handleChange} />
         </div>
         <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
-          <RoundedButton text="Save" />
+          <RoundedButton text="Save" type="submit" onClick={handleSubmit} />
         </div>
       </form>
     </div>
-    </>
   );
 };
+
 
 
 function Mother(){
