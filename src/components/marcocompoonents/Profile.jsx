@@ -101,9 +101,7 @@ const Doctor = () => {
     bio: "",
   });
   const [profileImage, setProfileImage] = useState(null);
-  const user = useSelector((state) => state.auth.user); // Assuming user data is in Redux
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user); 
 
   const handleChange = (e) => {
     setFormData({
@@ -187,32 +185,92 @@ const Doctor = () => {
 
 
 
-function Mother(){
-    return(
-        <>
-        <div className="img overflow-y-auto  w-[50px] h-[50px]  relative m-auto mt-[50px] md:w-[100px] md:h-[100px] ">
-                <div className="div absolute bottom-0 right-[10px]  bg-white p-2 rounded-full w-[max-content]"><ProfileImage/></div>
-                    <img src="https://picsum.photos/200/300" alt="" className="w-full h-full rounded-full" />
-                    
-                </div>
-                <form action="">
-                   <Input label='Edit First name' placeholder='enter name' />
-                   <Input label='Edit Last name' placeholder='enter name' />
-                   <div className=" w-[300px] m-auto pt-[20px] md:w-[450px]">
-                   <Button3 bg='bg-bluebutton' color='text-black' rounded='rounded-[10px]' text='Edit password'/>
-                   </div>
-                 
-                    <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
-                        <RoundedButton  text='Save' />
-                    </div>
-                </form>
-        </>
-    )
-}
+const Mother = () => {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+  });
+  const user = useSelector((state) => state.auth.user); 
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      // Query to find the document where uid matches the user
+      const motherQuery = query(collection(db, "mothers"), where("uid", "==", user));
+      const querySnapshot = await getDocs(motherQuery);
+      if (!querySnapshot.empty) {
+        const docId = querySnapshot.docs[0].id;
+        const userDoc = doc(db, "mothers", docId);
+        await updateDoc(userDoc, {
+          firstName: formData.firstName,
+          lastName: formData.lastName
+        });
+
+        alert('Updated your profile');
+      } else {
+        console.error("No matching documents.");
+      }
+    } catch (error) {
+      console.error("Error updating profile: ", error);
+    }
+  };
+
+  return (
+    <>
+      <div className="img overflow-y-auto w-[50px] h-[50px] relative m-auto mt-[50px] md:w-[100px] md:h-[100px]">
+        <div className="div absolute bottom-0 right-[10px] bg-white p-2 rounded-full w-[max-content]">
+          <ProfileImage />
+        </div>
+        <img src="https://picsum.photos/200/300" alt="" className="w-full h-full rounded-full" />
+      </div>
+      <form onSubmit={handleSubmit}>
+        <Input 
+          label="Edit First name" 
+          placeholder="Enter name" 
+          name="firstName" 
+          value={formData.firstName} 
+          onChange={handleChange} 
+        />
+        <Input 
+          label="Edit Last name" 
+          placeholder="Enter name" 
+          name="lastName" 
+          value={formData.lastName} 
+          onChange={handleChange} 
+        />
+        <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
+          <Button3 
+            bg="bg-bluebutton" 
+            color="text-black" 
+            rounded="rounded-[10px]" 
+            text="Edit password" 
+          />
+        </div>
+        <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
+          <RoundedButton 
+            text="Save" 
+            type="submit"
+            onClick={handleSubmit}
+          />
+        </div>
+      </form>
+    </>
+  );
+};
+
 
 export default function DoctorProfile() {
   const user = useSelector(state => state.auth.user);
   const [userType, setUserType] = useState(null);
+
+  const navigate = useNavigate()
     useEffect(() => {
     
   
@@ -245,6 +303,7 @@ export default function DoctorProfile() {
             console.error("Error determining user type: ", error);
           }
         } else {
+          navigate('/User/')
           console.log("No user found");
         }
       };
