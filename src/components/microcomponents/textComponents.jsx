@@ -93,7 +93,7 @@ export function TextArea(props) {
         placeholder={props.placeholder}
         id={props.ids}
         name={props.name}
-        className={`${props.classes} rounded-[10px] p-3 shadow-md w-[100%] h-[250px]`}
+        className={`${props.classes} rounded-[10px] p-3 shadow-lg w-[100%] h-[250px]`}
         value={props.value}
         onChange={props.onChange}
       />

@@ -6,8 +6,8 @@ import { db } from '../../firebase/config';
 import { useSelector } from 'react-redux';
 
 const classes = {
-  mother: 'rounded-l-[10px] rounded-b-[10px] w-[max-content] max-w-[80%] bg-smoke text-black',
-  doctor: 'rounded-r-[10px] rounded-b-[10px] w-[max-content] max-w-[80%] bg-blue text-white',
+  mother: 'rounded-l-[10px] rounded-b-[10px] w-[max-content] max-w-[80%] bg-smoke text-black my-[3px]',
+  doctor: 'rounded-r-[10px] rounded-b-[10px] w-[max-content] max-w-[80%] bg-blue text-white my-[3px]',
   doctorPosition: 'flex items-start',
   motherPosition: 'flex items-start justify-end'
 };
@@ -120,14 +120,14 @@ export default function Discussion() {
   return (
     <>
       <HeadWithProfile heading='Messages' />
-      <div className="div w-full space-y-4 h-full flex justify-between relative overflow-hidden ">
-        <div className="message p-5 h-full w-full overflow-y-auto pb-20">
+      <div className="div w-full space-y-4 h-full flex justify-between relative overflow-hidden  ">
+        <div className="message p-5 h-full w-full  overflow-y-auto py-20">  {/* Add padding-bottom here */}
           {messages.map((msg) => (
             <MessageHolder key={msg.id} message={msg} />
           ))}
           <div ref={messageEndRef}></div>
         </div>
-        <form onSubmit={sendMessage} className="input flex gap-[10px] w-full bg-gray-500 p-2 absolute bottom-0">
+        <form onSubmit={sendMessage} className="input flex gap-[10px] w-full bg-gray-200 p-2 pb-5 absolute bottom-0">
           <input
             type="text"
             ref={inputRef}
