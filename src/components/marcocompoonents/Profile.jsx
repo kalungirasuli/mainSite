@@ -12,6 +12,7 @@ import { setUserId } from "firebase/analytics";
 import { useNavigate } from "react-router-dom";
 
 const DoctorAvailabilityForm = () => {
+  const navigate = useNavigate()
   const [daysChecked, setDaysChecked] = useState({
     Monday: false,
     Tuesday: false,
@@ -43,6 +44,11 @@ const DoctorAvailabilityForm = () => {
   const handleCheck = (day) => {
     setDaysChecked({ ...daysChecked, [day]: !daysChecked[day] });
   };
+
+  const handleNavigate = ()=>{
+ 
+
+  }
   return (
     <div className="p-4">
       {Object.keys(availability).map((day) => (
@@ -102,7 +108,7 @@ const Doctor = () => {
   });
   const [profileImage, setProfileImage] = useState(null);
   const user = useSelector((state) => state.auth.user); 
-
+const navigate = useNavigate()
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -144,6 +150,10 @@ const Doctor = () => {
       console.error("Error updating profile: ", error);
     }
   };
+  const handleRedirect = ()=>{
+    console.log('clicked me ')
+    navigate("/profile/EditPassword")
+  }
 
   return (
     <div className="overflow-y-auto pb-[120px]">
@@ -160,12 +170,13 @@ const Doctor = () => {
       <form onSubmit={handleSubmit}>
         <Input label="Edit First name" name="firstName" placeholder="Enter name" value={formData.firstName} onChange={handleChange} />
         <Input label="Edit Last name" name="lastName" placeholder="Enter name" value={formData.lastName} onChange={handleChange} />
-        <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
+        <div className="w-[300px] m-auto pt-[20px] md:w-[450px]"  onClick={handleRedirect}>
           <Button3
             bg="bg-bluebutton"
             color="text-black"
             rounded="rounded-[10px]"
             text="Edit password"
+        onClick={handleRedirect}
           />
         </div>
         <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
@@ -190,7 +201,8 @@ const Mother = () => {
     firstName: "",
     lastName: "",
   });
-  const user = useSelector((state) => state.auth.user); 
+  const user = useSelector((state) => state.auth.user);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -202,8 +214,7 @@ const Mother = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      // Query to find the document where uid matches the user
-      const motherQuery = query(collection(db, "mothers"), where("uid", "==", user));
+      const motherQuery = query(collection(db, "mothers"), where("uid", "==", user.uid));
       const querySnapshot = await getDocs(motherQuery);
       if (!querySnapshot.empty) {
         const docId = querySnapshot.docs[0].id;
@@ -220,6 +231,11 @@ const Mother = () => {
     } catch (error) {
       console.error("Error updating profile: ", error);
     }
+  };
+
+  const handleEditPasswordClick = (event) => {
+    event.preventDefault();
+    navigate("/profile/EditPassword");
   };
 
   return (
@@ -251,20 +267,19 @@ const Mother = () => {
             color="text-black" 
             rounded="rounded-[10px]" 
             text="Edit password" 
+            onClick={handleEditPasswordClick}
           />
         </div>
         <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
           <RoundedButton 
             text="Save" 
             type="submit"
-            onClick={handleSubmit}
           />
         </div>
       </form>
     </>
   );
 };
-
 
 export default function DoctorProfile() {
   const user = useSelector(state => state.auth.user);
