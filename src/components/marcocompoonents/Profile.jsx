@@ -170,7 +170,7 @@ const navigate = useNavigate()
       <form onSubmit={handleSubmit}>
         <Input label="Edit First name" name="firstName" placeholder="Enter name" value={formData.firstName} onChange={handleChange} />
         <Input label="Edit Last name" name="lastName" placeholder="Enter name" value={formData.lastName} onChange={handleChange} />
-        <div className="w-[300px] m-auto pt-[20px] md:w-[450px]"  onClick={handleRedirect}>
+        <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
           <Button3
             bg="bg-bluebutton"
             color="text-black"
