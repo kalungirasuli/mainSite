@@ -17,11 +17,12 @@ import Checkout from "./components/marcocompoonents/Checkout"
 
 import Message from "./components/marcocompoonents/Messages"
 import Discussion from "./components/marcocompoonents/Discussion"
+import MessageRooms from "./components/marcocompoonents/MessageRooms"
 
 import AddPost from "./components/marcocompoonents/AddPost"
 
 import Profile from "./components/marcocompoonents/Profile"
-
+import EditPassword from "./components/marcocompoonents/EditPassword"
 import ViewAppointments from "./components/marcocompoonents/ViewAppointments"
 function App() {
   
@@ -40,13 +41,13 @@ function App() {
                   <Route path="doctor/:id" element={<DoctorDesc/>}></Route>
                   <Route path="doctor/checkout" element={<Checkout/>}></Route>
                   <Route path="doctor/booking" element={<Booking/>}></Route>
-                
               </Route>
               <Route path="Message" element={<Message/>}>
-                  {/* <Route index element={<Discission/>}></Route> */}
-                  <Route index element={<Discussion/>}></Route>
+                  <Route index element={<MessageRooms/>}></Route> 
+                  <Route path=":id" element={<Discussion/>}></Route>
               </Route>
               <Route path="profile" element={<Profile/>}></Route>
+              <Route path="profile/editpassword" element={<EditPassword/>}></Route>
               
       </Route>
       <Route path="User" element={<Temp/>}>
