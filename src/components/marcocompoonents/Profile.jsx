@@ -150,10 +150,10 @@ const navigate = useNavigate()
       console.error("Error updating profile: ", error);
     }
   };
-  const handleRedirect = ()=>{
-    console.log('clicked me ')
-    navigate("/profile/EditPassword")
-  }
+  const handleEditPasswordClick = (event) => {
+    event.preventDefault();
+    navigate("/profile/EditPassword");
+  };
 
   return (
     <div className="overflow-y-auto pb-[120px]">
@@ -176,7 +176,7 @@ const navigate = useNavigate()
             color="text-black"
             rounded="rounded-[10px]"
             text="Edit password"
-        onClick={handleRedirect}
+        onClick={handleEditPasswordClick}
           />
         </div>
         <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
