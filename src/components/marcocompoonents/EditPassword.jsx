@@ -12,9 +12,9 @@ export default function EditPassword(){
                     <Input label="Current Password" type="password" />
                     <Input label="New Password" type="password" />
                     <Input label="Confirm Password" type="password" />
-                   <div className="div w-full pt-5">
-                   <Button3 text="Save" bg='bg-blue text-white'/>
-                   </div>
+                    <div className="div w-full pt-5">
+                    <Button3 text="Save" bg='bg-blue text-white'/>
+                    </div>
                 </form>
             </div>
         </>
