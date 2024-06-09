@@ -49,7 +49,7 @@ export default function Mother() {
       await sendEmailVerification(user);
 
       // Store additional user data in Firestore
-      await addDoc(collection(db, "users"), {
+      await addDoc(collection(db, "mothers"), {
         uid: user.uid,
         firstName: formData.firstName,
         secondName: formData.secondName,

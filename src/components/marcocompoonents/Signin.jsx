@@ -9,7 +9,6 @@ import { auth } from "../../firebase/config";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/authSlice";
 
-
 export default function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -29,7 +28,7 @@ export default function SignIn() {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-            dispatch(setUser({ user: user.uid, email: user.email }));
+            dispatch(setUser({ user: user.uid, email: user.email, role: 'yourRoleHere' }));  // Replace 'yourRoleHere' with the actual role if available
             console.log('User logged in :', user);
             navigate('/');
         } catch (error) {
@@ -45,9 +44,7 @@ export default function SignIn() {
                     <Input type='text' ids='email' for='email' label='Email address' name='email' placeholder='Enter email address' onChange={handleChange} value={email} classes='bg-white' />
                     <Input type='password' ids='Password' for='password' label='Password' name='password' placeholder='Enter password' onChange={handleChange} value={password} classes='bg-white' />
                     <div className={`${buttonStyle}`}>
-                        <RoundedButton text='Sign-in' type='submit' 
-                        onClick={handleSubmit}
-                        />
+                        <RoundedButton text='Sign-in' type='submit' onClick={handleSubmit} />
                         <Alt endText='Forgot password' />
                         <Alt highlightText='Sign-up' endText='instead' link='/User/sign-in' />
                     </div>

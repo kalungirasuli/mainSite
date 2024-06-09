@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, where, getDocs } from 'firebase/firestore';
 import { HeadWithProfile } from "../microcomponents/HeadWithBack";
 import { IoSend } from "react-icons/io5";
-import { db, auth } from '../../firebase/config';  // Import auth if you have configured Firebase Authentication
+import { db } from '../../firebase/config';
+import { useSelector } from 'react-redux';
 
 const classes = {
   mother: 'rounded-l-[10px] rounded-b-[10px] w-[max-content] max-w-[80%] bg-smoke text-black',
@@ -32,35 +33,44 @@ function MessageHolder({ message }) {
 export default function Discussion() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-  const [userType, setUserType] = useState('');  // State to store user type
+  const [userType, setUserType] = useState(null);
   const inputRef = useRef(null);
   const messageEndRef = useRef(null);
+  const user = useSelector(state => state.auth.user);
 
   useEffect(() => {
     inputRef.current.focus();
 
     // Function to determine user type
     const determineUserType = async () => {
-      const user = auth.currentUser;
       if (user) {
-        const uid = user.uid;
-        
-        // Check if the user is a doctor
-        const doctorQuery = query(collection(db, 'doctors'), where('uid', '==', uid));
-        const doctorSnapshot = await getDocs(doctorQuery);
+        try {
+          console.log("User ID: ", user);
+          const uid = user;
 
-        if (!doctorSnapshot.empty) {
-          setUserType('doctor');
-          return;
+          // Check if the user is a doctor
+          const doctorQuery = query(collection(db, 'doctors'), where('uid', '==', uid));
+          const doctorSnapshot = await getDocs(doctorQuery);
+
+          if (!doctorSnapshot.empty) {
+            setUserType('doctor');
+            console.log("User is a doctor");
+            return;
+          }
+
+          // Check if the user is a mother
+          const motherQuery = query(collection(db, 'mothers'), where('uid', '==', uid));
+          const motherSnapshot = await getDocs(motherQuery);
+
+          if (!motherSnapshot.empty) {
+            setUserType('mother');
+            console.log("User is a mother");
+          }
+        } catch (error) {
+          console.error("Error determining user type: ", error);
         }
-
-        // Check if the user is a mother
-        const motherQuery = query(collection(db, 'mothers'), where('uid', '==', uid));
-        const motherSnapshot = await getDocs(motherQuery);
-
-        if (!motherSnapshot.empty) {
-          setUserType('mother');
-        }
+      } else {
+        console.log("No user found");
       }
     };
 
@@ -73,10 +83,12 @@ export default function Discussion() {
         msgs.push({ id: doc.id, ...doc.data() });
       });
       setMessages(msgs);
+    }, (error) => {
+      console.error("Error fetching messages: ", error);
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     // Scroll to the bottom when messages change
@@ -88,13 +100,20 @@ export default function Discussion() {
   const sendMessage = async (e) => {
     e.preventDefault();
     if (newMessage.trim() && userType) {
-      await addDoc(collection(db, "messages"), {
-        sender: userType,
-        text: newMessage,
-        timestamp: serverTimestamp(),
-      });
-      setNewMessage('');
-      inputRef.current.focus();
+      try {
+        await addDoc(collection(db, "messages"), {
+          sender: userType,
+          text: newMessage,
+          timestamp: serverTimestamp(),
+        });
+        setNewMessage('');
+        inputRef.current.focus();
+        console.log("Message sent successfully");
+      } catch (error) {
+        console.error("Error sending message: ", error);
+      }
+    } else {
+      console.log("Message is empty or userType is not set");
     }
   };
 
@@ -102,7 +121,7 @@ export default function Discussion() {
     <>
       <HeadWithProfile heading='Messages' />
       <div className="div w-full space-y-4 h-full flex justify-between relative overflow-hidden ">
-        <div className="message p-5 h-full w-full overflow-y-auto pb-20">  {/* Add padding-bottom here */}
+        <div className="message p-5 h-full w-full overflow-y-auto pb-20">
           {messages.map((msg) => (
             <MessageHolder key={msg.id} message={msg} />
           ))}
@@ -111,7 +130,7 @@ export default function Discussion() {
         <form onSubmit={sendMessage} className="input flex gap-[10px] w-full bg-gray-500 p-2 absolute bottom-0">
           <input
             type="text"
-            ref={inputRef}z
+            ref={inputRef}
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             className="w-full h-[45px] rounded-[10px] p-2 outline-0"
