@@ -58,7 +58,7 @@ export default function DoctorDesc(){
 
         </div>
         <div className="div py-5">
-        <RoundedButton onClick={handleSubmit}     text="Continue" link='/appointment/doctor/booking'/>
+        <RoundedButton onClick={handleSubmit} text="Continue" link={`/appointment/doctor/${id}/booking`} />
         </div>
         </div>
         

@@ -1,5 +1,5 @@
 import HeadWithBack from "../microcomponents/HeadWithBack";
-import { Input,File,TextArea } from "../microcomponents/textComponents";
+import { Input, File, TextArea } from "../microcomponents/textComponents";
 import { ProfileImage } from "../microcomponents/textComponents";
 import { Button3, } from "../microcomponents/RoundedButton";
 import RoundedButton from "../microcomponents/RoundedButton";
@@ -11,44 +11,28 @@ import { db } from "../../firebase/config";
 import { setUserId } from "firebase/analytics";
 import { useNavigate } from "react-router-dom";
 
-const DoctorAvailabilityForm = () => {
-  const navigate = useNavigate()
-  const [daysChecked, setDaysChecked] = useState({
-    Monday: false,
-    Tuesday: false,
-    Wednesday: false,
-    Thursday: false,
-    Friday: false,
-    Saturday: false,
-    Sunday: false,
-  });
-
-  const [availability, setAvailability] = useState({
-    Monday: [],
-    Tuesday: [],
-    Wednesday: [],
-    Thursday: [],
-    Friday: [],
-    Saturday: [],
-    Sunday: [],
-  });
-  
-  const handleAddHour = (day,event) => {
-    const newHour = day.trim();
-    if (newHour && !availability[day].includes(event.target.value.trim())) {
+const DoctorAvailabilityForm = ({ availability, setAvailability, daysChecked, setDaysChecked }) => {
+  const handleAddHour = (day, hour) => {
+    const newHour = hour.trim();
+    if (newHour && !availability[day].includes(newHour)) {
       setAvailability({
         ...availability,
         [day]: [...availability[day], newHour]
-      })
-  }
+      });
+    }
+  };
+
   const handleCheck = (day) => {
     setDaysChecked({ ...daysChecked, [day]: !daysChecked[day] });
   };
 
-  const handleNavigate = ()=>{
- 
+  const handleRemoveHour = (day, hour) => {
+    setAvailability({
+      ...availability,
+      [day]: availability[day].filter(h => h !== hour)
+    });
+  };
 
-  }
   return (
     <div className="p-4">
       {Object.keys(availability).map((day) => (
@@ -68,11 +52,11 @@ const DoctorAvailabilityForm = () => {
                 type="text"
                 className="border p-1 rounded"
                 placeholder="Add available hour"
-                onChange={((e) => handleAddHour(day,e.target.value))}  
+                onBlur={(e) => handleAddHour(day, e.target.value)}
               />
               <div
-                className="ml-2 bg-blue-500 text-white px-2 py-1 rounded"
-                onClick={(e) => handleAddHour(day,e)}
+                className="ml-2 bg-blue-500 text-white px-2 py-1 rounded cursor-pointer"
+                onClick={(e) => handleAddHour(day, e.target.previousSibling.value)}
               >
                 Add Hour
               </div>
@@ -85,7 +69,7 @@ const DoctorAvailabilityForm = () => {
                     <span>{hour}</span>
                     <button
                       className="text-red-500"
-                      // onClick={() => handleRemoveHour(day, hour)}
+                      onClick={() => handleRemoveHour(day, hour)}
                     >
                       &times;
                     </button>
@@ -99,16 +83,34 @@ const DoctorAvailabilityForm = () => {
     </div>
   );
 };
-}
 const Doctor = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     bio: "",
   });
+
+  const [availability, setAvailability] = useState({
+    Monday: [],
+    Tuesday: [],
+    Wednesday: [],
+    Thursday: [],
+    Friday: [],
+    Saturday: [],
+    Sunday: [],
+  });
+  const [daysChecked, setDaysChecked] = useState({
+    Monday: false,
+    Tuesday: false,
+    Wednesday: false,
+    Thursday: false,
+    Friday: false,
+    Saturday: false,
+    Sunday: false,
+  });
   const [profileImage, setProfileImage] = useState(null);
-  const user = useSelector((state) => state.auth.user); 
-const navigate = useNavigate()
+  const user = useSelector((state) => state.auth.user);
+  const navigate = useNavigate()
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -135,6 +137,7 @@ const navigate = useNavigate()
           firstName: formData.firstName,
           lastName: formData.lastName,
           bio: formData.bio,
+          availability: availability, // Update availability
         });
 
         // Handle profile image upload if needed
@@ -142,7 +145,7 @@ const navigate = useNavigate()
           // Add your image upload logic here if required
         }
 
-        alert('updated your profile')
+        alert('Profile updated successfully');
       } else {
         console.error("No matching documents.");
       }
@@ -150,7 +153,6 @@ const navigate = useNavigate()
       console.error("Error updating profile: ", error);
     }
   };
-
   return (
     <div className="overflow-y-auto pb-[120px]">
       <div className="w-[50px] h-[50px] relative m-auto mt-[50px] md:w-[100px] md:h-[100px]">
@@ -166,13 +168,20 @@ const navigate = useNavigate()
       <form onSubmit={handleSubmit}>
         <Input label="Edit First name" name="firstName" placeholder="Enter name" value={formData.firstName} onChange={handleChange} />
         <Input label="Edit Last name" name="lastName" placeholder="Enter name" value={formData.lastName} onChange={handleChange} />
-        <div className="w-[300px] m-auto pt-[20px] md:w-[450px]" onClick= {()=> console.log("cliced me ")}>
+
+        <DoctorAvailabilityForm
+            availability={availability}
+            setAvailability={setAvailability}
+            daysChecked={daysChecked}
+            setDaysChecked={setDaysChecked}
+          />
+        <div className="w-[300px] m-auto pt-[20px] md:w-[450px]" onClick={() => console.log("cliced me ")}>
           <Button3
             bg="bg-bluebutton"
             color="text-black"
             rounded="rounded-[10px]"
             text="Edit password"
-        
+
           />
         </div>
         <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
@@ -243,32 +252,33 @@ const Mother = () => {
         <img src="https://picsum.photos/200/300" alt="" className="w-full h-full rounded-full" />
       </div>
       <form onSubmit={handleSubmit}>
-        <Input 
-          label="Edit First name" 
-          placeholder="Enter name" 
-          name="firstName" 
-          value={formData.firstName} 
-          onChange={handleChange} 
+        <Input
+          label="Edit First name"
+          placeholder="Enter name"
+          name="firstName"
+          value={formData.firstName}
+          onChange={handleChange}
         />
-        <Input 
-          label="Edit Last name" 
-          placeholder="Enter name" 
-          name="lastName" 
-          value={formData.lastName} 
-          onChange={handleChange} 
+        <Input
+          label="Edit Last name"
+          placeholder="Enter name"
+          name="lastName"
+          value={formData.lastName}
+          onChange={handleChange}
         />
+
         <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
-          <Button3 
-            bg="bg-bluebutton" 
-            color="text-black" 
-            rounded="rounded-[10px]" 
-            text="Edit password" 
+          <Button3
+            bg="bg-bluebutton"
+            color="text-black"
+            rounded="rounded-[10px]"
+            text="Edit password"
             onClick={handleEditPasswordClick}
           />
         </div>
         <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
-          <RoundedButton 
-            text="Save" 
+          <RoundedButton
+            text="Save"
             type="submit"
           />
         </div>
@@ -282,53 +292,53 @@ export default function DoctorProfile() {
   const [userType, setUserType] = useState(null);
 
   const navigate = useNavigate()
-    useEffect(() => {
-    
-  
-      // Function to determine user type
-      const determineUserType = async () => {
-        if (user) {
-          try {
-            console.log("User ID: ", user);
-            const uid = user;
-  
-            // Check if the user is a doctor
-            const doctorQuery = query(collection(db, 'doctors'), where('uid', '==', uid));
-            const doctorSnapshot = await getDocs(doctorQuery);
-  
-            if (!doctorSnapshot.empty) {
-              setUserType('doctor');
-              console.log("User is a doctor");
-              return;
-            }
-  
-            // Check if the user is a mother
-            const motherQuery = query(collection(db, 'mothers'), where('uid', '==', uid));
-            const motherSnapshot = await getDocs(motherQuery);
-  
-            if (!motherSnapshot.empty) {
-              setUserType('mother');
-              console.log("User is a mother");
-            }
-          } catch (error) {
-            console.error("Error determining user type: ", error);
-          }
-        } else {
-          navigate('/User/')
-          console.log("No user found");
-        }
-      };
-  
-      determineUserType();
-  
+  useEffect(() => {
 
-    }, [user]);
-    return (
-        <>
-            <HeadWithBack heading=" Profile" />
-           {userType==='doctor'?<Doctor/>:<Mother/>}
-           
-        </>
-    );
+
+    // Function to determine user type
+    const determineUserType = async () => {
+      if (user) {
+        try {
+          console.log("User ID: ", user);
+          const uid = user;
+
+          // Check if the user is a doctor
+          const doctorQuery = query(collection(db, 'doctors'), where('uid', '==', uid));
+          const doctorSnapshot = await getDocs(doctorQuery);
+
+          if (!doctorSnapshot.empty) {
+            setUserType('doctor');
+            console.log("User is a doctor");
+            return;
+          }
+
+          // Check if the user is a mother
+          const motherQuery = query(collection(db, 'mothers'), where('uid', '==', uid));
+          const motherSnapshot = await getDocs(motherQuery);
+
+          if (!motherSnapshot.empty) {
+            setUserType('mother');
+            console.log("User is a mother");
+          }
+        } catch (error) {
+          console.error("Error determining user type: ", error);
+        }
+      } else {
+        navigate('/User/')
+        console.log("No user found");
+      }
+    };
+
+    determineUserType();
+
+
+  }, [user]);
+  return (
+    <div className="w-full h-full overflow-y-auto">
+      <HeadWithBack heading=" Profile" />
+      {userType === 'doctor' ? <Doctor /> : <Mother />}
+
+    </div>
+  );
 }
 
