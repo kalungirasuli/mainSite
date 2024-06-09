@@ -150,10 +150,6 @@ const navigate = useNavigate()
       console.error("Error updating profile: ", error);
     }
   };
-  const handleEditPasswordClick = (event) => {
-    event.preventDefault();
-    navigate("/profile/EditPassword");
-  };
 
   return (
     <div className="overflow-y-auto pb-[120px]">
@@ -170,13 +166,13 @@ const navigate = useNavigate()
       <form onSubmit={handleSubmit}>
         <Input label="Edit First name" name="firstName" placeholder="Enter name" value={formData.firstName} onChange={handleChange} />
         <Input label="Edit Last name" name="lastName" placeholder="Enter name" value={formData.lastName} onChange={handleChange} />
-        <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
+        <div className="w-[300px] m-auto pt-[20px] md:w-[450px]" onClick= {()=> console.log("cliced me ")}>
           <Button3
             bg="bg-bluebutton"
             color="text-black"
             rounded="rounded-[10px]"
             text="Edit password"
-        onClick={handleEditPasswordClick}
+        
           />
         </div>
         <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">

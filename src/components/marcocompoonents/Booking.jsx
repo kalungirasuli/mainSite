@@ -5,7 +5,7 @@ import { Button3 } from "../microcomponents/RoundedButton";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setBookingDetails } from "../../redux/userSlice";
 
 export default function Booking() {
@@ -16,7 +16,7 @@ export default function Booking() {
   const [file, setFile] = useState(null);
   const [description, setDescription] = useState('');
   const dispatch = useDispatch();
- 
+ const user = useSelector(state => state.auth.user)
   
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const timeSlots = [
@@ -37,6 +37,7 @@ export default function Booking() {
         mode: selectedMode,
         file: file ? file.name : '',
         description: description,
+        uid: user
       });
       alert("Booking successful!");
       dispatch(setBookingDetails({

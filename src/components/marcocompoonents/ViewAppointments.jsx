@@ -24,6 +24,7 @@ export default function ViewAppointments() {
          
           {/* the appointment card */}
          <AppoinmentCard/>
+         
           {/* end of the card */}
         </div>
       </div>
