@@ -21,6 +21,8 @@ import Discussion from "./components/marcocompoonents/Discussion"
 import AddPost from "./components/marcocompoonents/AddPost"
 
 import Profile from "./components/marcocompoonents/Profile"
+
+import ViewAppointments from "./components/marcocompoonents/ViewAppointments"
 function App() {
   
   return (
@@ -37,12 +39,14 @@ function App() {
                   <Route path="doctor/:id" element={<DoctorDesc/>}></Route>
                   <Route path="doctor/checkout" element={<Checkout/>}></Route>
                   <Route path="doctor/booking" element={<Booking/>}></Route>
+                  <Route path="myappointments" element={<ViewAppointments/>}></Route>
               </Route>
               <Route path="Message" element={<Message/>}>
                   {/* <Route index element={<Discission/>}></Route> */}
                   <Route index element={<Discussion/>}></Route>
               </Route>
               <Route path="profile" element={<Profile/>}></Route>
+              
       </Route>
       <Route path="User" element={<Temp/>}>
               <Route index  element={<Discission/>}></Route>
