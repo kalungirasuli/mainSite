@@ -39,7 +39,7 @@ function App() {
                   <Route index element={<ViewAppointments/>}></Route>
                   <Route path='doctors' element={<DoctorAll/>}></Route>
                   <Route path="doctor/:id" element={<DoctorDesc/>}></Route>
-                  <Route path="doctor/checkout" element={<Checkout/>}></Route>
+                  <Route path="doctor/:id/checkout" element={<Checkout/>}></Route>
                   <Route path="doctor/:id/booking" element={<Booking />} />
               </Route>
               <Route path="Message" element={<Message/>}>

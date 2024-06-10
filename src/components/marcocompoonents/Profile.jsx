@@ -185,7 +185,7 @@ const Doctor = () => {
           />
         </div>
         <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
-          <DatesAval />
+          <DatesAval className="hidden"/>
         </div>
         <File label="Edit Profile Picture" type="file" onChange={handleImageChange} />
         <div className="w-[340px] m-auto pt-[20px] md:w-[500px]">

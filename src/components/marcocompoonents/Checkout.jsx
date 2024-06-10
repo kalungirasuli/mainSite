@@ -60,9 +60,10 @@ console.log("paymenr status is ",response.data.paymentStatus.status )
           <p className="flex flex-row text-greytextdark text-[20px] p-4 justify-evenly"><span className="font-bold text-greytextdark text-left">Date</span>:<span>{data.date}</span></p>
         </div>
         <form className="w-[90%] m-auto mt-[50px] pt-[100px]" onSubmit={handleClick}>
+          { bookingDetails.mode == "Online" &&
           <div className="div pt-[50px]">
             <Input label='MTN Phone number' placeholder='Enter phone number (MTN)' value={phoneNumber} onChange={handlePhoneNumberChange} />
-          </div>
+          </div>}
           <div className="div mt-5 w-full">
             <Button3 text='Check out' bg='bg-blue' color='text-white' rounded='rounded-[10px]' width='w-[90%] m-auto' onClick={handleClick} />
           </div>

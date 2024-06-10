@@ -16,31 +16,30 @@ export default function Booking() {
   const [selectedMode, setSelectedMode] = useState('');
   const [file, setFile] = useState(null);
   const [description, setDescription] = useState('');
+  const [availability, setAvailability] = useState({});
   const [days, setDays] = useState([]);
-  const [timeSlots, setTimeSlots] = useState([]);
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
-  const user = useSelector(state => state.auth.user);
-  const modes = ['Physical', 'Online'];
+  const modes = [ 'select mode','Physical', 'Online'];
 
   useEffect(() => {
-    const fetchAvailability = async () => {
+    const fetchDoctorAvailability = async () => {
       try {
-        const docRef = doc(db, "doctors", id);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          setDays(Object.keys(data.availability || {}));
-          setTimeSlots(Object.values(data.availability || {}).flat());
+        const doctorDoc = doc(db, "doctors", id);
+        const doctorSnapshot = await getDoc(doctorDoc);
+        if (doctorSnapshot.exists()) {
+          const doctorData = doctorSnapshot.data();
+          setAvailability(doctorData.availability || {});
+          setDays(Object.keys(doctorData.availability || {}).filter(day => doctorData.availability[day].length > 0));
         } else {
-          console.log("No such document!");
+          console.error("No such document!");
         }
       } catch (error) {
-        console.error("Error fetching document: ", error);
+        console.error("Error getting document:", error);
       }
     };
 
-    fetchAvailability();
+    fetchDoctorAvailability();
   }, [id]);
 
   const handleBooking = async (event) => {
@@ -48,25 +47,20 @@ export default function Booking() {
 
     try {
       await addDoc(collection(db, "bookings"), {
+        userId: "1234",
+        doctorId: id,
         day: selectedDay,
         time: selectedTime,
         mode: selectedMode,
         file: file ? file.name : '',
         description: description,
-        uid: user.uid,
-        doctorId: id
       });
+
+      dispatch(setBookingDetails({ day: selectedDay, time: selectedTime , mode :selectedMode}));
       alert("Booking successful!");
-      dispatch(setBookingDetails({
-        day: selectedDay,
-        time: selectedTime,
-        mode: selectedMode,
-        file: file ? file.name : '',
-        description: description,
-      }));
       navigate(`/appointment/doctor/${id}/checkout`);
-    } catch (e) {
-      console.error("Error adding document: ", e);
+    } catch (error) {
+      console.error("Error adding booking: ", error);
     }
   };
 
@@ -81,18 +75,40 @@ export default function Booking() {
         </div>
         <form onSubmit={handleBooking} className="w-full">
           <div className="div w-[90%] m-auto">
-            <Time options={days} label='Select a day' onChange={(e) => setSelectedDay(e.target.value)} />
+            <select
+              value={selectedDay}
+              onChange={(e) => setSelectedDay(e.target.value)}
+              className="border p-2 rounded w-[300px] m-auto mt-4 md:w-[500px]"
+            >
+              <option value="" disabled>Select Day</option>
+              {days.map((day) => (
+                <option key={day} value={day}>{day}</option>
+              ))}
+            </select>
           </div>
+          {selectedDay && (
+            <div className="div w-[90%] m-auto">
+              <select
+                value={selectedTime}
+                onChange={(e) => setSelectedTime(e.target.value)}
+                className="border p-2 rounded w-[300px] m-auto mt-4 md:w-[500px]"
+              >
+                <option value="" disabled>Select Time</option>
+                {availability[selectedDay].map((time) => (
+                  <option key={time} value={time}>{time}</option>
+                ))}
+              </select>
+            </div>
+          )}
           <div className="div flex flex-col md:flex-row justify-between gap-[30px] w-[90%] m-auto">
-            <Time options={timeSlots} label='Select time' onChange={(e) => setSelectedTime(e.target.value)} />
             <Time options={modes} label='Select a mode' onChange={(e) => setSelectedMode(e.target.value)} />
           </div>
-          <div className="duv w-[90%] m-auto">
+          <div className="div w-[90%] m-auto">
             <File label='Attach medical files (if there is any)' type='file' onChange={(e) => setFile(e.target.files[0])} />
           </div>
           <TextArea placeholder='Describe your issue to the doctor in less than 300 words' onChange={(e) => setDescription(e.target.value)} />
           <div className="div w-[90%] p-5 m-auto mt-10">
-            <Button3 text='Continue' bg='bg-blue' color='text-white' rounded='rounded-[10px]' width='w-[90%] m-auto' />
+            <Button3 text='Continue' bg='bg-blue' color='text-white' rounded='rounded-[10px]' width='w-[90%] m-auto' type='submit'  onClick= {handleBooking}/>
           </div>
         </form>
       </div>
