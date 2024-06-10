@@ -108,7 +108,7 @@ export function FilePicker({ onFileChange }) {
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     if (!selectedFile) return;
-
+    onFileChange(selectedFile)
     // Check file type (image or video)
     const fileType = selectedFile.type.split('/')[0];
     if (fileType !== 'image' && fileType !== 'video') {
@@ -137,7 +137,7 @@ export function FilePicker({ onFileChange }) {
         <input
           type="file"
           id="fileInput"
-          accept="image/*"
+          accept="image/*,video/*"
           onChange={handleFileChange}
           className="hidden"
         />

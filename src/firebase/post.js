@@ -27,7 +27,7 @@ export const createPost = async (userUid, content, imageFile) => {
     throw new Error('User details not found');
   }
 
-  console.log('User details:', userDetails);
+  // console.log('User details:', userDetails);
 
   let post = {
     uid: userUid,
@@ -38,10 +38,13 @@ export const createPost = async (userUid, content, imageFile) => {
   };
 
   if (imageFile) {
-    const storageRef = ref(storage, `images/${imageFile.name}`);
+    const storageRef = ref(storage, `images/${imageFile.File.name}`);
+    console.log(storageRef)
     const snapshot = await uploadBytes(storageRef, imageFile);
+    // console.log(snapshot)
     const url = await getDownloadURL(snapshot.ref);
     post.imageUrl = url;
+    console.log(post.imageUrl)
   }
 
   await addDoc(collection(db, 'posts'), post);

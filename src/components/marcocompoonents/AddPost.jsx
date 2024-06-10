@@ -58,6 +58,7 @@ export default function AddPost() {
   }, [user]);
   const handleFileChange = (files) => {
     setSelectedFiles(files);
+    console.log(files)
   };
 
   const handleSubmit = async (e) => {

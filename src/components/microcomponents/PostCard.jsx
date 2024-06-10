@@ -236,16 +236,16 @@ const style2={
         <>
         {/* the post card component */}
         <div className="border-y-[1px] border-x-greytextfade pt-5  w-full -z-50">
-            <div className="header flex flex-row justify-normal px-3 gap-3 ">
+            <div className="header flex flex-row justify-between px-3 gap-3 ">
                 <div className="img rounded-[50%] w-[40px] h-[40px]  m-0 ">
                 {/* this send you to the posters profile they are doctor only and users cant view others profile accept doctors profiles */}
                 <Link to={props.profileLink} className='rounded-[50%] w-[40px] h-[40px]  m-0'>
-                 <img src={props.Profilesrc}  className={`p-0  w-full h-full  rounded-[50%] `}/>
+                 <img src={props.Profilesrc} alt={props.AltProfile} className={`p-0  w-full h-full  rounded-[50%] text-center font-bold text-greytextfade text-[20px] `}/>
                 </Link>
                 </div>
                 <div className="detailes w-full">
                     <div className="controls flex flex-row justify-between">
-                       <ul className="flex flex-row justify-between w-auto">
+                       <ul className="flex flex-row justify-between w-full">
                             <li className=" w-[max-content] text-[15px] text-greytextdark font-bold">
                             {props.author}
                             </li>
@@ -265,11 +265,11 @@ const style2={
                        </div>
                     </div>
                     {/* this is the posted text for the user */}
-                    <div className="postText">
-                        <p className="m-0 p-0 text-[13px] break-words lg:text-black lg:text-[15px]">{props.text}</p>
+                    <div className="postText w-full">
+                        <span className="m-0 p-0 text-[13px] break-all lg:text-black lg:text-[15px]">{props.text}</span>
                     </div>
                     {/* the file will only appear if the data returned has a file and the file type is an image or video */}
-                    {props.file ?  <div className="postFile w-full rounded-[15px] border-[1px] border-greytextfade py-3 px-2">{props.fileType=='image'? <Image src={props.imageSrc}  />:<VideoJS options={{autoplay: false,controls: true,responsive: true,fluid: true,sources: [{src :props.videoSrc,type: props.videoType}]}}  onReady={handlePlayerReady} />}</div>:''}
+                    {props.file ? <div className="postFile w-full rounded-[15px] border-[1px] border-greytextfade py-3 px-2">{props.fileType== 'image'? <Image src={props.imageSrc}  />:<VideoJS options={{autoplay: false,controls: true,responsive: true,fluid: true,sources: [{src :props.videoSrc,type: props.videoType}]}}  onReady={handlePlayerReady} />}</div>:''}
               
                     <div className="postcontrol flex flex-row justify-between p-3">
                     <LiaCommentSolid style={style2} className="icon-small" onClick={setcomment}/>
