@@ -1,9 +1,10 @@
 import { Outlet,Link } from "react-router-dom"
 import { IoNotifications, IoCalendarSharp, IoHomeSharp,  IoPerson, IoSearchSharp, IoAddSharp } from "react-icons/io5"
+import { BsPostcard } from "react-icons/bs";
 import { MdMessage } from "react-icons/md"
 import { Button3 } from "../microcomponents/RoundedButton"
 
-export default function HomeTemp(){
+export default function AdminHomeTemp(){
     return(
         <>
          <div className="div flex flex-cols-3 w-full  xl:w-[70%] m-auto h-screen">
@@ -18,24 +19,26 @@ export default function HomeTemp(){
                         <span className="text-center hidden text-[20px] xl:block">Dashboard</span>
                     </li>
                 </div>
-                <Link to="" className="p-0 w-[max-content] m-auto xl:w-full xl:m-0">
-                    <li className="p-3 w-[max-content] rounded-[30px] hover:bg-greytextfade  flex flex-row gap-5">
-                        <IoHomeSharp className="icon"/>
-                        <span className="text-center hidden text-[20px] xl:block">Home</span>
-                    </li>
-                </Link>
+                
                 <Link to="/appointment" className="p-0 w-[max-content] m-auto xl:w-full xl:m-0">
                     <li className="p-3 w-[max-content] rounded-[30px] hover:bg-greytextfade  flex flex-row gap-5">
                         <IoCalendarSharp className="icon"/>
-                        <span className="text-center hidden text-[20px] xl:block">Appoinment</span>
+                        <span className="text-center hidden text-[20px] xl:block">All appoinments</span>
                     </li>
                 </Link>
                 <Link to="/Message" className="p-0 w-[max-content] m-auto xl:w-full xl:m-0">
                     <li className="p-3 w-[max-content] rounded-[30px] hover:bg-greytextfade  flex flex-row gap-5">
                         <MdMessage className="icon"/>
-                        <span className="text-center hidden text-[20px] xl:block">Messages</span>
+                        <span className="text-center hidden text-[20px] xl:block">User messages</span>
                     </li>
                 </Link>
+                <Link to="/Message" className="p-0 w-[max-content] m-auto xl:w-full xl:m-0">
+                    <li className="p-3 w-[max-content] rounded-[30px] hover:bg-greytextfade  flex flex-row gap-5">
+                        <BsPostcard className="icon"/>
+                        <span className="text-center hidden text-[20px] xl:block">Posts</span>
+                    </li>
+                </Link>
+
                 <Link to="/profile" className="p-0 w-[max-content] m-auto xl:w-full xl:m-0">
                     <li className="p-3 w-[max-content] rounded-[30px] hover:bg-greytextfade  flex flex-row gap-5">
                         <IoPerson className="icon"/>
@@ -62,7 +65,6 @@ export default function HomeTemp(){
             </div>
             <div className="main w-full pb-[120px] overflow-hidden md:w-[80%] md:pb-0  md:border-r-[1px] md:border-r-greytextfade xl:w-[50%]">
                 <Outlet/>
-                
             </div>
             </div>
             </>

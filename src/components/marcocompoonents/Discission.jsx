@@ -64,7 +64,7 @@ export default function Discission(){
             </div>
             <div className="continue w-[240px] m-auto pt-[20px] md:w-[450px]">
             <RoundedButtonTwo text='CONTINUE' onClick={()=> handleContinue() }/>
-            <Alt highlightText='Sign-up' endText='instead' link= '/User/sign-in'/>
+            <Alt highlightText='Sign-in' endText='instead' link= '/User/sign-in'/>
             </div>
             
          </div>

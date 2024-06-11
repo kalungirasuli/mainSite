@@ -24,6 +24,8 @@ import AddPost from "./components/marcocompoonents/AddPost"
 import Profile from "./components/marcocompoonents/Profile"
 import EditPassword from "./components/marcocompoonents/EditPassword"
 import ViewAppointments from "./components/marcocompoonents/ViewAppointments"
+
+import AdminHomeTemp from "./components/marcocompoonents/AdminHomeTemp"
 function App() {
   
   return (
@@ -49,6 +51,19 @@ function App() {
               <Route path="profile" element={<Profile/>}></Route>
               <Route path="profile/editpassword" element={<EditPassword/>}></Route>
               
+      </Route>
+      <Route path="/admin" element={<AdminHomeTemp/>}>
+                    <Route index element={<Home/>}></Route>
+                    <Route path="add-post" element={<AddPost/>}></Route>
+                    <Route path="appointment" element={<Appointments/>}>
+                        <Route index element={<ViewAppointments/>}></Route>
+                    </Route>
+                    <Route path="Message" element={<Message/>}>
+                        <Route index element={<MessageRooms/>}></Route> 
+                        <Route path=":id" element={<Discussion/>}></Route>
+                    </Route>
+                    <Route path="profile" element={<Profile/>}></Route>
+                    <Route path="profile/editpassword" element={<EditPassword/>}></Route>
       </Route>
       <Route path="User" element={<Temp/>}>
               <Route index  element={<Discission/>}></Route>
