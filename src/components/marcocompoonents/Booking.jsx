@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import HeadWithBack from "../microcomponents/HeadWithBack";
-import { Time, File, TextArea } from "../microcomponents/textComponents";
+import { File, TextArea,Select } from "../microcomponents/textComponents";
 import { Button3 } from "../microcomponents/RoundedButton";
 import { addDoc, collection, getDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase/config";
@@ -44,7 +44,7 @@ export default function Booking() {
 
   const handleBooking = async (event) => {
     event.preventDefault();
-
+if(selectedDay&&selectedMode)
     try {
       await addDoc(collection(db, "bookings"), {
         userId: "1234",
@@ -73,12 +73,16 @@ export default function Booking() {
           <span className="w-[max-content] h-[max-content] absolute top-[0px] right-[10px]">
           </span>
         </div>
-        <form onSubmit={handleBooking} className="w-full">
-          <div className="div w-[90%] m-auto">
+        <form onSubmit={handleBooking} className="w-full ">
+          <div className="div  flex flex-col gap-2 w-[300px] m-auto pt-[20px] md:w-[450px]">
+          <label  className="text-[15px] text-greytextdark text-left mb-3">
+        Select day
+         </label>
+          <div className="div p-3 shadow-md rounded-[10px]">
             <select
               value={selectedDay}
               onChange={(e) => setSelectedDay(e.target.value)}
-              className="border p-2 rounded w-[300px] m-auto mt-4 md:w-[500px]"
+              className="rounded-[10px] outline-none w-full bg-white text-center cursor-pointer"
             >
               <option value="" disabled>Select Day</option>
               {days.map((day) => (
@@ -86,12 +90,18 @@ export default function Booking() {
               ))}
             </select>
           </div>
+          </div>
+         
           {selectedDay && (
-            <div className="div w-[90%] m-auto">
+             <div className="div flex flex-col gap-2 w-[300px] m-auto pt-[20px] md:w-[450px]">
+               <label  className="text-[15px] text-greytextdark text-left mb-3">
+              Select day
+               </label>
+            <div className="div p-3 shadow-md rounded-[10px]">
               <select
                 value={selectedTime}
                 onChange={(e) => setSelectedTime(e.target.value)}
-                className="border p-2 rounded w-[300px] m-auto mt-4 md:w-[500px]"
+                className="rounded-[10px] outline-none w-full bg-white text-center cursor-pointer"
               >
                 <option value="" disabled>Select Time</option>
                 {availability[selectedDay].map((time) => (
@@ -99,13 +109,15 @@ export default function Booking() {
                 ))}
               </select>
             </div>
+             </div>
           )}
-          <div className="div flex flex-col md:flex-row justify-between gap-[30px] w-[90%] m-auto">
-            <Time options={modes} label='Select a mode' onChange={(e) => setSelectedMode(e.target.value)} />
+          <div className="div  flex flex-col gap-2 w-[300px] m-auto pt-[20px] md:w-[450px]">
+            <Select options={modes} label='Select a mode' onChange={(e) => setSelectedMode(e.target.value)} />
           </div>
           <div className="div w-[90%] m-auto">
             <File label='Attach medical files (if there is any)' type='file' onChange={(e) => setFile(e.target.files[0])} />
           </div>
+          
           <TextArea placeholder='Describe your issue to the doctor in less than 300 words' onChange={(e) => setDescription(e.target.value)} />
           <div className="div w-[90%] p-5 m-auto mt-10">
             <Button3 text='Continue' bg='bg-blue' color='text-white' rounded='rounded-[10px]' width='w-[90%] m-auto' type='submit'  onClick= {handleBooking}/>

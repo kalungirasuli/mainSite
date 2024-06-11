@@ -286,7 +286,7 @@ export function Date(props){
   )
 }
 
-export function Time(props) {
+export function Select(props) {
   return (
     <div className="div mt-5 w-full">
       <label htmlFor={props.for} className="text-[15px] text-greytextdark text-left mb-3">
@@ -295,6 +295,7 @@ export function Time(props) {
       <div className="div p-3 shadow-md rounded-[10px]">
         <select
           name=""
+          value={props.valu}
           id=""
           className="rounded-[10px] outline-none w-full bg-white text-center cursor-pointer"
           onChange={props.onChange}

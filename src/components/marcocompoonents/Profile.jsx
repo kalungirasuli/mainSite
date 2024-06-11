@@ -47,28 +47,30 @@ const DoctorAvailabilityForm = ({ availability, setAvailability, daysChecked, se
             {day}
           </label>
           {daysChecked[day] && (
-            <div className="mt-2">
-              <input
+            <div className="mt-2  ">
+            <div className="div flex gap-[20px]">
+            <input
                 type="text"
                 className="border p-1 rounded"
                 placeholder="Add available hour"
                 onBlur={(e) => handleAddHour(day, e.target.value)}
               />
               <div
-                className="ml-2 bg-blue-500 text-white px-2 py-1 rounded cursor-pointer"
+                className="ml-2 bg-blue text-white px-2 py-1 rounded cursor-pointer"
                 onClick={(e) => handleAddHour(day, e.target.previousSibling.value)}
               >
                 Add Hour
               </div>
-              <div className="mt-2">
+            </div>
+              <div className="mt-2 flex flex-wrap gap-2">
                 {availability[day].map((hour) => (
                   <div
                     key={hour}
-                    className="flex items-center justify-between bg-gray-100 p-2 rounded mt-1"
+                    className="flex items-center justify-between bg-gray-100 p-2 rounded mt-1 w-[max-content] gap-2"
                   >
                     <span>{hour}</span>
                     <button
-                      className="text-red-500"
+                      className="text-red-500 text-[25px]"
                       onClick={() => handleRemoveHour(day, hour)}
                     >
                       &times;
@@ -169,12 +171,14 @@ const Doctor = () => {
         <Input label="Edit First name" name="firstName" placeholder="Enter name" value={formData.firstName} onChange={handleChange} />
         <Input label="Edit Last name" name="lastName" placeholder="Enter name" value={formData.lastName} onChange={handleChange} />
 
-        <DoctorAvailabilityForm
+       <div className="div w-[300px] m-auto pt-[20px] md:w-[450px]">
+       <DoctorAvailabilityForm
             availability={availability}
             setAvailability={setAvailability}
             daysChecked={daysChecked}
             setDaysChecked={setDaysChecked}
           />
+       </div>
         <div className="w-[300px] m-auto pt-[20px] md:w-[450px]" onClick={() => console.log("cliced me ")}>
           <Button3
             bg="bg-bluebutton"
@@ -185,7 +189,6 @@ const Doctor = () => {
           />
         </div>
         <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
-          <DatesAval className="hidden"/>
         </div>
         <File label="Edit Profile Picture" type="file" onChange={handleImageChange} />
         <div className="w-[340px] m-auto pt-[20px] md:w-[500px]">
