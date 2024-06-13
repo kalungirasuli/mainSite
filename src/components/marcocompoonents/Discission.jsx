@@ -1,6 +1,6 @@
-import { GiSlicingArrow } from "react-icons/gi"
+
 import { useState,useEffect } from "react"
-import RoundedButton from "../microcomponents/RoundedButton"
+
 import {Alt} from "../microcomponents/textComponents"
 import HeaderLogo from "../microcomponents/HeaderLogo"
 import { styles } from "../microcomponents/textComponents"

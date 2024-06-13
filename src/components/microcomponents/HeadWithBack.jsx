@@ -8,7 +8,7 @@ export default function HeadWithBack(props){
    }
     return(
         <>
-            <div className="div p-3 bg-white sticky top-0 flex flex-row  justify-between  border-b-[1px] border-b-[greytextfade] z-50">
+            <div className={` ${props.border?'border-0':'border-b-[1px] border-b-[greytextfade]'} div p-3 bg-white sticky top-0 flex flex-row  justify-between   z-50   `}>
              <span className='w-[35px] align-center'>
                 <IoIosArrowBack className='fill-black text-[25px]' onClick={handleBack}/>
              </span>

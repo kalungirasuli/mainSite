@@ -1,6 +1,6 @@
 import  { useEffect, useState } from "react";
 
-import DoctorListcard from "../microcomponents/DoctorListcard";
+import {Doctor} from "../microcomponents/DoctorListcard";
 import HeadWithBack from "../microcomponents/HeadWithBack";
 import { Search } from "../microcomponents/textComponents";
 import { getAllDoctors } from "../../firebase/doctors";
@@ -45,7 +45,7 @@ export default function DoctorAll() {
           </div>
           <div className="div w-[90%] m-auto flex flex-wrap justify-between gap-[10px] pt-5">
             {filteredDoctors.map(doctor => (
-              <DoctorListcard
+              <Doctor
                 key={doctor.id}
                 name={doctor.firstName + ' ' + doctor.secondName}
                 firstName={doctor.firstName}

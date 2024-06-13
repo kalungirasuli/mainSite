@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { RiArrowDropDownLine, RiCloseLine } from "react-icons/ri";
 import { TiMessages } from "react-icons/ti";
 import { BsFillFileEarmarkArrowDownFill } from "react-icons/bs";
+import {RotatingLines } from "react-loader-spinner";
 export default function AppoinmentCard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const modalRef = useRef();
@@ -23,6 +24,8 @@ export default function AppoinmentCard() {
     <>
       
           {/* the appointment card */}
+       
+          
           <div className="div flex flex-col "  onClick={() => setIsModalOpen(!isModalOpen)}>
            <div className="div flex flex-col gap-[20px] justify-between w-[150px] bg-white  shadow-md rounded-[10px] p-[10px]  relative">
            <div className="img w-full flex justify-center">
@@ -51,15 +54,20 @@ export default function AppoinmentCard() {
             {isModalOpen && (
               <div className="absolute  top-0 p left-0 w-full z-[1000] h-full bg-black bg-opacity-50 flex justify-center items-center overflow-x-hidden overflow-y-auto">
                 <div
-                  className="div modal bg-white max-w-sm m-5 mt-10 p-10 rounded-lg md:max-w-md w-full shadow-md relative"
+                  className="div modal bg-white h-[80%] overflow-y-auto max-w-sm m-5 mt-10 px-10 pb-10 rounded-lg md:max-w-md w-full  shadow-md relative"
                   ref={modalRef}
                 >
+                  <div className="div flex justify-end sticky top-0 bg-white py-5">
                   <button
-                    className="absolute top-0 right-0 m-4 text-gray-600"
-                    onClick={() => setIsModalOpen(false)}
+                    className=" text-gray-600 w-[max-content]"
+                    onClick={() => {
+                      setIsModalOpen(false)
+                      
+                    }}
                   >
                     <RiCloseLine className="h-6 w-6" />
                   </button>
+                  </div>
                   <div className="div">
                             <h1 className="text-[20px] text-greytextdark">Appointment details</h1>
                             <div className="div">

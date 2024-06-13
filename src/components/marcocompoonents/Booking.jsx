@@ -11,17 +11,19 @@ import { setBookingDetails } from "../../redux/userSlice";
 export default function Booking() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [selectedDay, setSelectedDay] = useState('');
-  const [selectedTime, setSelectedTime] = useState('');
-  const [selectedMode, setSelectedMode] = useState('');
-  const [file, setFile] = useState(null);
-  const [description, setDescription] = useState('');
-  const [availability, setAvailability] = useState({});
-  const [days, setDays] = useState([]);
+  const [selectedDay, setSelectedDay] = useState(''); //sets seleted day
+  const[selectedDate,setSelectedDate]=useState('')//seting selected date
+  const [selectedTime, setSelectedTime] = useState('');//setting selected time
+  const [selectedMode, setSelectedMode] = useState('');//setting the available 
+  const [file, setFile] = useState(null);//setting the file string 
+  const [description, setDescription] = useState('');//setting the description
+  const [availability, setAvailability] = useState({});//setting avalible day in the week
+  const [days, setDays] = useState([]);//setting the available days i the week
+  const [availableDaysInMonth,setAvailableDaysInMonth ]= useState([]);//seting available days of selected day in a month
   const user = useSelector((state) => state.auth.user);
-  const dispatch = useDispatch();
-  const modes = [ 'select mode','Physical', 'Online'];
-
+  const dispatch = useDispatch();//the state 
+  const modes = [ 'select mode','Physical', 'Online'];//the available modes of meeting
+  //getting all the available daya of the doctor as saved
   useEffect(() => {
     const fetchDoctorAvailability = async () => {
       try {
@@ -40,11 +42,31 @@ export default function Booking() {
     };
 
     fetchDoctorAvailability();
-  }, [id]);
 
+  }, [id]);
+  //getting all availble days in a range of 30 froms day(all tuesdays from current day to the nearest Tuesday in 30 dys)
+  const getAvailableDays=(selectedDay)=>{
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const currentDate = new Date();
+    const selectedDayIndex = daysOfWeek.indexOf(selectedDay);
+    const selectedDate = new Date();
+    selectedDate.setDate(currentDate.getDate() + (selectedDayIndex - currentDate.getDay() + 7) % 7);
+    
+    for (let i = 0; i < 30; i++) {
+        const nextDay = new Date(selectedDate);
+        nextDay.setDate(selectedDate.getDate() + i * 7);
+        const difference = nextDay - currentDate;
+        if (difference >= 0 && difference <= 30 * 24 * 60 * 60 * 1000) {
+            setAvailableDaysInMonth(availableDaysInMonth.push(nextDay.toDateString()))
+        }
+    }
+    return availableDays;
+}
+const availableDays = getAvailableDays(selectedDay);
+//save the data to firebase 
   const handleBooking = async (event) => {
     event.preventDefault();
-if(selectedDay&&selectedMode)
+    if(selectedDay&&selectedMode)
     try {
       await addDoc(collection(db, "bookings"), {
         userId: "1234",
@@ -54,15 +76,17 @@ if(selectedDay&&selectedMode)
         mode: selectedMode,
         file: file ? file.name : '',
         description: description,
+        date:selectedDate
       });
 
-      dispatch(setBookingDetails({ day: selectedDay, time: selectedTime , mode :selectedMode}));
+      dispatch(setBookingDetails({ day: selectedDay, time: selectedTime , mode :selectedMode,date:selectedDate}));
       alert("Booking successful!");
       navigate(`/appointment/doctor/${id}/checkout`);
     } catch (error) {
       console.error("Error adding booking: ", error);
     }
   };
+
 
   return (
     <>
@@ -91,6 +115,25 @@ if(selectedDay&&selectedMode)
             </select>
           </div>
           </div>
+          {availableDaysInMonth &&(
+            <div className="div flex flex-col gap-2 w-[300px] m-auto pt-[20px] md:w-[450px]">
+            <label  className="text-[15px] text-greytextdark text-left mb-3">
+           Select date
+            </label>
+         <div className="div p-3 shadow-md rounded-[10px]">
+           <select
+             value={selectedDate}
+             onChange={(e) => setSelectedDate(e.target.value)}
+             className="rounded-[10px] outline-none w-full bg-white text-center cursor-pointer"
+           >
+             <option value="" disabled>Select Time</option>
+             {availableDaysInMonth.map((data) => (
+               <option key={data} value={data}>{data}</option>
+             ))}
+           </select>
+         </div>
+          </div>
+          )}
          
           {selectedDay && (
              <div className="div flex flex-col gap-2 w-[300px] m-auto pt-[20px] md:w-[450px]">
@@ -111,6 +154,7 @@ if(selectedDay&&selectedMode)
             </div>
              </div>
           )}
+
           <div className="div  flex flex-col gap-2 w-[300px] m-auto pt-[20px] md:w-[450px]">
             <Select options={modes} label='Select a mode' onChange={(e) => setSelectedMode(e.target.value)} />
           </div>
