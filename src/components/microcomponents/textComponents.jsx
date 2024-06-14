@@ -115,7 +115,6 @@ export function FilePicker({ onFileChange }) {
       alert('Please select an image or video file.');
       return;
     }
-
     // Add file to the list
     const updatedFiles = [...files, selectedFile];
     setFiles(updatedFiles);
@@ -137,7 +136,7 @@ export function FilePicker({ onFileChange }) {
         <input
           type="file"
           id="fileInput"
-          accept="image/*,video/*"
+          accept="image/*"
           onChange={handleFileChange}
           className="hidden"
         />

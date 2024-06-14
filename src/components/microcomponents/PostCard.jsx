@@ -9,7 +9,6 @@ import 'video.js/dist/video-js.css';
 import { LiaCommentSolid } from "react-icons/lia";
 import { CiShare1 } from "react-icons/ci";
 import { IoSend,IoAttachSharp, IoCheckmark } from "react-icons/io5";
-import { AiOutlineAudio } from "react-icons/ai";
 import { BsImage } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { FaVideo } from "react-icons/fa6";
@@ -141,7 +140,7 @@ const ChatID=props.ChatUserId==props.ChatUserCurrent?true:false
                      <div className="postOperaions">
                       <ul className="">
                           {/* {props.ChatSent ?<li className="w-[max-content] hover:bg-greytextfade p-2 "><RiUserFollowLine style={style}  className="icon-small"/></li>: <li className="w-[max-content] p-2 hover:bg-greytextfade"><IoCheckmark style={style} color="#726F6F"/></li>} */}
-                          {!props.ChatSent ?<li className="w-[max-content]  "><RiUserFollowLine style={style}  className="icon-small"/></li>: <li className="w-[max-content] p-2 "><IoCheckmark style={style} color="#726F6F"/></li>}
+                          {/* {!props.ChatSent ?<li className="w-[max-content]  "><RiUserFollowLine style={style}  className="icon-small"/></li>: <li className="w-[max-content] p-2 "><IoCheckmark style={style} color="#726F6F"/></li>} */}
                          
                       </ul>
                      </div>

@@ -60,10 +60,10 @@ export default function Booking() {
         nextDay.setDate(selectedDate.getDate() + i * 7);
         const difference = nextDay - currentDate;
         if (difference >= 0 && difference <= 30 * 24 * 60 * 60 * 1000) {
-            setAvailableDaysInMonth(availableDaysInMonth.push(nextDay.toDateString()))
+            availableDaysInMonth.push(nextDay.toDateString())
         }
     }
-    return availableDays;
+    return availableDaysInMonth;
 }
 const availableDays = getAvailableDays(selectedDay);
 //save the data to firebase 

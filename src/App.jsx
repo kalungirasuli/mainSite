@@ -1,3 +1,5 @@
+
+import { useState,useEffect } from "react"
 import Pageload from "./components/microcomponents/Pageload"
 import { Routes,Route,BrowserRouter} from "react-router-dom"
 import HomeTemp from "./components/marcocompoonents/HomeTemp"
@@ -27,11 +29,44 @@ import ViewAppointments from "./components/marcocompoonents/ViewAppointments"
 
 import AdminHomeTemp from "./components/marcocompoonents/AdminHomeTemp"
 function App() {
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (event) => {
+      event.preventDefault();
+      setDeferredPrompt(event);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  const handleInstallClick = () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+        } else {
+          console.log('User dismissed the install prompt');
+        }
+
+        setDeferredPrompt(null);
+      });
+    }
+  };
   
   return (
     <>
     <div className="div  ">
     <Pageload />
+    {deferredPrompt && (
+        <button onClick={handleInstallClick}>Install App</button>
+      )}
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<HomeTemp/>}>
