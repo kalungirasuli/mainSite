@@ -5,6 +5,7 @@ import { Input } from "../microcomponents/textComponents";
 import { Button3 } from "../microcomponents/RoundedButton";
 import axios from 'axios';
 
+
 export default function Checkout() {
   const selectedDoctor = useSelector(state => state.user.selectedDoctor);
   const bookingDetails = useSelector(state => state.user.bookingDetails);
@@ -37,6 +38,7 @@ console.log("payment body is", response.data.paymentStatus)
 console.log("paymenr status is ",response.data.paymentStatus.status )
       if (response.data.paymentStatus && response.data.paymentStatus.status === 'SUCCESSFUL') {
         window.location.href = 'http://localhost:3000';
+      
       } else {
         console.error('Payment was not successful:', response.data);
     

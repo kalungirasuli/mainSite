@@ -30,7 +30,7 @@ export default function SignIn() {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
-            dispatch(setUser({ user: user.uid, email: user.email, role: 'yourRoleHere', super: user })); // Replace 'yourRoleHere' with the actual role if available
+            dispatch(setUser({ user: user.uid, email: user.email, role: 'yourRoleHere', super: user })); 
             console.log('User logged in:', user);
 
             const userAuth = auth.currentUser;

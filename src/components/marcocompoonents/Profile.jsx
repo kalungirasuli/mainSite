@@ -1,7 +1,7 @@
 import HeadWithBack from "../microcomponents/HeadWithBack";
 import { Input, File, TextArea } from "../microcomponents/textComponents";
 import { ProfileImage } from "../microcomponents/textComponents";
-import { Button3, } from "../microcomponents/RoundedButton";
+import { Button3, LogOutButton, } from "../microcomponents/RoundedButton";
 import RoundedButton from "../microcomponents/RoundedButton";
 import { useEffect, useState } from "react";
 import DatesAval from "../microcomponents/DateSelector";
@@ -10,6 +10,7 @@ import { collection, doc, getDocs, query, updateDoc, where } from "firebase/fire
 import { db } from "../../firebase/config";
 import { setUserId } from "firebase/analytics";
 import { useNavigate } from "react-router-dom";
+import { getAuth, signOut } from "firebase/auth";
 
 const DoctorAvailabilityForm = ({ availability, setAvailability, daysChecked, setDaysChecked }) => {
   const handleAddHour = (day, hour) => {
@@ -245,7 +246,18 @@ const Mother = () => {
     event.preventDefault();
     navigate("/profile/EditPassword");
   };
-
+  const handleLogOut = async () => {
+    const auth = getAuth();
+    try {
+      await signOut(auth);
+      // Redirect the user to the login page or home page
+      navigate('/');
+      console.log('User logged out successfully');
+    } catch (error) {
+      console.error('Error logging out: ', error);
+    }
+  };
+  
   return (
     <>
       <div className="img overflow-y-auto w-[50px] h-[50px] relative m-auto mt-[50px] md:w-[100px] md:h-[100px]">
@@ -286,6 +298,14 @@ const Mother = () => {
           />
         </div>
       </form>
+
+      <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
+          <LogOutButton
+          onClick={handleLogOut}
+            text="Log Out"
+            type="submit"
+          />
+        </div>
     </>
   );
 };

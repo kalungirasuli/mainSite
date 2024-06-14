@@ -15,6 +15,20 @@ export default function RoundedButton({link,text,onClick,type}){
     )
 }
 
+export function LogOutButton({link,text,onClick,type}){
+    return(
+        <>
+        <Link to={link} className="w-full p-0">
+            <div className="div w-full p-0">
+            
+            <button type={type} onClick={onClick} className="text-white bg-reddark p-3 rounded-[30px] w-full text-[20px]">{text}</button>
+             
+            </div>
+            </Link>
+        </>
+    )
+}
+
 
 export function Button3(props) {
     return (
