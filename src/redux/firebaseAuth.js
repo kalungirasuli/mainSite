@@ -2,7 +2,7 @@
 
 import { auth } from '../firebase/config';
 import { clearUser, setUser } from './authSlice';
-import store from './store';
+import {store} from './store';
 
 
 

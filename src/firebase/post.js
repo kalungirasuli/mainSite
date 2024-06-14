@@ -4,31 +4,23 @@ import { addDoc, collection, serverTimestamp, query, orderBy, onSnapshot, getDoc
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import {db, storage } from './config';
 
-export const createPost = async (userUid, content, imageFile) => {
-  // Fetch user details based on userUid from both 'doctors' and 'mothers'
-  let userDetails;
-  console.log( imageFile[0].name)
 
-  // Query to check if userUid exists in 'doctors' collection
+export const createPost = async (userUid, content, imageFiles) => {
+  let userDetails;
+
   const doctorsQuery = query(collection(db, 'doctors'), where("uid", "==", userUid));
   const doctorsSnapshot = await getDocs(doctorsQuery);
 
-  // Query to check if userUid exists in 'mothers' collection
   const mothersQuery = query(collection(db, 'mothers'), where("uid", "==", userUid));
   const mothersSnapshot = await getDocs(mothersQuery);
 
-  // Check if userUid was found in either collection
-  if (!doctorsSnapshot.empty &&!mothersSnapshot.empty) {
-    throw new Error('User details not found');
-  } else if (!doctorsSnapshot.empty) {
+  if (!doctorsSnapshot.empty) {
     userDetails = doctorsSnapshot.docs[0].data();
   } else if (!mothersSnapshot.empty) {
     userDetails = mothersSnapshot.docs[0].data();
   } else {
     throw new Error('User details not found');
   }
-
-  // console.log('User details:', userDetails);
 
   let post = {
     uid: userUid,
@@ -38,14 +30,15 @@ export const createPost = async (userUid, content, imageFile) => {
     timestamp: serverTimestamp(),
   };
 
-  if (imageFile) {
-    const storageRef = ref(storage, `images/${imageFile[0].name}`);
-    console.log(storageRef)
-    const snapshot = await uploadBytes(storageRef, imageFile);
-    // console.log(snapshot)
-    const url = await getDownloadURL(snapshot.ref);
-    post.imageUrl = url;
-    console.log(post.imageUrl)
+  if (imageFiles.length > 0) {
+    const fileUrls = await Promise.all(
+      imageFiles.map(async (file) => {
+        const storageRef = ref(storage, `images/${file.name}`);
+        const snapshot = await uploadBytes(storageRef, file);
+        return await getDownloadURL(snapshot.ref);
+      })
+    );
+    post.imageUrls = fileUrls;
   }
 
   await addDoc(collection(db, 'posts'), post);
