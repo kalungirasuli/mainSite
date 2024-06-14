@@ -212,17 +212,11 @@ const Doctor = () => {
         </div>
 
         <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
-          <RoundedButton text="Signout" type="button" bg='red'  />
+          <RoundedButton text="Signout" type="button" bg='red'  onClick={handleLogOut} />
         </div>
         
       </form>
-      <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
-          <LogOutButton
-          onClick={handleLogOut}
-            text="Log Out"
-            type="submit"
-          />
-        </div>
+    
    
     </div>
     </>
@@ -326,11 +320,7 @@ const Mother = () => {
       </form>
 
       <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
-          <LogOutButton
-          onClick={handleLogOut}
-            text="Log Out"
-            type="submit"
-          />
+          <RoundedButton text="Signout" type="button" bg='red'  onClick={handleLogOut} />
         </div>
     </>
   );

@@ -34,8 +34,8 @@ export default function Checkout() {
     try {
       const response = await axios.post('http://localhost:3000/pay', paymentDetails);
       console.log('Payment Response:', response.data);
-console.log("payment body is", response.data.paymentStatus)
-console.log("paymenr status is ",response.data.paymentStatus.status )
+      console.log("payment body is", response.data.paymentStatus)
+      console.log("paymenr status is ",response.data.paymentStatus.status )
       if (response.data.paymentStatus && response.data.paymentStatus.status === 'SUCCESSFUL') {
         window.location.href = 'http://localhost:3000';
       
