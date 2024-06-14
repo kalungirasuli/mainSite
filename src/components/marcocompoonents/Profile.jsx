@@ -156,7 +156,19 @@ const Doctor = () => {
       console.error("Error updating profile: ", error);
     }
   };
+  const handleLogOut = async () => {
+    const auth = getAuth();
+    try {
+      await signOut(auth);
+      // Redirect the user to the login page or home page
+      navigate('/');
+      console.log('User logged out successfully');
+    } catch (error) {
+      console.error('Error logging out: ', error);
+    }
+  };
   return (
+    <>
     <div className="overflow-y-auto pb-[120px]">
       <div className="w-[50px] h-[50px] relative m-auto mt-[50px] md:w-[100px] md:h-[100px]">
         <div className="absolute bottom-0 right-[10px] bg-white p-2 rounded-full w-[max-content]">
@@ -198,8 +210,18 @@ const Doctor = () => {
         <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
           <RoundedButton text="Save" type="submit" onClick={handleSubmit} />
         </div>
+
       </form>
+      <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
+          <LogOutButton
+          onClick={handleLogOut}
+            text="Log Out"
+            type="submit"
+          />
+        </div>
+   
     </div>
+    </>
   );
 };
 
