@@ -317,6 +317,9 @@ const Mother = () => {
             type="submit"
           />
         </div>
+        <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
+          <RoundedButton text="Signout" type="button" bg='red'  />
+        </div>
       </form>
 
       <div className="w-[300px] m-auto pt-[20px] md:w-[450px]">
