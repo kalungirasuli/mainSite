@@ -19,7 +19,7 @@ export default function Booking() {
   const [description, setDescription] = useState('');//setting the description
   const [availability, setAvailability] = useState({});//setting avalible day in the week
   const [days, setDays] = useState([]);//setting the available days i the week
-  // const [availableDaysInMonth,setAvailableDaysInMonth ]= useState([]);//seting available days of selected day in a month
+  const [availableDaysInMonth,setAvailableDaysInMonth ]= useState([]);//seting available days of selected day in a month
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();//the state 
   const modes = [ 'select mode','Physical', 'Online'];//the available modes of meeting
@@ -60,10 +60,10 @@ export default function Booking() {
         nextDay.setDate(selectedDate.getDate() + i * 7);
         const difference = nextDay - currentDate;
         if (difference >= 0 && difference <= 30 * 24 * 60 * 60 * 1000) {
-            setAvailableDaysInMonth(availableDaysInMonth.push(nextDay.toDateString()))
+            availableDaysInMonth.push(nextDay.toDateString())
         }
     }
-    return availableDays;
+    return availableDaysInMonth;
 }
 const availableDays = getAvailableDays(selectedDay);
 //save the data to firebase 

@@ -58,7 +58,6 @@ export default function AddPost() {
   }, [user]);
   const handleFileChange = (files) => {
     setSelectedFiles(files);
-    console.log(files)
   };
 
   const handleSubmit = async (e) => {
@@ -69,6 +68,7 @@ export default function AddPost() {
       alert("Post created successfully!");
       setContent("");
       setSelectedFiles([]);
+      
     } catch (error) {
       console.error("Error creating post:", error);
       alert("Failed to create post");

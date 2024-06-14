@@ -7,6 +7,7 @@ import {db, storage } from './config';
 export const createPost = async (userUid, content, imageFile) => {
   // Fetch user details based on userUid from both 'doctors' and 'mothers'
   let userDetails;
+  console.log( imageFile[0].name)
 
   // Query to check if userUid exists in 'doctors' collection
   const doctorsQuery = query(collection(db, 'doctors'), where("uid", "==", userUid));
@@ -38,7 +39,7 @@ export const createPost = async (userUid, content, imageFile) => {
   };
 
   if (imageFile) {
-    const storageRef = ref(storage, `images/${imageFile.File.name}`);
+    const storageRef = ref(storage, `images/${imageFile[0].name}`);
     console.log(storageRef)
     const snapshot = await uploadBytes(storageRef, imageFile);
     // console.log(snapshot)
