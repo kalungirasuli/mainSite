@@ -111,15 +111,15 @@ export function FilePicker({ onFileChange }) {
     onFileChange(selectedFile)
     // Check file type (image or video)
     const fileType = selectedFile.type.split('/')[0];
-    if (fileType !== 'image' && fileType !== 'video') {
-      alert('Please select an image or video file.');
+    if (fileType !== 'image') {
+      alert('Please select an image orfile.');
       return;
     }
     // Add file to the list
     const updatedFiles = [...files, selectedFile];
     setFiles(updatedFiles);
     onFileChange(updatedFiles);
-  
+    
   
   };
 
@@ -134,12 +134,12 @@ export function FilePicker({ onFileChange }) {
     <div className="p-4">
       <label htmlFor="fileInput" className="cursor-pointer border-solid border-[1px] border-greytextfade rounded-full p-2">
         <FiEdit lassName="text-lg" />
-        <span>{files.length === 0 ? 'Select File' : 'Add Another File'}</span>
+        <span>{'Select File'}</span>
         <input
           type="file"
           id="fileInput"
           accept="image/*"
-          onChange={handleFileChange}
+          onChange={(e)=>handleFileChange(e)}
           className="hidden"
         />
       </label>
@@ -148,9 +148,7 @@ export function FilePicker({ onFileChange }) {
           <div key={index} className="relative w-full md:w-80 h-80 md:h-96 m-2 border rounded-[20px] overflow-hidden flex-shrink-0">
             {file.type.startsWith('image') ? (
               <img src={URL.createObjectURL(file)} alt={`Image ${index}`} className="w-full h-full object-cover rounded-[20px]" />
-            ) : (
-              <video controls src={URL.createObjectURL(file)} className="w-[contain] h-full object-cover rounded-[20px]" />
-            )}
+            ) :''}
             <button
               onClick={(event) => handleRemoveFile(event, index)}
               className="absolute top-2 right-2 text-white bg-red-600 rounded-full p-1 hover:bg-red-800"
