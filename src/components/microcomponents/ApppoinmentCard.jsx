@@ -3,7 +3,7 @@ import { RiArrowDropDownLine, RiCloseLine } from "react-icons/ri";
 import { TiMessages } from "react-icons/ti";
 import { BsFillFileEarmarkArrowDownFill } from "react-icons/bs";
 import {RotatingLines } from "react-loader-spinner";
-export default function AppoinmentCard() {
+export default function AppoinmentCard({appointment}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const modalRef = useRef();
 
@@ -44,9 +44,9 @@ export default function AppoinmentCard() {
               </div>
               <div className=" text-center ">
                 <h1 className=" name break-words text-greytextdark text-[17px]">
-                  John Doe
+                  {appointment.name || "John Doe"}
                 </h1>
-                <p className="mode text-greytextfade text-[15px]">Physical</p>
+                <p className="mode text-greytextfade text-[15px]"> {appointment.mode || "online"}</p>
               </div>
             </div>
            </div>
@@ -77,11 +77,11 @@ export default function AppoinmentCard() {
                                 </div>
                                 <div className="div">
                                     <p className="text-[17px] text-greytext">Time</p>
-                                    <p className="text-[15px] text-greytextdark">12:00 PM</p>
+                                    <p className="text-[15px] text-greytextdark">{appointment.time || "2:00pm"}</p>
                                 </div>
                                 <div className="div">
                                     <p className="text-[17px] text-greytext ">Mode</p>
-                                    <p className="text-[15px] text-greytextdark">Physical</p>
+                                    <p className="text-[15px] text-greytextdark">{appointment.mode || "online"}</p>
                                 </div>
                                 <div className="div">
                                     <p className="text-[17px] text-greytext ">Appointment ID</p>
@@ -95,7 +95,7 @@ export default function AppoinmentCard() {
                                 </div>
                                 <div className="div">
                                     <p className="text-[17px] text-greytext ">Doctor</p>
-                                    <p className="text-[15px] text-greytextdark">Dr. John Doe</p>
+                                    <p className="text-[15px] text-greytextdark">Dr { appointment.name || "John Doe"}</p>
                                 </div>
                                 <div className="div">
                                     <p className="text-[17px] text-greytext ">Location</p>
@@ -103,7 +103,7 @@ export default function AppoinmentCard() {
                                 </div>
                                 <div className="div">
                                     <p className="text-[17px] text-greytext">Description</p>
-                                    <p className="text-[15px] text-greytextdark breakwords h-[max-content] max-h-[400px] overflow-x-hidden overflow-y-auto">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste ipsum incidunt, assumenda repellendus eligendi itaque dicta enim, aut adipisci quibusdam nihil? Alias, hic temporibus atque quis dolores numquam eius veniam quae voluptatum itaque quos earum animi eligendi dolorum eaque minus perferendis illo saepe deserunt modi repudiandae! Iure iste qui dicta quis nulla quia, cumque architecto porro ipsa, voluptate, repellat possimus non quam sapiente error similique ab cupiditate veniam eum earum. Nisi ad molestias, doloribus accusamus, aut quae, voluptatem ipsum commodi omnis ex nesciunt saepe dolore! Dicta a eveniet nesciunt, consectetur explicabo adipisci! Quae omnis neque cupiditate harum error consequatur itaque vero. Libero eaque suscipit vero autem? Nisi perferendis facere repudiandae ipsam non! Perferendis ullam nostrum repudiandae laboriosam repellat incidunt optio consectetur officiis voluptas blanditiis? Voluptate odio sequi, dolore odit molestias accusantium doloremque explicabo eum vero laudantium, aspernatur qui unde. Rerum tempore tenetur quae illum dolor doloremque, id aut, eos sit modi doloribus cupiditate, ipsa eligendi molestiae dolores voluptate? Laboriosam iusto error mollitia repellat, veritatis reprehenderit nam quod placeat amet sunt adipisci natus architecto quo hic sit nobis praesentium rerum! Quo aliquam, vero voluptates consectetur, aspernatur autem officiis assumenda beatae quas quam enim harum esse quisquam dolores? Officiis nihil qui inventore!</p>
+                                    <p className="text-[15px] text-greytextdark breakwords h-[max-content] max-h-[400px] overflow-x-hidden overflow-y-auto">{ appointment.description || "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste ipsum incidunt, assumenda repellendus eligendi itaque dicta enim, aut adipisci quibusdam nihil? Alias, hic temporibus atque quis dolores numquam eius veniam quae voluptatum itaque quos earum animi eligendi dolorum eaque minus perferendis illo saepe deserunt modi repudiandae! Iure iste qui dicta quis nulla quia, cumque architecto porro ipsa, voluptate, repellat possimus non quam sapiente error similique ab cupiditate veniam eum earum. Nisi ad molestias, doloribus accusamus, aut quae, voluptatem ipsum commodi omnis ex nesciunt saepe dolore! Dicta a eveniet nesciunt, consectetur explicabo adipisci! Quae omnis neque cupiditate harum error consequatur itaque vero. Libero eaque suscipit vero autem? Nisi perferendis facere repudiandae ipsam non! Perferendis ullam nostrum repudiandae laboriosam repellat incidunt optio consectetur officiis voluptas blanditiis? Voluptate odio sequi, dolore odit molestias accusantium doloremque explicabo eum vero laudantium, aspernatur qui unde. Rerum tempore tenetur quae illum dolor doloremque, id aut, eos sit modi doloribus cupiditate, ipsa eligendi molestiae dolores voluptate? Laboriosam iusto error mollitia repellat, veritatis reprehenderit nam quod placeat amet sunt adipisci natus architecto quo hic sit nobis praesentium rerum! Quo aliquam, vero voluptates consectetur, aspernatur autem officiis assumenda beatae quas quam enim harum esse quisquam dolores? Officiis nihil qui inventore!"}</p>
                                 </div>
                                 <div className="div flex gap-[30px] justify-start pt-10">
                                             <span>

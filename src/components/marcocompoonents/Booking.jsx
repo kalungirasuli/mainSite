@@ -24,6 +24,9 @@ export default function Booking() {
   const dispatch = useDispatch();//the state 
   const modes = [ 'select mode','Physical', 'Online'];//the available modes of meeting
   //getting all the available daya of the doctor as saved
+  
+  const selectedDoctor = useSelector(state => state.user.selectedDoctor);
+  
   useEffect(() => {
     const fetchDoctorAvailability = async () => {
       try {
@@ -69,14 +72,15 @@ const availableDays = getAvailableDays(selectedDay);
     if(selectedDay&&selectedMode)
     try {
       await addDoc(collection(db, "bookings"), {
-        userId: "1234",
+        userId: user,
         doctorId: id,
         day: selectedDay,
         time: selectedTime,
         mode: selectedMode,
         file: file ? file.name : '',
         description: description,
-        date:selectedDate
+        date:selectedDate,
+        name: `${selectedDoctor.firstName} ${selectedDoctor.secondName}`
       });
 
       dispatch(setBookingDetails({ day: selectedDay, time: selectedTime , mode :selectedMode,date:selectedDate}));

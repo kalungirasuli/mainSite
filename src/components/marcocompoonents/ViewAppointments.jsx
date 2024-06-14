@@ -1,31 +1,81 @@
-import AppoinmentCard from "../microcomponents/ApppoinmentCard";
-import HeadWithBack from "../microcomponents/HeadWithBack";
-import { IoMdAdd } from "react-icons/io";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useSelector } from "react-redux";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "../../firebase/config";
+import HeadWithBack from "../microcomponents/HeadWithBack";
+import AppoinmentCard from "../microcomponents/ApppoinmentCard";
+import { IoMdAdd } from "react-icons/io";
+
 export default function ViewAppointments() {
-  const [user, setUser] = useState('mother');
+  const [userType, setUserType] = useState(null);
+  const [appointments, setAppointments] = useState([]);
+  const user = useSelector((state) => state.auth.user);
+
+  useEffect(() => {
+    // Determine the user type
+    const determineUserType = async () => {
+      if (user) {
+        try {
+          const uid = user;
+
+          // Check if the user is a doctor
+          const doctorQuery = query(collection(db, 'doctors'), where('uid', '==', uid));
+          const doctorSnapshot = await getDocs(doctorQuery);
+
+          if (!doctorSnapshot.empty) {
+            setUserType('doctor');
+            return;
+          }
+
+          // Check if the user is a mother
+          const motherQuery = query(collection(db, 'mothers'), where('uid', '==', uid));
+          const motherSnapshot = await getDocs(motherQuery);
+
+          if (!motherSnapshot.empty) {
+            setUserType('mother');
+          }
+        } catch (error) {
+          console.error("Error determining user type: ", error);
+        }
+      }
+    };
+
+    // Fetch the bookings for the current user
+    const fetchBookings = async () => {
+      if (user) {
+        try {
+          const bookingQuery = query(collection(db, 'bookings'), where('userId', '==', user));
+          const bookingSnapshot = await getDocs(bookingQuery);
+
+          const bookings = bookingSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          setAppointments(bookings);
+          console.log('the booking data is ',bookings)
+        } catch (error) {
+          console.error("Error fetching bookings: ", error);
+        }
+      }
+    };
+
+    determineUserType();
+    fetchBookings();
+  }, [user]);
+
   return (
     <>
       <div>
         <HeadWithBack heading="My appointments" />
-        {/* the sett the add appointment button visible if the user is a mother and  hidden if the user is not a mother */}
-       {
-          user === 'mother' ? 
+        {userType === 'mother' && (
           <div className="div flex justify-end w-full p-5">
-         <Link to="/appointment/doctors" className="bg-bluebutton p-3 rounded-full" title="add an pointment" >
-          <IoMdAdd className="fill-greytextdark" style={{fontSize:"30px"}} />
-         </Link>
-         </div>
-          : ''
-       }
-       {/* end of button */}
+            <Link to="/appointment/doctors" className="bg-bluebutton p-3 rounded-full" title="add an appointment">
+              <IoMdAdd className="fill-greytextdark" style={{ fontSize: "30px" }} />
+            </Link>
+          </div>
+        )}
         <div className="div p-10 flex flex-wrap gap-[20px] h-full overflow-y-auto w-full overflow-x-hidden">
-         
-          {/* the appointment card */}
-         <AppoinmentCard/>
-         
-          {/* end of the card */}
+          {appointments.map((appointment) => (
+            <AppoinmentCard key={appointment.id} appointment={appointment} />
+          ))}
         </div>
       </div>
     </>
