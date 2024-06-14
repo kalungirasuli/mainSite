@@ -19,7 +19,7 @@ export default function Booking() {
   const [description, setDescription] = useState('');//setting the description
   const [availability, setAvailability] = useState({});//setting avalible day in the week
   const [days, setDays] = useState([]);//setting the available days i the week
-  const [availableDaysInMonth,setAvailableDaysInMonth ]= useState([]);//seting available days of selected day in a month
+  // const [availableDaysInMonth,setAvailableDaysInMonth ]= useState([]);//seting available days of selected day in a month
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();//the state 
   const modes = [ 'select mode','Physical', 'Online'];//the available modes of meeting
