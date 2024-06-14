@@ -119,6 +119,8 @@ export function FilePicker({ onFileChange }) {
     const updatedFiles = [...files, selectedFile];
     setFiles(updatedFiles);
     onFileChange(updatedFiles);
+  
+  
   };
 
   const handleRemoveFile = (event, index) => {
