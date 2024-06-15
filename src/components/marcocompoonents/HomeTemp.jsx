@@ -36,11 +36,11 @@ export default function HomeTemp(){
                         <span className="text-center hidden text-[20px] xl:block">Profile</span>
                     </li>
                 </Link>
-                <Link to="" className="p-0 w-[max-content] m-auto xl:w-full xl:m-0 xl:hidden">
+                {/* <Link to="" className="p-0 w-[max-content] m-auto xl:w-full xl:m-0 xl:hidden">
                     <li className="p-3 w-[max-content] rounded-[30px] hover:bg-greytextfade  flex flex-row gap-5">
                         <IoSearchSharp className='icon'/>
                     </li>
-                </Link>
+                </Link> */}
                 <Link to="/add-post" className="p-0 w-[max-content] m-auto  right-[10px] md:static xl:w-full xl:m-0 xl:block">
                     <li className="py-3 max-w-[200px]">
                         <div className="w-[max-content] bg-blue p-4 rounded-[50%] xl:hidden">

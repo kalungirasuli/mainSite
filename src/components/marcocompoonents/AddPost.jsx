@@ -71,7 +71,7 @@ export default function AddPost() {
 
   return (
     <>
-      <div className="post w-full h-full overflow-y-auto">
+      <div className="post w-full h-full overflow-y-auto pb-[10px]">
         <HeadWithBack heading="Add Post" />
         <div className="div w-full">
           <form className="form" onSubmit={handleSubmit}>
@@ -83,7 +83,10 @@ export default function AddPost() {
               onChange={(e) => setContent(e.target.value)}
             />
             <FilePicker onFileChange={handleFileChange} />
-            <RoundedButton text="Post" onClick={handleSubmit} />
+          <div className="div w-[200px] m-auto
+          ">
+          <RoundedButton text="Post" onClick={handleSubmit} />
+          </div>
           </form>
         </div>
       </div>

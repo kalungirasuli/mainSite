@@ -30,7 +30,7 @@ export default function Home() {
                 role={post.role} 
                 time={post.time} 
                 following={post.following}  
-                text={post.content} 
+                text={post.content? post.content:""} 
                 imageSrc={post.imageUrl}
                 file={post.imageUrl || post.videoSrc? true:false} 
                 fileType={post.imageUrl? 'image':'video'} 
