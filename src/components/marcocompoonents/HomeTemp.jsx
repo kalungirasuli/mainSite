@@ -41,7 +41,7 @@ export default function HomeTemp(){
                         <IoSearchSharp className='icon'/>
                     </li>
                 </Link>
-                <Link to="/add-post" className="p-0 w-[max-content] m-auto absolute bottom-[50px] right-[10px] md:static xl:w-full xl:m-0 xl:block">
+                <Link to="/add-post" className="p-0 w-[max-content] m-auto  right-[10px] md:static xl:w-full xl:m-0 xl:block">
                     <li className="py-3 max-w-[200px]">
                         <div className="w-[max-content] bg-blue p-4 rounded-[50%] xl:hidden">
                         <IoAddSharp className="icon white" />
@@ -54,7 +54,7 @@ export default function HomeTemp(){
               
             </ul>
             </div>
-            <div className="main w-full pb-[120px] overflow-hidden md:w-[80%] md:pb-0  md:border-r-[1px] md:border-r-greytextfade xl:w-[50%]">
+            <div className="main w-full pb-[70px] overflow-hidden md:w-[80%] md:pb-0  md:border-r-[1px] md:border-r-greytextfade xl:w-[50%]">
                 <Outlet/>
                 
             </div>

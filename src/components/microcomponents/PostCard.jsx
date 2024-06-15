@@ -268,8 +268,8 @@ const style2={
                         <span className="m-0 p-0 text-[13px] break-all lg:text-black lg:text-[15px]">{props.text}</span>
                     </div>
                     {/* the file will only appear if the data returned has a file and the file type is an image or video */}
-                    {props.file ? <div className="postFile w-full rounded-[15px] border-[1px] border-greytextfade py-3 px-2">{props.fileType== 'image'? <Image src={props.imageSrc}  />:<VideoJS options={{autoplay: false,controls: true,responsive: true,fluid: true,sources: [{src :props.videoSrc,type: props.videoType}]}}  onReady={handlePlayerReady} />}</div>:''}
-              
+                    {/* {props.file ? <div className="postFile w-full rounded-[15px] border-[1px] border-greytextfade py-3 px-2">{props.fileType== 'image'? <Image src={props.imageSrc}  />:<VideoJS options={{autoplay: false,controls: true,responsive: true,fluid: true,sources: [{src :props.videoSrc,type: props.videoType}]}}  onReady={handlePlayerReady} />}</div>:''} */}
+                    {props.file ? <div className="postFile w-full rounded-[15px] border-[1px] border-greytextfade py-3 px-2">{props.fileType== 'image'? <img src={props.imageSrc} alt='loading...' loading="lazy"  />:<VideoJS options={{autoplay: false,controls: true,responsive: true,fluid: true,sources: [{src :props.videoSrc,type: props.videoType}]}}  onReady={handlePlayerReady} />}</div>:''}
                     <div className="postcontrol flex flex-row justify-between p-3">
                     <LiaCommentSolid style={style2} className="icon-small" onClick={setcomment}/>
                     <CiShare1 style={style2} className="icon-small"/>
