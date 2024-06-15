@@ -31,7 +31,7 @@ export default function SignIn() {
             const user = userCredential.user;
 
             dispatch(setUser({ user: user.uid, email: user.email, role: 'yourRoleHere', super: user })); 
-            console.log('User logged in:', user);
+            console.log('User logged in:', user.uid);
 
             const userAuth = auth.currentUser;
             console.log("The authenticated user is:", userAuth);

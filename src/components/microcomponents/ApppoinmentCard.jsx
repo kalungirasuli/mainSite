@@ -3,10 +3,18 @@ import { RiArrowDropDownLine, RiCloseLine } from "react-icons/ri";
 import { TiMessages } from "react-icons/ti";
 import { BsFillFileEarmarkArrowDownFill } from "react-icons/bs";
 import {RotatingLines } from "react-loader-spinner";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../firebase/config";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+
+
 export default function AppoinmentCard({appointment}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const modalRef = useRef();
-
+  const user = useSelector((state) => state.auth.user);
+  const navigate = useNavigate()
   useEffect(() => {
     function handleClickOutside(event) {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -19,6 +27,37 @@ export default function AppoinmentCard({appointment}) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleMessagesClick = async () => {
+    if (user) {
+      try {
+        const q = query(
+          collection(db, "messageRooms"),
+          where("users", "array-contains", user)
+        );
+        const snapshot = await getDocs(q);
+        let room = null;
+        
+        snapshot.forEach((doc) => {
+          if (doc.data().users.includes(appointment.doctorId)) {
+            room = doc;
+          }
+        });
+
+        if (room) {
+          navigate(`/Message/${room.id}`);
+        } else {
+          const newRoom = await addDoc(collection(db, "messageRooms"), {
+            users: [user, appointment.doctorId ],
+            createdAt: new Date(),
+          });
+          navigate(`/Message/${newRoom.id}`);
+        }
+      } catch (error) {
+        console.error("Error handling messages click: ", error);
+      }
+    }
+  };
 
   return (
     <>
@@ -107,7 +146,7 @@ export default function AppoinmentCard({appointment}) {
                                 </div>
                                 <div className="div flex gap-[30px] justify-start pt-10">
                                             <span>
-                                            <TiMessages className="fill-greytextdark" style={{fontSize:'25px'}}/>
+                                            <TiMessages className="fill-greytextdark" style={{fontSize:'25px'}} onClick={handleMessagesClick}/>
                                             </span>  
                                             <span>
                                             <BsFillFileEarmarkArrowDownFill className="fill-greytextdark" style={{fontSize:'25px'}}/>

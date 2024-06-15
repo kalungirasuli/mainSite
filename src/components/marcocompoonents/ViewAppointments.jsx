@@ -13,11 +13,11 @@ export default function ViewAppointments() {
   const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
-    // Determine the user type
     const determineUserType = async () => {
       if (user) {
         try {
           const uid = user;
+          console.log(uid)
 
           // Check if the user is a doctor
           const doctorQuery = query(collection(db, 'doctors'), where('uid', '==', uid));
@@ -41,16 +41,20 @@ export default function ViewAppointments() {
       }
     };
 
-    // Fetch the bookings for the current user
     const fetchBookings = async () => {
-      if (user) {
+      if (user && userType) {
         try {
-          const bookingQuery = query(collection(db, 'bookings'), where('userId', '==', user));
-          const bookingSnapshot = await getDocs(bookingQuery);
+          let bookingQuery;
+          if (userType === 'doctor') {
+            bookingQuery = query(collection(db, 'bookings'), where('doctorId', '==', user));
+          } else if (userType === 'mother') {
+            bookingQuery = query(collection(db, 'bookings'), where('userId', '==', user));
+          }
 
+          const bookingSnapshot = await getDocs(bookingQuery);
           const bookings = bookingSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
           setAppointments(bookings);
-          console.log('the booking data is ',bookings)
+          console.log('the booking data is ', bookings);
         } catch (error) {
           console.error("Error fetching bookings: ", error);
         }
@@ -58,8 +62,11 @@ export default function ViewAppointments() {
     };
 
     determineUserType();
-    fetchBookings();
-  }, [user]);
+
+    if (userType) {
+      fetchBookings();
+    }
+  }, [user, userType]);
 
   return (
     <>

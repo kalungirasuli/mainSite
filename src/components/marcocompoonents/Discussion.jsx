@@ -4,6 +4,7 @@ import { HeadWithProfile } from "../microcomponents/HeadWithBack";
 import { IoSend } from "react-icons/io5";
 import { db } from '../../firebase/config';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 const classes = {
   mother: 'rounded-l-[10px] rounded-b-[10px] w-[max-content] max-w-[80%] bg-smoke text-black my-[3px]',
@@ -31,6 +32,7 @@ function MessageHolder({ message }) {
 }
 
 export default function Discussion() {
+  const { id: roomId } = useParams();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [userType, setUserType] = useState(null);
@@ -41,11 +43,9 @@ export default function Discussion() {
   useEffect(() => {
     inputRef.current.focus();
 
-    // Function to determine user type
     const determineUserType = async () => {
       if (user) {
         try {
-          console.log("User ID: ", user);
           const uid = user;
 
           // Check if the user is a doctor
@@ -54,7 +54,6 @@ export default function Discussion() {
 
           if (!doctorSnapshot.empty) {
             setUserType('doctor');
-            console.log("User is a doctor");
             return;
           }
 
@@ -64,34 +63,34 @@ export default function Discussion() {
 
           if (!motherSnapshot.empty) {
             setUserType('mother');
-            console.log("User is a mother");
           }
         } catch (error) {
-          console.error("Error determining user type: ", error);
+          console.error("Error determining user type:", error.message);
         }
       } else {
-        console.log("No user found");
+        console.error("User is not logged in.");
       }
     };
 
     determineUserType();
 
-    const q = query(collection(db, "messages"), orderBy("timestamp"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const msgs = [];
-      querySnapshot.forEach((doc) => {
-        msgs.push({ id: doc.id, ...doc.data() });
+    if (roomId) {
+      const q = query(collection(db, "messages"), where('roomId', '==', roomId), orderBy("timestamp"));
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const msgs = [];
+        querySnapshot.forEach((doc) => {
+          msgs.push({ id: doc.id, ...doc.data() });
+        });
+        setMessages(msgs);
+      }, (error) => {
+        console.error("Error fetching messages:", error.message);
       });
-      setMessages(msgs);
-    }, (error) => {
-      console.error("Error fetching messages: ", error);
-    });
 
-    return () => unsubscribe();
-  }, [user]);
+      return () => unsubscribe();
+    }
+  }, [user, roomId]);
 
   useEffect(() => {
-    // Scroll to the bottom when messages change
     if (messageEndRef.current) {
       messageEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
     }
@@ -105,23 +104,23 @@ export default function Discussion() {
           sender: userType,
           text: newMessage,
           timestamp: serverTimestamp(),
+          roomId
         });
         setNewMessage('');
         inputRef.current.focus();
-        console.log("Message sent successfully");
       } catch (error) {
-        console.error("Error sending message: ", error);
+        console.error("Error sending message:", error.message);
       }
     } else {
-      console.log("Message is empty or userType is not set");
+      console.warn("Message is empty or userType is not set.");
     }
   };
 
   return (
     <>
       <HeadWithProfile heading='Messages' />
-      <div className="div w-full space-y-4 h-full flex justify-between relative overflow-hidden  ">
-        <div className="message p-5 h-full w-full  overflow-y-auto py-20">  {/* Add padding-bottom here */}
+      <div className="div w-full space-y-4 h-full flex justify-between relative overflow-hidden">
+        <div className="message p-5 h-full w-full overflow-y-auto pb-[100px]"> {/* Add padding-bottom here */}
           {messages.map((msg) => (
             <MessageHolder key={msg.id} message={msg} />
           ))}
@@ -134,9 +133,10 @@ export default function Discussion() {
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             className="w-full h-[45px] rounded-[10px] p-2 outline-0"
+            placeholder="Type your message here..."
           />
-          <button type="submit">
-            <IoSend className="fill-black focus:fill-blue" style={{ fontSize: '30px' }} />
+          <button type="submit" className="flex items-center justify-center w-[45px] h-[45px] rounded-[10px] bg-blue-500">
+            <IoSend className="fill-white" style={{ fontSize: '24px' }} />
           </button>
         </form>
       </div>

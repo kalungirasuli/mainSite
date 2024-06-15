@@ -22,8 +22,8 @@ export default function Booking() {
   const [availableDaysInMonth,setAvailableDaysInMonth ]= useState([]);//seting available days of selected day in a month
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();//the state 
-  const modes = [ 'select mode','Physical', 'Online'];//the available modes of meeting
-  //getting all the available daya of the doctor as saved
+  const modes = [ 'select mode','Physical', 'Online'];
+  const [doctorUid, setDoctorUid] = useState("")
   
   const selectedDoctor = useSelector(state => state.user.selectedDoctor);
   
@@ -31,9 +31,13 @@ export default function Booking() {
     const fetchDoctorAvailability = async () => {
       try {
         const doctorDoc = doc(db, "doctors", id);
+    
         const doctorSnapshot = await getDoc(doctorDoc);
+        
         if (doctorSnapshot.exists()) {
           const doctorData = doctorSnapshot.data();
+          console.log('the doctor info is',doctorData)
+          setDoctorUid(doctorData.uid)
           setAvailability(doctorData.availability || {});
           setDays(Object.keys(doctorData.availability || {}).filter(day => doctorData.availability[day].length > 0));
         } else {
@@ -73,7 +77,7 @@ const availableDays = getAvailableDays(selectedDay);
     try {
       await addDoc(collection(db, "bookings"), {
         userId: user,
-        doctorId: id,
+        doctorId: doctorUid,
         day: selectedDay,
         time: selectedTime,
         mode: selectedMode,
