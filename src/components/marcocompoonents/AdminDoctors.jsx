@@ -4,31 +4,53 @@ import {Doctor} from "../microcomponents/DoctorListcard";
 import HeadWithBack from "../microcomponents/HeadWithBack";
 import { Search } from "../microcomponents/textComponents";
 import AdminUserSingle from "../microcomponents/AdminUserSingle";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase/config";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function  AdminDoctors() {
- 
-  const [doctors, setDoctors] = useState([]); // State to store fetched doctors
+  const user = useSelector((state) => state.auth.user);
+  const [doctors, setDoctors] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchDoctors = async () => {
-      const doctorsRef = collection(db, "doctors"); 
+    const checkAdmin = async () => {
+      if (!user) {
+        navigate('/User/sign-in');
+        return;
+      }
 
-    
+      const adminRef = collection(db, "admin");
+      const q = query(adminRef, where("uid", "==", user));
 
       try {
-        const doctorSnapshot = await getDocs( doctorsRef);
-        setDoctors(doctorSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        const adminSnapshot = await getDocs(q);
+        if (adminSnapshot.empty) {
+          navigate('/User/sign-in');
+          return;
+        }
 
-        console.log(doctors)
+        fetchDoctors();
+      } catch (error) {
+        console.error("Error checking admin status:", error);
+        navigate('/User/sign-in');
+      }
+    };
+
+    const fetchDoctors = async () => {
+      const doctorsRef = collection(db, "doctors");
+
+      try {
+        const doctorSnapshot = await getDocs(doctorsRef);
+        setDoctors(doctorSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       } catch (error) {
         console.error("Error fetching doctors:", error);
       }
     };
 
-    fetchDoctors(); // Call the fetch function on component mount
-  }, [])
+    checkAdmin();
+  }, [user, navigate]);
   return (
     <>
       <div className="div">

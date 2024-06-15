@@ -3,14 +3,44 @@ import HeadWithBack from "../microcomponents/HeadWithBack";
 import { Search } from "../microcomponents/textComponents";
 import AdminUserSingle from "../microcomponents/AdminUserSingle";
 import { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase/config";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function  AdminMothers() {
   const [mothers, setMothers] = useState([]); // State to store fetched doctors
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
-    const fetchDoctors = async () => {
+
+    const checkAdmin = async () => {
+      if (!user) {
+        navigate('/User/sign-in');
+        return;
+      }
+
+      const adminRef = collection(db, "admin");
+      const q = query(adminRef, where("uid", "==", user));
+
+      try {
+        const adminSnapshot = await getDocs(q);
+        if (adminSnapshot.empty) {
+          navigate('/User/sign-in');
+          return;
+        }
+
+        fetchMothers();
+      } catch (error) {
+        console.error("Error checking admin status:", error);
+        navigate('/User/sign-in');
+      }
+    };
+
+
+
+    const fetchMothers = async () => {
       const mothersRef = collection(db, "mothers");
 
     
@@ -24,9 +54,9 @@ export default function  AdminMothers() {
         console.error("Error fetching doctors:", error);
       }
     };
-
-    fetchDoctors(); // Call the fetch function on component mount
-  }, [])
+    checkAdmin();
+    
+  }, [user, navigate])
   return (
     <>
       <div className="div">

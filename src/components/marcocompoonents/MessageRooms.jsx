@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { BiSolidMessageError } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { collection, query, where, orderBy, limit, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import HeadWithBack from "../microcomponents/HeadWithBack";
@@ -35,8 +35,10 @@ const MessageListCard = ({room, senderName, senderImage, time, preview, status }
 export default function MessageRooms() {
   const [messageRooms, setMessageRooms] = useState([]);
   const user = useSelector(state => state.auth.user);
+  const navigate = useNavigate()
   useEffect(() => {
     // Function to fetch message rooms and their last messages
+  if(user){
     const fetchMessageRooms = async () => {
       try {
         if (!user) return; // Exit early if user is not available
@@ -85,6 +87,10 @@ export default function MessageRooms() {
 
     // Call the fetchMessageRooms function
     fetchMessageRooms();
+  }
+  else{
+    navigate('/User/sign-in');
+  }
   }, [user]); // Add user as a dependency
 
   return (
