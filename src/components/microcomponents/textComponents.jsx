@@ -163,7 +163,15 @@ export function FilePicker({ onFileChange }) {
 }
 
 
-
+export function Loading(){
+  return(
+    <>
+                  <div className="loading-indicator w-[100px] h-auto  m-auto mt-[40%] p-2">
+                  <img src="/images/load-35_128.gif" alt="Loading..." />
+                  </div>
+    </>
+  )
+  }
 
 export function ProfileImage(props) {
   const [files, setFiles] = useState([]);

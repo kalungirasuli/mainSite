@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, where, getDocs } from 'firebase/firestore';
-import { HeadWithProfile } from "../microcomponents/HeadWithBack";
+import HeadWithBack from '../microcomponents/HeadWithBack';
 import { IoSend } from "react-icons/io5";
 import { db } from '../../firebase/config';
 import { useSelector } from 'react-redux';
@@ -118,15 +118,15 @@ export default function Discussion() {
 
   return (
     <>
-      <HeadWithProfile heading='Messages' />
-      <div className="div w-full space-y-4 h-full flex justify-between relative overflow-hidden">
-        <div className="message p-5 h-full w-full overflow-y-auto pb-[100px]"> {/* Add padding-bottom here */}
+      <HeadWithBack heading={messages.map((msg)=>(msg.id))} />
+      <div className="div w-full space-y-4 h-full flex justify-between md:relative md:h-[95%] ">
+        <div className="message p-5 h-full w-full overflow-y-auto pb-[100px] md:pb-[120px]"> {/* Add padding-bottom here */}
           {messages.map((msg) => (
             <MessageHolder key={msg.id} message={msg} />
           ))}
           <div ref={messageEndRef}></div>
         </div>
-        <form onSubmit={sendMessage} className="input flex gap-[10px] w-full bg-gray-200 p-2 pb-5 absolute bottom-0">
+        <form onSubmit={sendMessage} className="input flex gap-[10px] w-full bg-gray-200 p-2 pb-5 absolute bottom-0 md:h-[100px]">
           <input
             type="text"
             ref={inputRef}
@@ -136,7 +136,7 @@ export default function Discussion() {
             placeholder="Type your message here..."
           />
           <button type="submit" className="flex items-center justify-center w-[45px] h-[45px] rounded-[10px] bg-blue-500">
-            <IoSend className="fill-white" style={{ fontSize: '24px' }} />
+            <IoSend className="fill-blue" style={{ fontSize: '24px' }} />
           </button>
         </form>
       </div>

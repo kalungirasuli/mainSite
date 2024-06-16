@@ -62,8 +62,7 @@ function App() {
   
   return (
     <>
-    <div className="div  ">
-    <Pageload />
+    <div className="div bg-smoke  ">
     {deferredPrompt && (
         <button onClick={handleInstallClick}>Install App</button>
       )}

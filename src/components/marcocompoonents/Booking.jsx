@@ -52,24 +52,27 @@ export default function Booking() {
 
   }, [id]);
   //getting all availble days in a range of 30 froms day(all tuesdays from current day to the nearest Tuesday in 30 dys)
-  const getAvailableDays=(selectedDay)=>{
+  const getAvailableDays = (selectedDay) => {
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const currentDate = new Date();
     const selectedDayIndex = daysOfWeek.indexOf(selectedDay);
     const selectedDate = new Date();
     selectedDate.setDate(currentDate.getDate() + (selectedDayIndex - currentDate.getDay() + 7) % 7);
-    
+
+    let updatedAvailableDays = [];
+
     for (let i = 0; i < 30; i++) {
         const nextDay = new Date(selectedDate);
         nextDay.setDate(selectedDate.getDate() + i * 7);
         const difference = nextDay - currentDate;
         if (difference >= 0 && difference <= 30 * 24 * 60 * 60 * 1000) {
-            availableDaysInMonth.push(nextDay.toDateString())
+            updatedAvailableDays.push(nextDay.toDateString());
         }
     }
-    return availableDaysInMonth;
+
+    setAvailableDaysInMonth(updatedAvailableDays);
+    return updatedAvailableDays;
 }
-const availableDays = getAvailableDays(selectedDay);
 //save the data to firebase 
   const handleBooking = async (event) => {
     event.preventDefault();
@@ -113,7 +116,11 @@ const availableDays = getAvailableDays(selectedDay);
           <div className="div p-3 shadow-md rounded-[10px]">
             <select
               value={selectedDay}
-              onChange={(e) => setSelectedDay(e.target.value)}
+              onChange={(e) =>{
+                 setSelectedDay(e.target.value)
+                 setAvailableDaysInMonth([]);
+                 getAvailableDays(e.target.value)
+                }}
               className="rounded-[10px] outline-none w-full bg-white text-center cursor-pointer"
             >
               <option value="" disabled>Select Day</option>
@@ -123,7 +130,7 @@ const availableDays = getAvailableDays(selectedDay);
             </select>
           </div>
           </div>
-          {availableDaysInMonth &&(
+          {availableDaysInMonth.length > 0 &&(
             <div className="div flex flex-col gap-2 w-[300px] m-auto pt-[20px] md:w-[450px]">
             <label  className="text-[15px] text-greytextdark text-left mb-3">
            Select date
@@ -134,7 +141,7 @@ const availableDays = getAvailableDays(selectedDay);
              onChange={(e) => setSelectedDate(e.target.value)}
              className="rounded-[10px] outline-none w-full bg-white text-center cursor-pointer"
            >
-             <option value="" disabled>Select Time</option>
+             <option value="" disabled>Select date</option>
              {availableDaysInMonth.map((data) => (
                <option key={data} value={data}>{data}</option>
              ))}

@@ -53,19 +53,41 @@ export default function Checkout() {
     <>
       <div className="div">
         <HeadWithBack heading='Check out appointment' />
-        <div className="div w-[90%] m-auto mt-10 shadow-lg rounded-lg pt-5">
+        <div className="div w-[90%] m-auto mt-10 border-solid border-[1px] border-greytextfade rounded-lg p-5">
           {/* summary of the booking */}
-          <h2 className="w-[max-content] text-greytextafade m-auto text-[20px]">Booking summary</h2>
-          <p className="flex flex-row text-greytextdark text-[20px] p-4 justify-evenly"><span className="font-bold text-greytextdark text-left">Pediatrician</span>:<span>{data.doctor}</span></p>
-          <p className="flex flex-row text-greytextdark text-[20px] p-4 justify-evenly"><span className="font-bold text-greytextdark text-left">Mode</span>:<span>{data.mode}</span></p>
-          <p className="flex flex-row text-greytextdark text-[25px] p-4 justify-evenly"><span className="font-bold text-greytextdark text-left">Time</span>:<span>{data.time}</span></p>
-          <p className="flex flex-row text-greytextdark text-[20px] p-4 justify-evenly"><span className="font-bold text-greytextdark text-left">Date</span>:<span>{data.date}</span></p>
-        </div>
-        <form className="w-[90%] m-auto mt-[50px] pt-[100px]" onSubmit={handleClick}>
-          { bookingDetails.mode == "Online" &&
+          <div className=" summa p-2 text-center border-solid border-[1px] border-greytextfade rounded-lg ">
+            <h3 className='text-greytextfade p-0 m-0 text-[20px] '>Booking summary</h3>
+          </div>
+          <div className="div pt-3 flex justify-evenly gap-2">
+          <div className="div text-center w-[50%] border-solid border-[1px] border-greytextfade rounded-lg ">
+            <ul className='flex flex-col gap-2 p-2'>
+              <li className='text-greytextdark text-[15px] p-3 w-full rounded-lg  transition-all duration-100  hover:scale-100  hover:bg-smoke md:text-[20px]'>Doctor</li>
+              <li className='text-greytextdark text-[15px] p-3 w-full rounded-lg  transition-all duration-100  hover:scale-100  hover:bg-smoke md:text-[20px]'>Date</li>
+              <li className='text-greytextdark text-[15px] p-3 w-full rounded-lg  transition-all duration-100  hover:scale-100  hover:bg-smoke md:text-[20px]'>Time</li>
+              <li className='text-greytextdark text-[15px] p-3 w-full rounded-lg  transition-all duration-100  hover:scale-100  hover:bg-smoke md:text-[20px]'>Mode</li>
+            </ul>
+          </div>
+          <div className="div text-center w-[50%] border-solid border-[1px] border-greytextfade rounded-lg">
+            {
+              data&&(
+                <ul className='flex flex-col gap-2 p-2'>
+              <li className='text-greytextdark text-[15px] p-3 w-full rounded-lg  transition-all duration-100  hover:scale-100  hover:bg-smoke md:text-[20px]'>{data.doctor}</li>
+              <li className='text-greytextdark text-[15px] p-3 w-full rounded-lg  transition-all duration-100  hover:scale-100  hover:bg-smoke md:text-[20px]'>{data.date}</li>
+              <li className='text-greytextdark text-[15px] p-3 w-full rounded-lg  transition-all duration-100  hover:scale-100  hover:bg-smoke md:text-[20px]'>{data.time}</li>
+              <li className='text-greytextdark text-[15Spx] p-3 w-full rounded-lg  transition-all duration-100  hover:scale-100  hover:bg-smoke md:text-[20px]'>{data.mode}</li>
+            </ul>
+              )
+            }
+          </div>
+          </div>
+         </div>
+        <form className="w-[90%] m-auto mt-[20px] rounded-lg border-solid border-[1px] border-greytextfade p-3" onSubmit={handleClick}>
+        <div className=" summa p-2 text-center border-solid border-[1px] border-greytextfade rounded-lg ">
+            <h3 className='text-greytextfade p-0 m-0 text-[20px] '>Enter billing address</h3>
+          </div>
           <div className="div pt-[50px]">
             <Input label='MTN Phone number' placeholder='Enter phone number (MTN)' value={phoneNumber} onChange={handlePhoneNumberChange} />
-          </div>}
+          </div>
           <div className="div mt-5 w-full">
             <Button3 text='Check out' bg='bg-blue' color='text-white' rounded='rounded-[10px]' width='w-[90%] m-auto' onClick={handleClick} />
           </div>

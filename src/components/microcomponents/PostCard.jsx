@@ -13,6 +13,8 @@ import { BsImage } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { FaVideo } from "react-icons/fa6";
 import {useState} from "react";
+import { addComment } from "../../firebase/post";
+import TimeFormater from "./Formater";
 // the image component
 const Loader=()=>{
     return(
@@ -39,7 +41,7 @@ const Image =(props)=>{
     return(
         <>
     <VisibilitySensor>
-    <Img src={props.src} className="w-full min-h-[200px] max-h-[400px] md:max-h-[600px] md:min-h-[250px] rounded-[20px]" loader={<Loader/>} unloader={<Loader/>} crossOrigin="annonymous"/>
+    <Img src={props.src} className="w-full min-h-[200px] max-h-[400px] md:max-h-[600px] md:min-h-[250px] rounded-[20px]" loader={<Loader/>} unloader={<Loader/>}/>
     </VisibilitySensor>
     </>
     )
@@ -115,27 +117,40 @@ const largeicons={
 //else it will return the message card without the user profile picture
 //this if the message thread has not been appended by other users
 const ChatID=props.ChatUserId==props.ChatUserCurrent?true:false
+
+
+const getInitials = (name) => {
+  if (!name) return ''; // Return empty string if name is undefined or null
+  
+  const names = name.split(' ');
+  if (names.length === 1) {
+    return name.charAt(0).toUpperCase();
+  } else {
+    return names[0].charAt(0).toUpperCase() + names[names.length - 1].charAt(0).toUpperCase();
+  }
+};
+
+// Get initials from sender's name
+const initials = getInitials(props.ChatsenderName);
   return( 
       <>
       <div className="header flex flex-row justify-normal px-3 gap-3 w-[max-content] max-w-[90%] md:max-w-[80%] " id={ChatID}>
               <div className="img rounded-[50%] w-[40px] h-[40px]  m-0 ">
                  <Link to={props.profileLink} className='rounded-[50%] w-[40px] h-[40px]  m-0'>
                   {/* the image should not appear if the user is the same as the current user send the message */}
-                 <img src={props.ChatsenderPicture}  className={`p-0  w-full h-full  rounded-[50%] `}/>
+                 <img src={props.ChatsenderPicture} alt={initials} className={`p-0  w-full h-full  rounded-[50%] text-center text-[20px] text-greytextdark `}/>
                  </Link>
               </div>
-              <div className="detailes w-full bg-gray-50 rounded-b-[20px] rounded-se-[20px] p-2 ">
+              <div className="detailes w-full bg-white rounded-b-[20px] rounded-se-[20px] p-2 border-solid border-[1px] border-greytextfade ">
                   <div className="controls flex flex-row justify-between">
-                     <ul className="flex flex-row justify-between w-auto">
+                     <ul className="flex flex-row justify-between gap-5 w-full">
                           <li className=" w-[max-content] text-[15px] text-greytextdark font-bold">
                           {props.ChatsenderName}
                           </li>
                           
                           {props.Chatsenderrole=='doctor'|| props.Chatsenderrole=='admin'?<li className="w-[max-content]"><div className="verified"><MdVerifiedUser style={style} color={'#3b8aff'} /></div></li>:''}
-                      
-                          <li className=" w-[max-content] text-[15px] text-greytextfade">
-                          {props.Cahttime}
-                          </li>
+                            
+                          <TimeFormater timestamp={props.Cahttime?props.Cahttime:null}/>
                      </ul>
                      <div className="postOperaions">
                       <ul className="">
@@ -146,7 +161,7 @@ const ChatID=props.ChatUserId==props.ChatUserCurrent?true:false
                      </div>
                   </div>
                   {/* this only appears when the users is refferanced the message in the comment */}
-                  <Link to={props.ChatRef} className="postText w-full border-l-blue border-l-3 ">
+                  {/* <Link to={props.ChatRef} className="postText w-full border-l-blue border-l-3 ">
                     <ul className="flex w-auto">
                             <li className=" w-[max-content] text-[15px] text-greytextdark font-bold">
                             {props.ChatsenderName}
@@ -160,7 +175,7 @@ const ChatID=props.ChatUserId==props.ChatUserCurrent?true:false
                       </ul>
                       <p className="m-0 pb-2 text-[13px] lg:text-black lg:text-[15px]">{props.ChatrefText?ChatrefText.subString(0,20):''}</p>
                      {props.ChatrefFile ?  <div className="postFile w-full rounded-[15px] border-[1px] border-greytextfade py-3 px-2 bg-slate-100">{props.ChatrefFileType=='image'?<img src={props.ChatRefimage} loading="lazy" />:<video src={props.ChatRefvideo} type={Chat}></video>}</div>:''}
-                  </Link>
+                  </Link> */}
                   {/* end of the refferance */}
                   <div className="postText w-full">
                       <p className="m-0 pb-2 text-[13px] lg:text-black lg:text-[15px]">{props.Chattext}</p>
@@ -168,7 +183,7 @@ const ChatID=props.ChatUserId==props.ChatUserCurrent?true:false
                   {props.Chatfile ?  <div className="postFile w-[contain] rounded-[15px] border-[1px] border-greytextfade py-3 px-2">{props.ChatfileType=='image'? <img src={props.ChatimageSrc} className="w-auto min-h-[100px] max-h-[450px] md:max-h-[500px] m-auto rounded-[10px]"  />:<VideoJS options={{autoplay: false,controls: true,responsive: true,fluid: true,sources: [{src :props.ChatvideoSrc,type: props.ChatvideoType}]}}  onReady={handlePlayerReady} />}</div>:''}
             
                   <div className="postcontrol flex flex-row justify-end gap-4 p-3">
-                  <LiaCommentSolid style={style2} className="icon-small"/> 
+                  {/* <LiaCommentSolid style={style2} className="icon-small"/>  */}
                   <RiDeleteBin4Line style={style2} className="icon-small"/>
                   </div>
                   
@@ -179,128 +194,117 @@ const ChatID=props.ChatUserId==props.ChatUserCurrent?true:false
       </>
   )
 }
-// the refferance div tha appears on top of the input fill with the use clicks to refferance a message
-const RefShowInput=(props)=>{
-  return(
-    <>
-     <div to={props.ChatRef} className="postText w-full p-4 border-l-blue border-l-[5px] bg-white ">
-                            <ul className="flex w-auto">
-                                    <li className=" w-[max-content] text-[15px] text-greytextdark font-bold">
-                                    {props.ChatsenderName}
-                                    </li>
-                                    
-                                    {props.Chatsenderrole=='doctor'|| props.Chatsenderrole=='admin'?<li className="w-[max-content]"><div className="verified"><MdVerifiedUser style={style} color={'#3b8aff'} /></div></li>:''}
-                                
-                                    <li className=" w-[max-content] text-[15px] text-greytextfade">
-                                    {props.Cahttime}
-                                    </li>
-                              </ul>
-                             {props.ChatrefFile && props.ChatrefFileType=='image'?<div className="flex flex-row"> <span className="w-full"><BsImage ></BsImage></span><img src={props.ChatRefimage} className="w-[30%] h-[60px]"/>:</div>:''}
-                             {props.ChatrefFile && props.ChatrefFileType=='video'?<div className="flex flex-row"> <span className="w-full"><FaVideo></FaVideo></span><video src={props.ChatRefvideo} type={ChatRefvideoType}></video>:</div>:''}
-                             {props.ChatRefText?<p className="m-0 pb-2 text-[13px] lg:text-black lg:text-[15px]">{props.ChatrefText?ChatrefText.subString(0,20):''}</p>:''}
-                      </div>
-    </>
-  )
-}
-export default function PostCard(props){
-//the check state of clicked icon
-const [refferance,setRefferance]=React.useState(true)
- const style={
-        fontSize:'25px',
-        color:'#3b8aff'
-    }
-const style2={
-  fontSize:'30px',
-  color:'#3d4652'
 
-}
-  const playerRef = React.useRef(null);
-  const handlePlayerReady = (player) => {
-    playerRef.current = player;
-
-    // You can handle player events here, for example:
-    player.on('waiting', () => {
-      videojs.log('player is waiting');
-    });
-
-    player.on('dispose', () => {
-      videojs.log('player will dispose');
-    });
+export default function PostCard(props) {
+  const style = {
+    fontSize: '25px',
+    color: '#3b8aff'
   };
-  const [comment,setComm]=useState(false)
-  const setcomment=()=>{
-    comment?setComm(false):setComm(true)
-  }
-    return(
-        <>
-        {/* the post card component */}
-        <div className="border-y-[1px] border-x-greytextfade pt-5  w-full -z-50">
-            <div className="header flex flex-row justify-between px-3 gap-3 ">
-                <div className="img rounded-[50%] w-[40px] h-[40px]  m-0 ">
-                {/* this send you to the posters profile they are doctor only and users cant view others profile accept doctors profiles */}
-                <Link to={props.profileLink} className='rounded-[50%] w-[40px] h-[40px]  m-0'>
-                 <img src={props.Profilesrc} alt={props.AltProfile} className={`p-0  w-full h-full  rounded-[50%] text-center font-bold text-greytextfade text-[20px] `}/>
-                </Link>
-                </div>
-                <div className="detailes w-full">
-                    <div className="controls flex flex-row justify-between">
-                       <ul className="flex flex-row justify-between w-full">
-                            <li className=" w-[max-content] text-[15px] text-greytextdark font-bold">
-                            {props.author}
-                            </li>
-                            {/* this is when the poster is a doctor or an admin and the protected icon will appear */}
-                            {props.role=='doctor'|| props.role=='admin'?<li className="w-[max-content]"><div className="verified"><MdVerifiedUser style={style} color={'#3b8aff'} /></div></li>:''}
-                        
-                            <li className=" w-[max-content] text-[15px] text-greytextfade">
-                            {props.time}
-                            </li>
-                       </ul>
-                       <div className="postOperaions">
-                        <ul className="">
-                          {/* if the user is following the poster of the post the icon will change so this is boolean in nature */}
-                            {props.following ?<li className="w-[max-content] hover:bg-greytextfade p-2 "><RiUserFollowLine style={style}  className="icon-small"/></li>: <li className="w-[max-content] p-2 hover:bg-greytextfade"><RiUserUnfollowLine style={style} color="#726F6F"/></li>}
-                           
-                        </ul>
-                       </div>
+  const style2 = {
+    fontSize: '25px',
+    color: '#3d4652'
+  };
+
+  const [comment, setComment] = useState(false);
+  const [newComment, setNewComment] = useState('');
+
+  const toggleCommentSection = () => {
+    setComment(!comment);
+  };
+
+  const handleAddComment = async () => {
+    if (newComment.trim() !== '') {
+      try {
+        await addComment(props.userUid, props.postId, newComment);
+        setNewComment('');
+        alert('comment submited')
+      } catch (error) {
+        console.error('Error adding comment:', error);
+      }
+    }
+  };
+
+  return (
+    <>
+      {/* Post card content */}
+      <div className="border-y-[1px] border-x-greytextfade pt-5 w-full -z-50">
+        <div className="header flex flex-row justify-between px-3 gap-3">
+          <div className="img rounded-[50%] w-[40px] h-[40px] m-0">
+            <Link to={props.profileLink} className='rounded-[50%] w-[40px] h-[40px] m-0'>
+              <img src={props.Profilesrc} alt={props.AltProfile} className="p-0 w-full h-full rounded-[50%] text-center font-bold text-greytextfade text-[20px]" />
+            </Link>
+          </div>
+          <div className="detailes w-full">
+            <div className="controls flex flex-row justify-between">
+              <ul className="flex flex-row justify-between w-full">
+                <li className="w-[max-content] text-[15px] text-greytextdark font-bold">
+                  {props.author}
+                </li>
+                {props.role === 'doctor' || props.role === 'admin' ? (
+                  <li className="w-[max-content]">
+                    <div className="verified">
+                      <MdVerifiedUser style={style} color={'#3b8aff'} />
                     </div>
-                    {/* this is the posted text for the user */}
-                    <div className="postText w-full">
-                        <span className="m-0 p-0 text-[13px] break-all lg:text-black lg:text-[15px]">{props.text}</span>
-                    </div>
-                    {/* the file will only appear if the data returned has a file and the file type is an image or video */}
-                    {/* {props.file ? <div className="postFile w-full rounded-[15px] border-[1px] border-greytextfade py-3 px-2">{props.fileType== 'image'? <Image src={props.imageSrc}  />:<VideoJS options={{autoplay: false,controls: true,responsive: true,fluid: true,sources: [{src :props.videoSrc,type: props.videoType}]}}  onReady={handlePlayerReady} />}</div>:''} */}
-                    {props.file ? <div className="postFile w-full rounded-[15px] border-[1px] border-greytextfade py-3 px-2">{props.fileType== 'image'? <img src={props.imageSrc} alt='loading...' loading="lazy"  />:<VideoJS options={{autoplay: false,controls: true,responsive: true,fluid: true,sources: [{src :props.videoSrc,type: props.videoType}]}}  onReady={handlePlayerReady} />}</div>:''}
-                    <div className="postcontrol flex flex-row justify-between p-3">
-                    <LiaCommentSolid style={style2} className="icon-small" onClick={setcomment}/>
-                    <CiShare1 style={style2} className="icon-small"/>
-                    <RiAccountPinBoxLine style={style2} className="icon-small"/>
-                    <RiDeleteBin4Line style={style2} className="icon-small"/>
-                    </div>
-                    
-                </div>
-                
-                
+                  </li>
+                ) : ''}
+                <li className="w-[max-content] text-[15px] text-greytextfade">
+                  {props.time}
+                </li>
+              </ul>
             </div>
-            {/* the comment section */}
-            {/* this should only appear when the user clicks the comment icon on the post */}
-           {
-            comment? <div className="comments w-full h-[500px] align-middle md:h-[650px] border-t-[1px] border-t-greytextfade">
-            <div className="chats w-[90%] m-auto p-3 h-[440px] md:h-[540px] overflow-y-auto overflow-x-hidden">
-               <MessageDoctor Chattext={props.Chattext} ChatsenderName={props.ChatsenderName} ChatSent={props.ChatSent} Chatfile={props.Chatfile} ChatimageSrc={props.ChatimageSrc} ChatvideoSrc={props.ChatvideoSrc} ChatvideoType={props.ChatvideoType} ChatfileType={props.ChatfileType} ChatsenderPicture={props.ChatsenderPicture} Cahttime={props.Cahttime} Chatsenderrole={props.Chatsenderrole}/>
+            <div className="postText w-full py-4">
+              <span className="m-0 p-0 text-[13px] break-all lg:text-black lg:text-[15px]">{props.text}</span>
             </div>
-            {/* this only appears when the users is refferaning the message in the comment */}
-             {refferance?<RefShowInput ChatRef={props.ChatRef} ChatRefimage={props.ChatRefimage} ChatRefvideo={props.ChatRefvideo} ChatrefText={props.ChatrefText} ChatrefFile={props.ChatrefFile} ChatrefFileType={props.ChatrefFileType} ChatRefimage={props.ChatRefimage} ChatRefvideo={props.ChatRefvideo} ChatRefvideoType={props.ChatRefvideoType}/>:''}     
-            {/* end of the refferancing */} 
-            <div className="input p-3  flex flex-row justify-between w-full  bg-gray-100 ">
-                <span className="h-[max-content] m-auto"><IoAttachSharp style={style2}/></span>
-                  <input type="text" className="w-[75%] rounded-[20px] h-[45px] px-3 text-gray-800 "/>
-                 <span className="h-[max-content] m-auto"  >  <IoSend style={style2}/></span>        
+            {props.file ? (
+              <div className="postFile w-full min-w-[min-content] bg-gray-300 rounded-[25px] border-[1px] border-greytextfade">
+                {props.fileType === 'image' ? (
+                  <Image src={props.imageSrc} alt="Post file" className="rounded-[15px]" />
+                ) : (
+                  <video src={props.videoSrc} controls className="w-full rounded-[15px]" />
+                )}
+              </div>
+            ) : ''}
+            <div className="postcontrol flex flex-row justify-between p-3">
+              <span className="flex gap-[5px]" onClick={toggleCommentSection} >
+             
+              <LiaCommentSolid style={style2} className="icon-small"/>
+              <div className="bagde w-[max-content] h-[max-content] p-[1px] text-[15px] mt-1">
+               {props.comments ? (props.comments.length >= 1000 ? '1000+' : props.comments.length) : ''}
+              </div>
+              </span>
+              <CiShare1 style={style2} className="icon-small" />
+              <RiDeleteBin4Line style={style2} className="icon-small" />
             </div>
-          </div>:""
-           }
-            
+          </div>
         </div>
-        {/* end of comment section */}
-        </>
-    )
+        {comment && (
+          <div className="comments w-full h-[510px] align-middle md:h-[650px] border-t-[1px] border-t-greytextfade">
+            <div className="chats w-[90%] flex flex-col gap-2 m-auto p-3 h-[440px] md:h-[540px] overflow-y-auto overflow-x-hidden">
+              {props.comments.map(comment => (
+                <MessageDoctor
+                  key={comment.id}
+                  Chattext={comment.comment}
+                  ChatsenderName={comment.firstName + ' ' + comment.secondName}
+                  Cahttime={new Date(comment.timestamp.seconds * 1000).toLocaleString()}
+                  ChatsenderPicture={comment.ChatsenderPicture}
+                  Chatsenderrole={comment.role}
+                />
+              ))}
+            </div>
+            <div className="input p-3 flex flex-row justify-between w-full bg-gray-100">
+              <input
+                type="text"
+                className="w-[87%] rounded-[20px] h-[45px] px-3 text-gray-800"
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+              />
+              <span className="h-[max-content] m-auto" onClick={handleAddComment}>
+                <IoSend style={style2} onClick={handleAddComment} />
+              </span>
+            </div>
+          </div>
+        )}
+      </div>
+    </>
+  );
 }
