@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -14,9 +15,10 @@ export default function ViewAppointments() {
 
   useEffect(() => {
     const determineUserType = async () => {
+
       if (user) {
         try {
-          const uid = user;
+          const uid = user; 
           console.log(uid)
 
           // Check if the user is a doctor
@@ -34,7 +36,11 @@ export default function ViewAppointments() {
 
           if (!motherSnapshot.empty) {
             setUserType('mother');
+            return;
           }
+
+          // Default to fetching all bookings if user is not a doctor or mother
+          setUserType('admin');
         } catch (error) {
           console.error("Error determining user type: ", error);
         }
@@ -42,13 +48,16 @@ export default function ViewAppointments() {
     };
 
     const fetchBookings = async () => {
-      if (user && userType) {
+      if (user && userType !== null) {
         try {
           let bookingQuery;
           if (userType === 'doctor') {
             bookingQuery = query(collection(db, 'bookings'), where('doctorId', '==', user));
           } else if (userType === 'mother') {
             bookingQuery = query(collection(db, 'bookings'), where('userId', '==', user));
+          } else {
+            // Fetch all bookings for admin
+            bookingQuery = query(collection(db, 'bookings'));
           }
 
           const bookingSnapshot = await getDocs(bookingQuery);
@@ -63,10 +72,10 @@ export default function ViewAppointments() {
 
     determineUserType();
 
-    if (userType) {
+    if (userType !== null) {
       fetchBookings();
     }
-  }, [user, userType]);
+  }, [user, userType]); // Added userType to the dependency array
 
   return (
     <>

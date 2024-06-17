@@ -52,7 +52,7 @@ export default function  AdminDoctors() {
              name={doctor.firstName +" " + doctor.secondName} 
              time={doctor.timestamp}
              email={doctor.email}
-
+             doctorId={doctor.uid}
             // this deactives an account 
              status='Deactived'
             //  the shows after the doctor has created it

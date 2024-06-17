@@ -50,7 +50,7 @@ export default function  AdminMothers() {
              name={mother.firstName +" " + mother.secondName} 
              time={mother.timestamp}
              email={mother.email}
-
+             doctorId={mother.uid}
             // this deactives an account 
              status='Deactived'
             //  the shows after the mother has created it

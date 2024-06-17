@@ -43,27 +43,41 @@ export default function Discussion() {
   useEffect(() => {
     inputRef.current.focus();
 
+
     const determineUserType = async () => {
       if (user) {
         try {
           const uid = user;
-
+    
+          // Check if the user is an admin
+          const adminQuery = query(collection(db, 'admin'), where('uid', '==', uid));
+          const adminSnapshot = await getDocs(adminQuery);
+    
+          if (!adminSnapshot.empty) {
+            setUserType('admin');
+            return;
+          }
+    
           // Check if the user is a doctor
           const doctorQuery = query(collection(db, 'doctors'), where('uid', '==', uid));
           const doctorSnapshot = await getDocs(doctorQuery);
-
+    
           if (!doctorSnapshot.empty) {
             setUserType('doctor');
             return;
           }
-
+    
           // Check if the user is a mother
           const motherQuery = query(collection(db, 'mothers'), where('uid', '==', uid));
           const motherSnapshot = await getDocs(motherQuery);
-
+    
           if (!motherSnapshot.empty) {
             setUserType('mother');
+            return;
           }
+    
+          // If no user type is found
+          console.error("User type not found.");
         } catch (error) {
           console.error("Error determining user type:", error.message);
         }
@@ -71,7 +85,7 @@ export default function Discussion() {
         console.error("User is not logged in.");
       }
     };
-
+    
     determineUserType();
 
     if (roomId) {

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
@@ -7,6 +8,8 @@ import { styles, Input } from '../microcomponents/textComponents';
 import HeaderLogo from '../microcomponents/HeaderLogo';
 import RoundedButton from '../microcomponents/RoundedButton';
 import { buttonStyle, Alt } from '../microcomponents/textComponents';
+import { db } from '../../firebase/config';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 
 export default function SignIn() {
     const [email, setEmail] = useState('');
@@ -30,15 +33,52 @@ export default function SignIn() {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
-            dispatch(setUser({ user: user.uid, email: user.email, role: 'yourRoleHere', super: user })); 
+            const userType = await determineUserType(user.uid);
+
+            dispatch(setUser({ user: user.uid, email: user.email, role: userType, super: user }));
             console.log('User logged in:', user.uid);
 
-            const userAuth = auth.currentUser;
-            console.log("The authenticated user is:", userAuth);
-
-            navigate('/');
+            if (userType === 'admin') {
+                navigate('/pannel');
+            } else {
+                navigate('/');
+            }
         } catch (error) {
             console.error('Error logging in user:', error.message);
+        }
+    };
+
+    const determineUserType = async (uid) => {
+        try {
+            // Check if the user is an admin
+            const adminQuery = query(collection(db, 'admin'), where('uid', '==', uid));
+            const adminSnapshot = await getDocs(adminQuery);
+
+            if (!adminSnapshot.empty) {
+                return 'admin';
+            }
+
+            // Check if the user is a doctor
+            const doctorQuery = query(collection(db, 'doctors'), where('uid', '==', uid));
+            const doctorSnapshot = await getDocs(doctorQuery);
+
+            if (!doctorSnapshot.empty) {
+                return 'doctor';
+            }
+
+            // Check if the user is a mother
+            const motherQuery = query(collection(db, 'mothers'), where('uid', '==', uid));
+            const motherSnapshot = await getDocs(motherQuery);
+
+            if (!motherSnapshot.empty) {
+                return 'mother';
+            }
+
+            // Default user type if no match is found
+            return 'unknown';
+        } catch (error) {
+            console.error('Error determining user type: ', error);
+            return 'unknown';
         }
     };
 
@@ -69,7 +109,7 @@ export default function SignIn() {
                     classes='bg-white'
                 />
                 <div className={`${buttonStyle}`}>
-                    <RoundedButton text='Sign-in' type='submit'  onClick={handleSubmit}/>
+                    <RoundedButton text='Sign-in' type='submit' onClick={handleSubmit} />
                     <Alt endText='Forgot password' link='/User/resetpassword' />
                     <Alt highlightText='Sign-up' endText='instead' link='/User' />
                 </div>
