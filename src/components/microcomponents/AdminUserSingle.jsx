@@ -99,8 +99,8 @@ export default function AdminUserSingle(props) {
                                             <TiMessages className="fill-greytextdark" style={{fontSize:'25px'}} onClick={props.handleMessagesClick}/>
                                             </span>  
                                              {/* the file only appears no doctors page so no need to write more logic for it */}
-                                            <span className={`${props.show?'block':'hidden'}`}>
-                                            <BsFillFileEarmarkArrowDownFill className="fill-greytextdark" style={{fontSize:'25px'}} onClick={props.downloadFile}/>
+                                            <span className={`${props.show?'block':'hidden'}`} onClick={()=> console.log("clicked me ")} >
+                                            <BsFillFileEarmarkArrowDownFill className="fill-greytextdark" style={{fontSize:'25px'}} onClick={()=> console.log("clicked me ")}/>
                                             </span>  
                                              {/* the delect only appears no doctors page so no need to write more logic for it */} 
                                             <span className={`${props.show?'block':'hidden'}bg-red-500 p-2 text-white text-center text-[15px] rounded-lg`} onClick={props.handleDelete}>
