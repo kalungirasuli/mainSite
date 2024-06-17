@@ -1,41 +1,41 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa';
-
 export default defineConfig({
   plugins: [
-    react(),
-    VitePWA({
+    react(), 
+    VitePWA({ 
+      registerType: 'autoUpdate',
+      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
       manifest: {
-        fileName: 'manifest.json',
-      },
-      workbox: {
-        globPatterns: ['**/*'],
-        navigateFallback: '/index.html',
-        runtimeCaching: [
-          {
-            // Cache Firebase API responses
-            urlPattern: new RegExp('^https://neonnate-e66bb.firebaseapp.com/'),
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'firebase-api-cache',
+        name: 'Neonates',
+        short_name: 'Neonates',
+        theme_color: '#ffffff',
+        icons: [
+            {
+                src: './images/logo.png',
+                sizes: '64x64',
+                type: 'image/png'
             },
-          },
-          {
-            // Cache images
-            urlPattern: /\.(png|jpg|jpeg|svg|gif)$/,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'image-cache',
-              expiration: {
-                maxEntries: 50,
-                maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
-              },
+            {
+                src: './images/logo.png',
+                sizes: '192x192',
+                type: 'image/png'
             },
-          },
-          // Add more runtime caching strategies as needed
+            {
+                src: './images/logo.png',
+                sizes: '512x512',
+                type: 'image/png',
+                purpose: 'any'
+            },
+            {
+                src: './images/logo.png',
+                sizes: '512x512',
+                type: 'image/png',
+                purpose: 'maskable'
+            }
         ],
-      },
-    }),
+      }, 
+    })
   ],
-});
+})
