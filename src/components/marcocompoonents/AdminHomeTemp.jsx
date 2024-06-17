@@ -1,5 +1,5 @@
 import { Outlet,Link } from "react-router-dom"
-import {  IoCalendarSharp, IoHomeSharp,  IoPerson, IoSearchSharp, IoAddSharp } from "react-icons/io5"
+import {  IoCalendarSharp, IoHomeSharp,  IoPerson, IoSearchSharp, IoAddSharp, IoWomanOutline } from "react-icons/io5"
 import { BsPostcard } from "react-icons/bs";
 import { MdMessage } from "react-icons/md"
 import { Button3 } from "../microcomponents/RoundedButton"
@@ -19,37 +19,37 @@ export default function AdminHomeTemp(){
                         <span className="text-center hidden text-[20px] xl:block">Dashboard</span>
                     </li>
                 </div>
-                <Link to="/appointment" className="p-0 w-[max-content] m-auto xl:w-full xl:m-0">
+                <Link to="/admin" className="p-0 w-[max-content] m-auto xl:w-full xl:m-0">
                     <li className="p-3 w-[max-content] rounded-[30px] hover:bg-greytextfade  flex flex-row gap-5">
                         <IoCalendarSharp className="icon"/>
                         <span className="text-center hidden text-[20px] xl:block">All appoinments</span>
                     </li>
                 </Link>
-                <Link to="/Message" className="p-0 w-[max-content] m-auto xl:w-full xl:m-0">
+                <Link to="/admin" className="p-0 w-[max-content] m-auto xl:w-full xl:m-0">
                     <li className="p-3 w-[max-content] rounded-[30px] hover:bg-greytextfade  flex flex-row gap-5">
                         <MdMessage className="icon"/>
                         <span className="text-center hidden text-[20px] xl:block">User messages</span>
                     </li>
                 </Link>
-                <Link to="/Message" className="p-0 w-[max-content] m-auto xl:w-full xl:m-0">
+                <Link to="/admin" className="p-0 w-[max-content] m-auto xl:w-full xl:m-0">
                     <li className="p-3 w-[max-content] rounded-[30px] hover:bg-greytextfade  flex flex-row gap-5">
                         <BsPostcard className="icon"/>
                         <span className="text-center hidden text-[20px] xl:block">Posts</span>
                     </li>
                 </Link>
 
-                <Link to="/profile" className="p-0 w-[max-content] m-auto xl:w-full xl:m-0">
+                <Link to="/admin" className="p-0 w-[max-content] m-auto xl:w-full xl:m-0">
                     <li className="p-3 w-[max-content] rounded-[30px] hover:bg-greytextfade  flex flex-row gap-5">
                         <IoPerson className="icon"/>
                         <span className="text-center hidden text-[20px] xl:block">Profile</span>
                     </li>
                 </Link>
-                <Link to="" className="p-0 w-[max-content] m-auto xl:w-full xl:m-0 xl:hidden">
+                <Link to="admin" className="p-0 w-[max-content] m-auto xl:w-full xl:m-0 xl:hidden">
                     <li className="p-3 w-[max-content] rounded-[30px] hover:bg-greytextfade  flex flex-row gap-5">
                         <IoSearchSharp className='icon'/>
                     </li>
                 </Link>
-                <Link to="/add-post" className="p-0 w-[max-content] m-auto absolute bottom-[50px] right-[10px] md:static xl:w-full xl:m-0 xl:block">
+                <Link to="/admin" className="p-0 w-[max-content] m-auto absolute bottom-[50px] right-[10px] md:static xl:w-full xl:m-0 xl:block">
                     <li className="py-3 max-w-[200px]">
                         <div className="w-[max-content] bg-blue p-4 rounded-[50%] xl:hidden">
                         <IoAddSharp className="icon white" />
