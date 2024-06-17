@@ -1,0 +1,33 @@
+
+@keyframes zoomIn {
+    0% {
+      
+        opacity: 0; /* Start with opacity 0 */
+    }
+    20% {
+        opacity: 0.2; /* Midway through animation */
+    }
+
+    40%{
+        opacity: 0.4
+    }
+
+    60% { /* Adjust the scale factor as needed */
+        opacity: 0.6; /* Fully visible */
+    }
+    80% {
+        opacity: 0.8; /* Start with opacity 0 */
+    }
+    100% {
+        transform: scale(1.2); /* Adjust the scale factor as needed */
+        opacity: 1; /* Full*/
+    }
+
+   
+}
+
+/* Apply animation to logo when loaded */
+.logoloaded {
+    animation: zoomIn 2s ease-in-out; /* Adjust duration and timing function as needed */
+    animation-fill-mode: forwards; /* Keeps final state of animation (scale 1.2) */
+}

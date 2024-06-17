@@ -3,8 +3,24 @@
 @tailwind utilities;
 
 
-/* fonts: lucinda */
 
+
+::-webkit-scrollbar{
+      display: none;
+}
+::-webkit-scrollbar-track{
+  background: blue;
+}
+::-webkit-scrollbar-thumb{
+  background: transparent;
+}
+
+li{
+  transition: all .5s;
+  margin-bottom: 2px;
+  
+}
+/* fonts: lucinda */
 @font-face {
     font-family: lucidahandwriting;
     src: url(../public/css/fonts/lucidahandwriting.ttf);

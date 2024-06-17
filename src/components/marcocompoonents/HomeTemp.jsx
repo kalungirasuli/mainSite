@@ -58,7 +58,7 @@ export default function HomeTemp(){
                 <Outlet/>
                 
             </div>
-            <div className="div p-4 hidden xl:block xl:w-[30%] ">
+            <div className="div p-4 hidden lg:block xl:w-[30%] ">
                 <SavePost/>   
             </div>
             </div>

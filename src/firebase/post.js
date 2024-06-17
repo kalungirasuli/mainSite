@@ -94,6 +94,8 @@ export const fetchPostsWithComments = (callback) => {
     }
     callback(posts);
   });
+
+  
 };
 
 

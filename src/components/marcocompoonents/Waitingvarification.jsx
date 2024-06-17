@@ -10,7 +10,7 @@ export default function WaitingVerification() {
     doctor: "Your documents are currently under verification. We appreciate your patience and will respond by sending you an email soon. Thank you.",
   };
   const buttontext = {
-    mother: 'Resend message',
+    mother: 'Sign-in into account',
     doctor: 'Cancel submission',
   };
   const altbuttontext = {
@@ -45,7 +45,7 @@ export default function WaitingVerification() {
         <p className="text-[13px] text-greytextdark md:text-[20px] ">
           {user === 'mother' ? message.mother : message.doctor}
         </p>
-        <Button3 width='w-[60%] mt-5' color={color} bg={bg} text={text} />
+        <Button3 width='w-[60%] mt-5' color={color} bg={bg} text={text} link='/User/sign-in'/>
       </div>
       {user === 'doctor' ? (
         <div className={`${buttonStyle} mt-5`}>
@@ -53,11 +53,7 @@ export default function WaitingVerification() {
           <p className="text-center text-greytextdark text-[15] my-2"> or</p>
           <Button3 width='w-full' color='text-white' bg='bg-blue' text={altbuttontext.out} />
         </div>
-      ) : (
-        <div className="progress-bar flex flex-row absolute bottom-[100px] left-0 right-0 w-[70%] m-auto lg:w-[50%] bg-greytextfade xl:w-[40%]">
-          <hr className='bg-blue h-2 w-[20%]' />
-        </div>
-      )}
+      ) : ''}
     </div>
   );
 }

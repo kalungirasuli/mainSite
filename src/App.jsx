@@ -22,12 +22,17 @@ import Discussion from "./components/marcocompoonents/Discussion"
 import MessageRooms from "./components/marcocompoonents/MessageRooms"
 
 import AddPost from "./components/marcocompoonents/AddPost"
-
+import Postsingle from "./components/marcocompoonents/Postsingle"
 import Profile from "./components/marcocompoonents/Profile"
 import EditPassword from "./components/marcocompoonents/EditPassword"
+import ResetPassword from "./components/marcocompoonents/ResetPassword"
+// import NewPassword from "./components/marcocompoonents/NewPassword"
 import ViewAppointments from "./components/marcocompoonents/ViewAppointments"
 
 import AdminHomeTemp from "./components/marcocompoonents/AdminHomeTemp"
+import AdminUsers from "./components/marcocompoonents/AdminUser"
+import AdminDoctors from "./components/marcocompoonents/AdminDoctors"
+import AdminMothers from "./components/marcocompoonents/AdminMothers"
 function App() {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
 
@@ -67,9 +72,13 @@ function App() {
         <button onClick={handleInstallClick}>Install App</button>
       )}
     <BrowserRouter>
+
+
+    {/* the general routes */}
     <Routes>
       <Route path="/" element={<HomeTemp/>}>
               <Route index element={<Home/>}></Route>
+              <Route path='post' element={<Postsingle/>}></Route>
               <Route path="add-post" element={<AddPost/>}></Route>
               <Route path="appointment" element={<Appointments/>}>
                   <Route index element={<ViewAppointments/>}></Route>
@@ -86,25 +95,42 @@ function App() {
               <Route path="profile/editpassword" element={<EditPassword/>}></Route>
               
       </Route>
-      <Route path="/admin" element={<AdminHomeTemp/>}>
+ 
+
+
+    
+      {/* the admin pannel routes */}
+      <Route path="/pannel" element={<AdminHomeTemp/>}>
                     <Route index element={<Home/>}></Route>
+                    <Route path='post' element={<Postsingle/>}></Route>
                     <Route path="add-post" element={<AddPost/>}></Route>
-                    <Route path="appointment" element={<Appointments/>}>
+                    <Route path="appointments" element={<Appointments/>}>
                         <Route index element={<ViewAppointments/>}></Route>
                     </Route>
-                    <Route path="Message" element={<Message/>}>
+                    <Route path="Messages" element={<Message/>}>
                         <Route index element={<MessageRooms/>}></Route> 
                         <Route path=":id" element={<Discussion/>}></Route>
                     </Route>
-                    <Route path="profile" element={<Profile/>}></Route>
-                    <Route path="profile/editpassword" element={<EditPassword/>}></Route>
+                    <Route path="users" element={<AdminUsers/>}>
+                        <Route path='doctors' element={<AdminDoctors/>}></Route>
+                        <Route path="mothers" element={<AdminMothers/>}></Route>
+                    </Route>
+                    
       </Route>
+
+
+
+
+
+      {/* the starter routes */}
       <Route path="User" element={<Temp/>}>
               <Route index  element={<Discission/>}></Route>
               <Route path="sign-up-mother" element={<Mother/>}></Route>
               <Route path="sign-up-pedetricain" element={<Doctor/>}></Route>
               <Route path="sign-in" element={<SignIn/>}></Route>
               <Route path='verification' element={<Waitingvarification/>}></Route>
+              <Route path='resetpassword' element={<ResetPassword/>}></Route>
+              {/* <Route path="newpassword" element={<NewPassword/>}></Route> */}
       </Route>
       
     </Routes>

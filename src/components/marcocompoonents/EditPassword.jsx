@@ -4,6 +4,7 @@ import HeadWithBack from "../microcomponents/HeadWithBack";
 import { Input } from "../microcomponents/textComponents";
 import { Button3 } from "../microcomponents/RoundedButton";
 import { useSelector } from 'react-redux';
+import { Alt } from '../microcomponents/textComponents';
 
 export default function EditPassword() {
     const [currentPassword, setCurrentPassword] = useState('');
@@ -72,7 +73,9 @@ export default function EditPassword() {
                     <div className="w-full pt-5">
                         <Button3 text="Save" bg='bg-blue text-white' onClick={handlePasswordChange}/>
                     </div>
+                    <Alt highlightText='Email' endText='verification  instead' link='/resetpassword' />
                 </form>
+               
             </div>
         </>
     );

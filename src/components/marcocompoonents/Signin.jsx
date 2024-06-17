@@ -70,7 +70,7 @@ export default function SignIn() {
                 />
                 <div className={`${buttonStyle}`}>
                     <RoundedButton text='Sign-in' type='submit'  onClick={handleSubmit}/>
-                    <Alt endText='Forgot password' />
+                    <Alt endText='Forgot password' link='/User/resetpassword' />
                     <Alt highlightText='Sign-up' endText='instead' link='/User' />
                 </div>
             </form>
