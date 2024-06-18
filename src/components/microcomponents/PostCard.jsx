@@ -181,7 +181,7 @@ export default function PostCard(props) {
         console.error('Error deleting post:', error);
     }
 };
-const canDelete = props.userUid === props.postUid || props.userRole === 'admin';
+const canDelete = props.userUid === props.postUid || props.userType === 'admin';
   return (
     <>
       <div className="border-y-[1px] border-x-greytextfade pt-5 w-full -z-50">
