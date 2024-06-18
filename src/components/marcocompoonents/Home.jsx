@@ -21,7 +21,7 @@ export default function Home() {
     
     return (
         <div className="post w-full h-full overflow-y-auto">
-          {posts.length === 0 && loading ? <Pageload /> : console.log("Posts fetched:", posts.map((posts)=>(posts.imageUrls[0].value)))} 
+          {posts.length === 0 && loading ? <Pageload /> : console.log("Posts fetched:", console.log(user))} 
             {loading && posts.length===0? <Loading /> : (
                 posts.map((post) => (
                     <PostCard 

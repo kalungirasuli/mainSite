@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 
-const Install= () => {
+const Install = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showInstallButton, setShowInstallButton] = useState(false);
+  const [isAppInstalled, setIsAppInstalled] = useState(false);
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (event) => {
@@ -16,28 +17,28 @@ const Install= () => {
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 
-    // Check if the PWA can be installed manually
-    window.addEventListener('appinstalled', () => {
-      console.log('PWA was installed');
-      setShowInstallButton(false); // Hide the install button once installed
-    });
-
-    // Check if PWA can be installed on page load
-    const isPWAInstallable = () => {
-      const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-      if (document.referrer.startsWith('android-app://') || isStandalone) {
-        setShowInstallButton(false);
-      }
+    const checkAppInstalled = () => {
+      const isInstalled = window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone ||
+        document.referrer.includes('android-app://');
+      
+      setIsAppInstalled(isInstalled);
+      setShowInstallButton(!isInstalled);
     };
 
-    window.addEventListener('load', isPWAInstallable);
+    window.addEventListener('appinstalled', () => {
+      setIsAppInstalled(true);
+      setShowInstallButton(false);
+    });
+
+    checkAppInstalled();
+
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
       window.removeEventListener('appinstalled', () => {
-        console.log('PWA was installed');
-        setShowInstallButton(false);
+        setIsAppInstalled(false);
+        setShowInstallButton(true);
       });
-      window.removeEventListener('load', isPWAInstallable);
     };
   }, []);
 
@@ -50,6 +51,8 @@ const Install= () => {
       deferredPrompt.userChoice.then((choiceResult) => {
         if (choiceResult.outcome === 'accepted') {
           console.log('User accepted the install prompt');
+          setIsAppInstalled(true);
+          setShowInstallButton(false);
         } else {
           console.log('User dismissed the install prompt');
         }
@@ -60,17 +63,16 @@ const Install= () => {
   };
 
   return (
-    <div className='absolute top-[400px] right-[50px] z-[900] bg-white p-5 shadow-xl rounded-lg'>
-      {/* Your application content */}
-      <h1>Welcome to My PWA!</h1>
-      
+    <>
       {/* Button to install the PWA */}
-      {showInstallButton && (
-        <button onClick={handleInstallClick}>
-          Install My PWA
-        </button>
+      {!isAppInstalled && showInstallButton && (
+        <div className='absolute top-4 right-4 z-50 bg-blue p-3 rounded-lg shadow-lg'>
+          <button onClick={handleInstallClick} className='bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded'>
+            Install My PWA
+          </button>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

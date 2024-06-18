@@ -40,11 +40,20 @@ console.log('the booking is', bookingId)
     try {
       const response = await axios.post('http://localhost:3000/pay', paymentDetails);
       // console.log('Payment Response:', response.data);
-      // if (response.data.paymentStatus && response.data.paymentStatus.status === 'SUCCESSFUL') {
-        window.location.href = `http://localhost:3000/?bookingId=${bookingId}`;
-      // } else {
-        // console.error('Payment was not successful:', response.data);
-      // }
+       data.mode==='Online'?generateMeetLink(data.mode):generateMeetId(data.mode);
+       const generateMeetLink=()=>{
+        if(response.data.paymentStatus && response.data.paymentStatus.status === 'SUCCESSFUL' && data.mode === 'Online') {
+          window.location.href = `http://localhost:3000/?bookingId=${bookingId}`;
+        } else {
+          console.error('Payment was not successful:', response.data);
+        }}
+        const generateMeetId=()=>{
+          if(response.data.paymentStatus && response.data.paymentStatus.status === 'SUCCESSFUL' && data.mode === 'Physical') {
+            //generate meet id instead and save to fire base 
+          } else {
+            console.error('Payment was not successful:', response.data);
+          }
+        }
     } catch (error) {
       console.error('Error making payment request:', error);
     }

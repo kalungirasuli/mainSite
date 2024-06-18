@@ -158,7 +158,7 @@ const handleBooking = async (event) => {
           {selectedDay && (
              <div className="div flex flex-col gap-2 w-[300px] m-auto pt-[20px] md:w-[450px]">
                <label  className="text-[15px] text-greytextdark text-left mb-3">
-              Select day
+              Select time
                </label>
             <div className="div p-3 shadow-md rounded-[10px]">
               <select
