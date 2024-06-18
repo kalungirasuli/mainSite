@@ -74,11 +74,11 @@ export default function Booking() {
     return updatedAvailableDays;
 }
 //save the data to firebase 
-  const handleBooking = async (event) => {
-    event.preventDefault();
-    if(selectedDay&&selectedMode)
+const handleBooking = async (event) => {
+  event.preventDefault();
+  if (selectedDay && selectedMode) {
     try {
-      await addDoc(collection(db, "bookings"), {
+      const bookingRef = await addDoc(collection(db, "bookings"), {
         userId: user,
         doctorId: doctorUid,
         day: selectedDay,
@@ -86,17 +86,22 @@ export default function Booking() {
         mode: selectedMode,
         file: file ? file.name : '',
         description: description,
-        date:selectedDate,
-        name: `${selectedDoctor.firstName} ${selectedDoctor.secondName}`
+        date: selectedDate,
+        name: `${selectedDoctor.firstName} ${selectedDoctor.secondName}`,
       });
 
-      dispatch(setBookingDetails({ day: selectedDay, time: selectedTime , mode :selectedMode,date:selectedDate}));
+      const bookingId = bookingRef.id;
+
+      dispatch(setBookingDetails({ day: selectedDay, time: selectedTime, mode: selectedMode, date: selectedDate, bookingId }));
+
       alert("Booking successful!");
-      navigate(`/appointment/doctor/${id}/checkout`);
+      navigate(`/appointment/doctor/${id}/checkout?bookingId=${bookingId}`);
     } catch (error) {
       console.error("Error adding booking: ", error);
     }
-  };
+  }
+};
+
 
 
   return (

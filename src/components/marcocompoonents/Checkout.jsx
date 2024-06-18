@@ -4,9 +4,14 @@ import HeadWithBack from "../microcomponents/HeadWithBack";
 import { Input } from "../microcomponents/textComponents";
 import { Button3 } from "../microcomponents/RoundedButton";
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 
 export default function Checkout() {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const bookingId = searchParams.get('bookingId');
+  
   const selectedDoctor = useSelector(state => state.user.selectedDoctor);
   const bookingDetails = useSelector(state => state.user.bookingDetails);
 
@@ -25,27 +30,23 @@ export default function Checkout() {
 
   const handleClick = async (e) => {
     e.preventDefault();
-
+console.log('the booking is', bookingId)
     const paymentDetails = {
       total: 100, // Example total amount
       phone: phoneNumber,
+      bookingId, // Include the booking ID
     };
 
     try {
       const response = await axios.post('http://localhost:3000/pay', paymentDetails);
-      console.log('Payment Response:', response.data);
-      console.log("payment body is", response.data.paymentStatus)
-      console.log("paymenr status is ",response.data.paymentStatus.status )
-      if (response.data.paymentStatus && response.data.paymentStatus.status === 'SUCCESSFUL') {
-        window.location.href = 'http://localhost:3000';
-      
-      } else {
-        console.error('Payment was not successful:', response.data);
-    
-      }
+      // console.log('Payment Response:', response.data);
+      // if (response.data.paymentStatus && response.data.paymentStatus.status === 'SUCCESSFUL') {
+        window.location.href = `http://localhost:3000/?bookingId=${bookingId}`;
+      // } else {
+        // console.error('Payment was not successful:', response.data);
+      // }
     } catch (error) {
       console.error('Error making payment request:', error);
-     
     }
   };
 
