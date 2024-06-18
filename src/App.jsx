@@ -33,12 +33,15 @@ import AdminHomeTemp from "./components/marcocompoonents/AdminHomeTemp"
 import AdminUsers from "./components/marcocompoonents/AdminUser"
 import AdminDoctors from "./components/marcocompoonents/AdminDoctors"
 import AdminMothers from "./components/marcocompoonents/AdminMothers"
+
+
+import Install from "./components/microcomponents/Install"
 function App() {
  
   return (
     <>
     <div className="div bg-smoke  ">
-    
+    <Install/>
     <BrowserRouter>
 
 
