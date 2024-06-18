@@ -5,7 +5,7 @@ import RoundedButton from "../microcomponents/RoundedButton";
 import { buttonStyle, Alt } from "../microcomponents/textComponents";
 import { auth, db } from '../../firebase/config'; // Import Firebase auth and Firestore instances
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
@@ -71,7 +71,8 @@ export default function Doctor() {
                 secondName,
                 email,
                 licenseURL,
-                certificateURL
+                certificateURL,
+                timestamp: serverTimestamp(),
             });
 
             console.log('Data submitted successfully');

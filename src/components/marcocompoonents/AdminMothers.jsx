@@ -2,9 +2,31 @@
 import HeadWithBack from "../microcomponents/HeadWithBack";
 import { Search } from "../microcomponents/textComponents";
 import AdminUserSingle from "../microcomponents/AdminUserSingle";
+import { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase/config";
 
 export default function  AdminMothers() {
- 
+  const [mothers, setMothers] = useState([]); // State to store fetched doctors
+
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      const mothersRef = collection(db, "mothers");
+
+    
+
+      try {
+        const doctorSnapshot = await getDocs( mothersRef);
+        setMothers(doctorSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+
+        console.log(mothers)
+      } catch (error) {
+        console.error("Error fetching doctors:", error);
+      }
+    };
+
+    fetchDoctors(); // Call the fetch function on component mount
+  }, [])
   return (
     <>
       <div className="div">
@@ -19,20 +41,29 @@ export default function  AdminMothers() {
             />
           </div>
           <div className="div w-[90%] m-auto flex flex-wrap justify-between gap-[10px] pt-5">
+          {mothers.map((mother) => (
              <AdminUserSingle 
-            //  the use type group must be retuned please to handle ui logic please isaac
+             //  the use type group must be retuned please to handle ui logic please isaac
+
+             key={mother.id}
              user={'mother'}
-             name='Isaac Opinni' 
-             time='12th/03/2045:23:50:00'
-             email='opinniisaac8@gmail.com'
-            //  the shows after the doctor has created it
-             Description='Am a doctor the treates people well'
+             name={mother.firstName +" " + mother.secondName} 
+             time={mother.timestamp}
+             email={mother.email}
+             doctorId={mother.uid}
+            // this deactives an account 
+             status='Deactived'
+            //  the shows after the mother has created it
+             Description={ mother.bio || 'Am a mother the treates people well'}
+             show={true}
+             downloadFile={() => window.open(mother.licenseURL, '_blank')}
             //  this initlizes a message between mother and admin
              handleMassageClick={console.log('message init')}
-            //  this props has natig to do with the returned data it's logic is default and shouldnot change at any time, this hides some features depending on the page it is placed 
-             show={false}
+            //  the delete the mother form the platform
+              onChangeCheck={console.log('cheing')}
+             handleDelete={console.log('Delete Doctor')}
              />
-            
+            ))}
           </div>
         </div>
       </div>

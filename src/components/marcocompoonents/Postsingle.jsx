@@ -3,10 +3,22 @@ import PostCard from "../microcomponents/PostCard";
 import Pageload from "../microcomponents/Pageload"; // Replace with your loading indicator 
 import { Loading } from "../microcomponents/textComponents";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { fetchPostsWithComments } from "../../firebase/post";
 
 export default function Postsingle() {
    
-    the 
+    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(true); // Loading state
+    const user = useSelector((state) => state.auth.user);
+    useEffect(() => {
+        fetchPostsWithComments((fetchedPosts) => {
+            setPosts(fetchedPosts);
+            console.log("Posts fetched:", fetchedPosts);
+            !posts.length===0?setLoading(false):''; // Set loading to false once data is fetched
+            
+        });
+    }, []);
     
     return (
          
