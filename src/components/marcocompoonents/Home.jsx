@@ -6,6 +6,7 @@ import { Loading } from "../microcomponents/textComponents";
 import { useSelector } from "react-redux";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase/config";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
     const [posts, setPosts] = useState([]);
@@ -13,8 +14,9 @@ export default function Home() {
     const [userType, setUserType] = useState(null); // State to store user type
     const [userDetails, setUserDetails] = useState(null); // State to store user details
     const user = useSelector((state) => state.auth.user);
-
+const navigate = useNavigate()
     useEffect(() => {
+     if(user){
         const fetchUserData = async () => {
             // Function to determine user type and fetch user details
             const determineUserTypeAndFetchDetails = async (uid) => {
@@ -65,6 +67,9 @@ export default function Home() {
         };
 
         fetchUserData();
+     }else{
+        navigate('/User/sign-in');
+     }
     }, [user]);
 
     const handleDeletePost = async (postId) => {

@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../firebase/config";
@@ -12,7 +12,7 @@ export default function ViewAppointments() {
   const [userType, setUserType] = useState(null);
   const [appointments, setAppointments] = useState([]);
   const user = useSelector((state) => state.auth.user);
-
+const navigate = useNavigate()
   useEffect(() => {
     const determineUserType = async () => {
 
@@ -44,6 +44,9 @@ export default function ViewAppointments() {
         } catch (error) {
           console.error("Error determining user type: ", error);
         }
+      }
+      else{
+        navigate('/User/sign-in');
       }
     };
 
