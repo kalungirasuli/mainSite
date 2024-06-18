@@ -236,7 +236,7 @@ const canDelete = props.userUid === props.postUid || props.userType === 'admin';
             {props.file ? (
               <div className="postFile w-full min-w-[min-content] bg-gray-300 rounded-[25px] border-[1px] border-greytextfade">
                 {props.fileType === 'image' ? (
-                  <Image src={props.imageSrc} alt="Post file" className="rounded-[15px]" />
+                  <Image src={props.imageSrc} alt="Post file" className="rounded-lg" />
                 ) : (
                   <video src={props.videoSrc} controls className="w-full rounded-[15px]" />
                 )}

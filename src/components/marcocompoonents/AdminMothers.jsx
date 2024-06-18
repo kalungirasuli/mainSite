@@ -85,7 +85,7 @@ export default function  AdminMothers() {
              status='Deactived'
             //  the shows after the mother has created it
              Description={ mother.bio || 'Am a mother the treates people well'}
-             show={true}
+             show={false}
              downloadFile={() => window.open(mother.licenseURL, '_blank')}
             //  this initlizes a message between mother and admin
              handleMassageClick={console.log('message init')}
