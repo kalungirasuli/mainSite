@@ -11,19 +11,20 @@ export default function Home() {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true); // Loading state
     const [userType, setUserType] = useState(null); // State to store user type
+    const [userDetails, setUserDetails] = useState(null); // State to store user details
     const user = useSelector((state) => state.auth.user);
 
     useEffect(() => {
         const fetchUserData = async () => {
-            // Function to determine user type
-            const determineUserType = async (uid) => {
+            // Function to determine user type and fetch user details
+            const determineUserTypeAndFetchDetails = async (uid) => {
                 try {
                     // Check if the user is an admin
                     const adminQuery = query(collection(db, 'admin'), where('uid', '==', uid));
                     const adminSnapshot = await getDocs(adminQuery);
         
                     if (!adminSnapshot.empty) {
-                        return 'admin';
+                        return { type: 'admin', details: adminSnapshot.docs[0].data() };
                     }
         
                     // Check if the user is a doctor
@@ -31,7 +32,7 @@ export default function Home() {
                     const doctorSnapshot = await getDocs(doctorQuery);
         
                     if (!doctorSnapshot.empty) {
-                        return 'doctor';
+                        return { type: 'doctor', details: doctorSnapshot.docs[0].data() };
                     }
         
                     // Check if the user is a mother
@@ -39,14 +40,14 @@ export default function Home() {
                     const motherSnapshot = await getDocs(motherQuery);
         
                     if (!motherSnapshot.empty) {
-                        return 'mother';
+                        return { type: 'mother', details: motherSnapshot.docs[0].data() };
                     }
         
                     // Default user type if no match is found
-                    return 'unknown';
+                    return { type: 'unknown', details: null };
                 } catch (error) {
                     console.error('Error determining user type: ', error);
-                    return 'unknown';
+                    return { type: 'unknown', details: null };
                 }
             };
 
@@ -57,9 +58,10 @@ export default function Home() {
                 setLoading(false);
             });
 
-            const type = await determineUserType(user);
+            const { type, details } = await determineUserTypeAndFetchDetails(user);
             setUserType(type);
-            console.log(type)
+            setUserDetails(details);
+            console.log(type, details);
         };
 
         fetchUserData();
@@ -73,7 +75,6 @@ export default function Home() {
             console.error('Error deleting post:', error);
         }
     };
-  
     
     return (
         <div className="post w-full h-full overflow-y-auto">
@@ -83,6 +84,7 @@ export default function Home() {
                     <PostCard 
                         key={post.id}
                         userUid={user}
+                        userDetails={userDetails}
                         postUid={post.uid}
                         Profilesrc={post.Profilesrc} 
                         AltProfile={'HB'} 

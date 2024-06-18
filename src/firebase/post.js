@@ -45,40 +45,12 @@ export const createPost = async (userUid, content, imageFiles) => {
 };
 
 // Add a comment to a post
-export const addComment = async (  userUid, postId, comment) => {
+export const addComment = async ( postId, comment) => {
  
 
-   // Fetch user details based on userUid from both 'doctors' and 'mothers'
-  let userDetails;
 
-  // Query to check if userUid exists in 'doctors' collection
-  const doctorsQuery = query(collection(db, 'doctors'), where("uid", "==", userUid));
-  const doctorsSnapshot = await getDocs(doctorsQuery);
 
-  // Query to check if userUid exists in 'mothers' collection
-  const mothersQuery = query(collection(db, 'mothers'), where("uid", "==", userUid));
-  const mothersSnapshot = await getDocs(mothersQuery);
-
-  // Check if userUid was found in either collection
-  if (!doctorsSnapshot.empty &&!mothersSnapshot.empty) {
-    throw new Error('User details not found');
-  } else if (!doctorsSnapshot.empty) {
-    userDetails = doctorsSnapshot.docs[0].data();
-  } else if (!mothersSnapshot.empty) {
-    userDetails = mothersSnapshot.docs[0].data();
-  } else {
-    throw new Error('User details not found');
-  }
-
-  const commentData = {
-    uid: userUid,
-    firstName: userDetails.firstName,
-    secondName: userDetails.secondName,
-    comment: comment,
-    timestamp: serverTimestamp(),
-  };
-
-  await addDoc(collection(db, 'posts', postId, 'comments'), commentData);
+  await addDoc(collection(db, 'posts', postId, 'comments'), comment);
 };
 
 // Fetch posts with comments
@@ -102,4 +74,9 @@ export const fetchPostsWithComments = (callback) => {
 export const deletePost = async (postId) => {
   const postRef = doc(collection(db, 'posts'), postId);
   await deleteDoc(postRef);
+};
+
+export const deleteComment = async (commentId) => {
+  const commentRef = doc(db, 'comments', commentId); // Adjust path if necessary
+  await deleteDoc(commentRef);
 };

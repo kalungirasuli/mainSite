@@ -11,8 +11,9 @@ import { CiShare1 } from "react-icons/ci";
 import { IoSend } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { addComment } from "../../firebase/post";
+import { addComment, deleteComment } from "../../firebase/post";
 import TimeFormater from "./Formater";
+import { serverTimestamp } from "firebase/firestore";
 
 // the image component
 const Loader = () => {
@@ -108,6 +109,8 @@ const MessageDoctor = (props) => {
 
   const initials = getInitials(props.ChatsenderName);
 
+  const canDeleteComment = props.currentUserId === props.commentUserId || props.userType === 'admin';;
+
   return (
     <>
       <div className="header flex flex-row justify-normal px-3 gap-3 w-[max-content] max-w-[90%] md:max-w-[80%] " id={ChatID}>
@@ -124,6 +127,13 @@ const MessageDoctor = (props) => {
               </li>
               {props.Chatsenderrole === 'doctor' || props.Chatsenderrole === 'admin' ? <li className="w-[max-content]"><div className="verified"><MdVerifiedUser style={style} color={'#3b8aff'} /></div></li> : ''}
               <TimeFormater timestamp={props.Cahttime ? props.Cahttime : null} />
+              {canDeleteComment && (
+              <RiDeleteBin4Line
+                style={style2}
+                className="icon-small"
+                onClick={() => props.handleDeleteComment(props.commentId)}
+              />
+            )}
             </ul>
           </div>
           <div className="postText w-full">
@@ -153,26 +163,28 @@ export default function PostCard(props) {
     setComment(!comment);
   };
 
-  const handleAddComment = async () => {
-    if (newComment.trim() !== '') {
-      try {
-        await addComment(props.userUid, props.postId, newComment);
-        const newCommentObj = {
-          id: comments.length + 1,
-          comment: newComment,
-          firstName: props.currentUserFirstName,
-          secondName: props.currentUserSecondName,
-          timestamp: new Date(),
-          ChatsenderPicture: props.currentUserProfilePicture,
-          role: props.currentUserRole,
-        };
-        setComments([...comments, newCommentObj]);
-        setNewComment('');
-      } catch (error) {
-        console.error('Error adding comment:', error);
-      }
+const handleAddComment = async () => {
+  // if (comment.trim() !== '') {
+    const commentData = { // Renamed to 'commentData'
+      uid: props.userUid,
+      comment: newComment, // Use the state variable here
+      postId: props.postId,
+      // role: props.userDetails.role,
+      firstName: props.userDetails.firstName,
+      secondName: props.userDetails.secondName,
+      timestamp: serverTimestamp(),
+      time: new Date().toISOString(),
+    };
+
+    try {
+      await addComment(props.postId, commentData); 
+      setComments((prevComments) => [...prevComments, commentData]);
+      setNewComment(''); // Clear the input field
+    } catch (error) {
+      console.error('Error adding comment:', error);
     }
-  };
+  // }
+};
 
   const handleDeletePost = async () => {
     try {
@@ -180,6 +192,15 @@ export default function PostCard(props) {
     } catch (error) {
         console.error('Error deleting post:', error);
     }
+};
+
+const handleDeleteComment = async (commentId) => {
+  try {
+    await deleteComment(commentId);
+    setComments((prevComments) => prevComments.filter((comment) => comment.id !== commentId));
+  } catch (error) {
+    console.error('Error deleting comment:', error);
+  }
 };
 const canDelete = props.userUid === props.postUid || props.userType === 'admin';
   return (
@@ -241,9 +262,14 @@ const canDelete = props.userUid === props.postUid || props.userType === 'admin';
                   key={comment.id}
                   Chattext={comment.comment}
                   ChatsenderName={comment.firstName + ' ' + comment.secondName}
-                  Cahttime={new Date(comment.timestamp.seconds ? comment.timestamp.seconds * 1000 : comment.timestamp).toLocaleString()}
+                  // Cahttime={new Date(comment.timestamp.seconds ? comment.timestamp.seconds * 1000 : comment.timestamp).toLocaleString() || "o"}
                   ChatsenderPicture={comment.ChatsenderPicture}
                   Chatsenderrole={comment.role}
+                  commentId={comment.id} // Pass comment ID
+                  currentUserId={props.userUid} // Pass current user ID
+                  commentUserId={comment.uid} // Pass comment author ID
+                  handleDeleteComment={handleDeleteComment} // Pass delete comment handler
+userType={props.userType}
                 />
               ))}
             </div>
