@@ -174,6 +174,14 @@ export default function PostCard(props) {
     }
   };
 
+  const handleDeletePost = async () => {
+    try {
+        await props.handleDeletePost(props.postId);
+    } catch (error) {
+        console.error('Error deleting post:', error);
+    }
+};
+const canDelete = props.userUid === props.postUid || props.userRole === 'admin';
   return (
     <>
       <div className="border-y-[1px] border-x-greytextfade pt-5 w-full -z-50">
@@ -221,7 +229,7 @@ export default function PostCard(props) {
                 </div>
               </span>
               <CiShare1 style={style2} className="icon-small" />
-              <RiDeleteBin4Line style={style2} className="icon-small" />
+              {canDelete && <RiDeleteBin4Line style={style2} className="icon-small" onClick={handleDeletePost} />}
             </div>
           </div>
         </div>

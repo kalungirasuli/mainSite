@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchPostsWithComments } from "../../firebase/post";
+import { deletePost, fetchPostsWithComments } from "../../firebase/post";
 import PostCard from "../microcomponents/PostCard";
 import Pageload from "../microcomponents/Pageload"; // Replace with your loading indicator 
 import { Loading } from "../microcomponents/textComponents";
@@ -18,6 +18,14 @@ export default function Home() {
         });
     }, []);
    
+    const handleDeletePost = async (postId) => {
+        try {
+            await deletePost(postId);
+            setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
+        } catch (error) {
+            console.error('Error deleting post:', error);
+        }
+    };
     
     return (
         <div className="post w-full h-full overflow-y-auto">
@@ -27,6 +35,7 @@ export default function Home() {
                     <PostCard 
                         key={post.id}
                         userUid={user}
+                        postUid={post.uid}
                         Profilesrc={post.Profilesrc} 
                         AltProfile={'HB'} 
                         author={post.firstName + " " + post.secondName} 
@@ -39,6 +48,7 @@ export default function Home() {
                         fileType={post.imageUrls && post.imageUrls[0]? 'image' : 'video'} 
                         comments={post.comments}
                         postId={post.id}
+                        handleDeletePost={handleDeletePost}
                         // videoType={post.videoType || 'video/mp4'}
                     />
                 ))

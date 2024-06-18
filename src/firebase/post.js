@@ -1,6 +1,6 @@
 
 
-import { addDoc, collection, serverTimestamp, query, orderBy, onSnapshot, getDocs, where } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp, query, orderBy, onSnapshot, getDocs, where, deleteDoc, doc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import {db, storage } from './config';
 
@@ -99,3 +99,7 @@ export const fetchPostsWithComments = (callback) => {
 };
 
 
+export const deletePost = async (postId) => {
+  const postRef = doc(collection(db, 'posts'), postId);
+  await deleteDoc(postRef);
+};

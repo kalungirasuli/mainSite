@@ -63,6 +63,7 @@ export default function AddPost() {
       alert("Post created successfully!");
       setContent("");
       setSelectedFiles([]);
+      navigate('/');
     } catch (error) {
       console.error("Error creating post:", error);
       alert("Failed to create post");
