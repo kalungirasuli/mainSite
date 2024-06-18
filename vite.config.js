@@ -7,6 +7,15 @@ export default defineConfig({
     VitePWA({ 
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
+      workbox: {
+        clientsClaim: true,
+        skipWaiting: true
+      },
+      /* If you want to check it on dev, add devOptions.
+      */
+      devOptions: {
+        enabled: true
+      },
       manifest: {
         name: 'Neonates',
         short_name: 'Neonates',
