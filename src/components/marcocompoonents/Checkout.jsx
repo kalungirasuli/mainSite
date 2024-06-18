@@ -44,12 +44,15 @@ console.log('the booking is', bookingId)
        const generateMeetLink=()=>{
         if(response.data.paymentStatus && response.data.paymentStatus.status === 'SUCCESSFUL' && data.mode === 'Online') {
           window.location.href = `http://localhost:3000/?bookingId=${bookingId}`;
+          // if paid not true appoiment should not show
+          // then delete appointment
         } else {
           console.error('Payment was not successful:', response.data);
         }}
         const generateMeetId=()=>{
           if(response.data.paymentStatus && response.data.paymentStatus.status === 'SUCCESSFUL' && data.mode === 'Physical') {
             //generate meet id instead and save to fire base 
+             // if paid not true appoiment should not show
           } else {
             console.error('Payment was not successful:', response.data);
           }
