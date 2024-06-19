@@ -35,13 +35,13 @@ import AdminDoctors from "./components/marcocompoonents/AdminDoctors"
 import AdminMothers from "./components/marcocompoonents/AdminMothers"
 
 
-import Install from "./components/microcomponents/Install"
+// import Install from "./components/microcomponents/Install"
 function App() {
 
   return (
     <>
       <div className="div bg-smoke  ">
-        <Install />
+        {/* <Install /> */}
         <BrowserRouter>
 
 
