@@ -56,14 +56,13 @@ export default function Home() {
             // Fetch posts and user type
             fetchPostsWithComments((fetchedPosts) => {
                 setPosts(fetchedPosts);
-                console.log("Posts fetched:", fetchedPosts);
-                setLoading(false);
+                // setLoading(false);
             });
 
             const { type, details } = await determineUserTypeAndFetchDetails(user);
             setUserType(type);
             setUserDetails(details);
-            console.log(type, details);
+            // console.log(type, details);
         };
 
         fetchUserData();
@@ -77,13 +76,13 @@ export default function Home() {
             await deletePost(postId);
             setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
         } catch (error) {
-            console.error('Error deleting post:', error);
+            // console.error('Error deleting post:', error);
         }
     };
     
     return (
         <div className="post w-full h-full overflow-y-auto">
-          {posts.length === 0 && loading ? <Pageload /> : console.log("Posts fetched:", console.log(user))} 
+          {posts.length===0 && loading ? <Pageload /> : console.log("Posts fetched:", posts.length)} 
             {loading && posts.length===0? <Loading /> : (
                 posts.map((post) => (
                     <PostCard 
