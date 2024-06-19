@@ -40,7 +40,7 @@ const Image = (props) => {
   return (
     <>
       <VisibilitySensor>
-        <Img src={props.src} className="w-full min-h-[200px] max-h-[400px] md:max-h-[600px] md:min-h-[250px] rounded-[20px]" loader={<Loader />} unloader={<Loader />} />
+        <Img src={props.src} className="w-full min-h-[200px] max-h-[400px] md:max-h-[600px] md:min-h-[250px] rounded-lg" loader={<Loader />} unloader={<Loader />} />
       </VisibilitySensor>
     </>
   );
@@ -234,7 +234,7 @@ const canDelete = props.userUid === props.postUid || props.userType === 'admin';
               <span className="m-0 p-0 text-[13px] break-all lg:text-black lg:text-[15px]">{props.text}</span>
             </div>
             {props.file ? (
-              <div className="postFile w-full min-w-[min-content] bg-gray-300 rounded-[25px] border-[1px] border-greytextfade">
+              <div className="postFile w-full min-w-[min-content] bg-gray-300 rounded-lg border-[1px] border-greytextfade">
                 {props.fileType === 'image' ? (
                   <Image src={props.imageSrc} alt="Post file" className="rounded-lg" />
                 ) : (

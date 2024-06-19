@@ -84,7 +84,7 @@ export default function SignIn() {
 
     return (
         <div className={`${styles}`}>
-            <HeaderLogo text='Welcome to Neonates, sign-In' head='Neonates' />
+            <HeaderLogo text='Welcome to Pedlyfe, sign-In' head='Pedlyfe' />
             <form onSubmit={handleSubmit}>
                 <Input
                     type='text'

@@ -14,7 +14,7 @@ export default function Home() {
     const [userType, setUserType] = useState(null); // State to store user type
     const [userDetails, setUserDetails] = useState(null); // State to store user details
     const user = useSelector((state) => state.auth.user);
-const navigate = useNavigate()
+    const navigate = useNavigate()
     useEffect(() => {
      if(user){
         const fetchUserData = async () => {
