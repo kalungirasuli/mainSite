@@ -5,7 +5,7 @@ import { Input } from "../microcomponents/textComponents";
 import { Button3 } from "../microcomponents/RoundedButton";
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-
+import {v4 as uuidv4} from 'uuid';
 
 export default function Checkout() {
   const location = useLocation();
@@ -51,6 +51,7 @@ console.log('the booking is', bookingId)
         }}
         const generateMeetId=()=>{
           if(response.data.paymentStatus && response.data.paymentStatus.status === 'SUCCESSFUL' && data.mode === 'Physical') {
+            const meetId = uuidv4();
             //generate meet id instead and save to fire base 
              // if paid not true appoiment should not show
           } else {
