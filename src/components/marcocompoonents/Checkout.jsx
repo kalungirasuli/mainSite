@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import HeadWithBack from "../microcomponents/HeadWithBack";
 import { Input } from "../microcomponents/textComponents";
 import { Button3 } from "../microcomponents/RoundedButton";
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {v4 as uuidv4} from 'uuid';
+import { setBookingDetails } from '../../redux/userSlice';
+import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { db } from '../../firebase/config';
 
 export default function Checkout() {
   const location = useLocation();
@@ -17,6 +20,8 @@ export default function Checkout() {
 
   const [phoneNumber, setPhoneNumber] = useState('');
 
+  const dispatch = useDispatch()
+const navigate = useNavigate()
   const data = {
     doctor: `${selectedDoctor.firstName} ${selectedDoctor.secondName}`,
     mode: bookingDetails.mode,
@@ -49,17 +54,35 @@ console.log('the booking is', bookingId)
         } else {
           console.error('Payment was not successful:', response.data);
         }}
-        const generateMeetId=()=>{
+        const generateMeetId=async ()=>{
           if(response.data.paymentStatus && response.data.paymentStatus.status === 'SUCCESSFUL' && data.mode === 'Physical') {
             const meetId = uuidv4();
             //generate meet id instead and save to fire base 
              // if paid not true appoiment should not show
+
+             const bookingRef = doc(db, 'bookings', bookingId);
+             await updateDoc(bookingRef, {
+               meetingId: meetId
+             });
           } else {
             console.error('Payment was not successful:', response.data);
           }
         }
     } catch (error) {
+      await deleteAppointment()
       console.error('Error making payment request:', error);
+    }
+  };
+
+  const deleteAppointment = async () => {
+    try {
+      const bookingRef = doc(db, 'bookings', bookingId);
+      await deleteDoc(bookingRef); 
+      dispatch(setBookingDetails(null)); 
+      alert('Appointment deleted successfully.');
+      navigate('/appointment')
+    } catch (error) {
+      console.error('Error deleting appointment:', error);
     }
   };
 
