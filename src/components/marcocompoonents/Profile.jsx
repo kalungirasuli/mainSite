@@ -11,6 +11,7 @@ import { db } from "../../firebase/config";
 import { setUserId } from "firebase/analytics";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
+import { clearUser } from "../../redux/authSlice";
 
 const DoctorAvailabilityForm = ({ availability, setAvailability, daysChecked, setDaysChecked }) => {
   const handleAddHour = (day, hour) => {
@@ -114,6 +115,7 @@ const Doctor = () => {
   const [profileImage, setProfileImage] = useState(null);
   const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate()
+  const dispatch  = useDispatch()
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -161,6 +163,7 @@ const Doctor = () => {
     try {
       await signOut(auth);
       // Redirect the user to the login page or home page
+      dispatch(clearUser());
       navigate('/');
       console.log('User logged out successfully');
     } catch (error) {
@@ -232,7 +235,7 @@ const Mother = () => {
   });
   const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
-
+const dispatch = useDispatch()
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -271,6 +274,7 @@ const Mother = () => {
     try {
       await signOut(auth);
       // Redirect the user to the login page or home page
+      dispatch(clearUser());
       navigate('/');
       console.log('User logged out successfully');
     } catch (error) {

@@ -44,6 +44,7 @@ export default function Home() {
                     if (!motherSnapshot.empty) {
                         return { type: 'mother', details: motherSnapshot.docs[0].data() };
                     }
+                    
         
                     // Default user type if no match is found
                     return { type: 'unknown', details: null };
