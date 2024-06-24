@@ -33,6 +33,7 @@ import AdminHomeTemp from "./components/marcocompoonents/AdminHomeTemp"
 import AdminUsers from "./components/marcocompoonents/AdminUser"
 import AdminDoctors from "./components/marcocompoonents/AdminDoctors"
 import AdminMothers from "./components/marcocompoonents/AdminMothers"
+import ProtectedRoute from "./components/microcomponents/ProtectedRoutes"
 
 
 // import Install from "./components/microcomponents/Install"
@@ -40,74 +41,63 @@ function App() {
 
   return (
     <>
-      <div className="div bg-smoke  ">
-        {/* <Install /> */}
-        <BrowserRouter>
-
-
-          {/* the general routes */}
-          <Routes>
+    <div className="div bg-smoke">
+      <BrowserRouter>
+        <Routes>
+          {/* General Routes */}
+          <Route element={<ProtectedRoute allowedRoles={['doctor', 'mother']} />}>
             <Route path="/" element={<HomeTemp />}>
-              <Route index element={<Home />}></Route>
-              <Route path='post' element={<Postsingle />}></Route>
-              <Route path="add-post" element={<AddPost />}></Route>
+              <Route index element={<Home />} />
+              <Route path="post" element={<Postsingle />} />
+              <Route path="add-post" element={<AddPost />} />
               <Route path="appointment" element={<Appointments />}>
-                <Route index element={<ViewAppointments />}></Route>
-                <Route path='doctors' element={<DoctorAll />}></Route>
-                <Route path="doctor/:id" element={<DoctorDesc />}></Route>
-                <Route path="doctor/:id/checkout" element={<Checkout />}></Route>
+                <Route index element={<ViewAppointments />} />
+                <Route path="doctors" element={<DoctorAll />} />
+                <Route path="doctor/:id" element={<DoctorDesc />} />
+                <Route path="doctor/:id/checkout" element={<Checkout />} />
                 <Route path="doctor/:id/booking" element={<Booking />} />
               </Route>
               <Route path="Message" element={<Message />}>
-                <Route index element={<MessageRooms />}></Route>
-                <Route path=":id" element={<Discussion />}></Route>
+                <Route index element={<MessageRooms />} />
+                <Route path=":id" element={<Discussion />} />
               </Route>
-              <Route path="profile" element={<Profile />}></Route>
-              <Route path="profile/editpassword" element={<EditPassword />}></Route>
-
+              <Route path="profile" element={<Profile />} />
+              <Route path="profile/editpassword" element={<EditPassword />} />
             </Route>
+          </Route>
 
-
-
-
-            {/* the admin pannel routes */}
+          {/* Admin Panel Routes */}
+          <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
             <Route path="/pannel" element={<AdminHomeTemp />}>
-              <Route index element={<Home />}></Route>
-              <Route path='post' element={<Postsingle />}></Route>
-              <Route path="add-post" element={<AddPost />}></Route>
+              <Route index element={<Home />} />
+              <Route path="post" element={<Postsingle />} />
+              <Route path="add-post" element={<AddPost />} />
               <Route path="appointments" element={<Appointments />}>
-                <Route index element={<ViewAppointments />}></Route>
+                <Route index element={<ViewAppointments />} />
               </Route>
               <Route path="Messages" element={<Message />}>
-                <Route index element={<MessageRooms />}></Route>
-                <Route path=":id" element={<Discussion />}></Route>
+                <Route index element={<MessageRooms />} />
+                <Route path=":id" element={<Discussion />} />
               </Route>
               <Route path="users" element={<AdminUsers />}>
-                <Route path='doctors' element={<AdminDoctors />}></Route>
-                <Route path="mothers" element={<AdminMothers />}></Route>
+                <Route path="doctors" element={<AdminDoctors />} />
+                <Route path="mothers" element={<AdminMothers />} />
               </Route>
-
             </Route>
+          </Route>
 
-
-
-
-
-            {/* the starter routes */}
-            <Route path="User" element={<Temp />}>
-              <Route index element={<Discission />}></Route>
-              <Route path="sign-up-mother" element={<Mother />}></Route>
-              <Route path="sign-up-pedetricain" element={<Doctor />}></Route>
-              <Route path="sign-in" element={<SignIn />}></Route>
-              <Route path='verification' element={<Waitingvarification />}></Route>
-              <Route path='resetpassword' element={<ResetPassword />}></Route>
-              {/* <Route path="newpassword" element={<NewPassword/>}></Route> */}
-            </Route>
-
-          </Routes>
-        </BrowserRouter>
-
-      </div>
+          {/* Starter Routes */}
+          <Route path="User" element={<Temp />}>
+            <Route index element={<Discission />} />
+            <Route path="sign-up-mother" element={<Mother />} />
+            <Route path="sign-up-pedetricain" element={<Doctor />} />
+            <Route path="sign-in" element={<SignIn />} />
+            <Route path="verification" element={<Waitingvarification />} />
+            <Route path="resetpassword" element={<ResetPassword />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </div>
     </>
   )
 
