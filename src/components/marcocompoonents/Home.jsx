@@ -24,8 +24,9 @@ export default function Home() {
                     // Check if the user is an admin
                     const adminQuery = query(collection(db, 'admin'), where('uid', '==', uid));
                     const adminSnapshot = await getDocs(adminQuery);
-        
+                    
                     if (!adminSnapshot.empty) {
+                        navigate('/pannel');
                         return { type: 'admin', details: adminSnapshot.docs[0].data() };
                     }
         
@@ -34,6 +35,7 @@ export default function Home() {
                     const doctorSnapshot = await getDocs(doctorQuery);
         
                     if (!doctorSnapshot.empty) {
+                        navigate('/')
                         return { type: 'doctor', details: doctorSnapshot.docs[0].data() };
                     }
         
@@ -42,6 +44,7 @@ export default function Home() {
                     const motherSnapshot = await getDocs(motherQuery);
         
                     if (!motherSnapshot.empty) {
+                        navigate('/')
                         return { type: 'mother', details: motherSnapshot.docs[0].data() };
                     }
                     

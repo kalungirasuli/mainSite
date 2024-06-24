@@ -100,7 +100,7 @@ export default function HomeTemp() {
                 <div className="main w-full h-full pb-[40px] overflow-hidden md:w-[80%] md:pb-0 md:border-r-[1px] md:border-r-greytextfade xl:w-[50%]">
                     <Outlet />
                 </div>
-                <div className="div p-4 hidden lg:block xl:w-[30%]">
+                <div className="div p-4 hidden lg:block lg:w-[30%]">
                     <SavePost />
                 </div>
             </div>
