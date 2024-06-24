@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Outlet, Link ,useLocation } from "react-router-dom";
+import { Outlet, Link ,useLocation,useParams } from "react-router-dom";
 import { IoNotifications, IoCalendarSharp, IoHomeSharp, IoPerson, IoSearchSharp, IoAddSharp } from "react-icons/io5";
 import { MdMessage } from "react-icons/md";
 import { Button3 } from "../microcomponents/RoundedButton";
@@ -32,7 +32,10 @@ export default function HomeTemp() {
     }, []);
 
     const location = useLocation();
-    const isMessagesRoute = location.pathname === "/Message/:id";
+    const { id } = useParams(); // Assuming you are using React Router's useParams hook
+
+    // Check if the current pathname matches "/Message/:id"
+    const isMessagesRoute = location.pathname === `/Message/${id}`
     return (
         <>
             <div className="div flex flex-cols-3  w-full bg-white xl:w-[80%] border-x-[1px] border-x-greytextfade m-auto h-screen">
@@ -97,7 +100,7 @@ export default function HomeTemp() {
                  </ul>
              </div>
                
-                <div className="main w-full h-full pb-[40px] overflow-hidden md:w-[80%] md:pb-0 md:border-r-[1px] md:border-r-greytextfade xl:w-[50%]">
+                <div className="main w-full h-screen pb-[40px] overflow-hidden md:w-[80%] md:pb-0 md:border-r-[1px] md:border-r-greytextfade xl:w-[50%]">
                     <Outlet />
                 </div>
                 <div className="div p-4 hidden lg:block lg:w-[30%]">
