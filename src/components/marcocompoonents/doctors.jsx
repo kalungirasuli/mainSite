@@ -10,7 +10,8 @@ import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/authSlice';
-
+import { Loading } from '../microcomponents/textComponents';
+import Popup from '../microcomponents/Pop';
 export default function Doctor() {
     const [formData, setFormData] = useState({
         firstName: '',
@@ -19,6 +20,8 @@ export default function Doctor() {
         license: null,
         certificate: null
     });
+    const [loading, setLoading] = useState(false);
+
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const storage = getStorage(); 
@@ -44,7 +47,7 @@ export default function Doctor() {
         setError('');
 
         const { firstName, secondName, email, license, certificate,password } = formData;
-       
+        setLoading(true);
 
         try {
            // Create the user account with email and password
@@ -89,20 +92,26 @@ export default function Doctor() {
             },
             role: 'doctor',
           }));
+          setLoading(false);
             navigate('/User/verification'); 
             // Redirect to the desired route after successful submission
         } catch (error) {
             console.error('Error submitting data:', error.message);
             setError(error.message);
+            setLoading(false);
+           
         }
     };
 
     return (
         <>
-            <div className={`${styles}`}>
+           {
+            loading?<Loading/>:(
+                <div className={`${styles}`}>
                 <HeaderLogo text='Welcome to Neonates, sign-up' head='Pediatricians' />
                 <form onSubmit={handleSubmit}>
-                    {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error message */}
+                    {error && <p style={{ color: 'red',textAlign:'center' }}>{error}</p>} {/* Display error message */}
+
                     <Input
                         type='text'
                         for='firstname'
@@ -172,6 +181,8 @@ export default function Doctor() {
                     </div>
                 </form>
             </div>
+            )
+           }
         </>
     );
 }

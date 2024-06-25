@@ -10,13 +10,15 @@ import RoundedButton from '../microcomponents/RoundedButton';
 import { buttonStyle, Alt } from '../microcomponents/textComponents';
 import { db } from '../../firebase/config';
 import { collection, query, where, getDocs } from 'firebase/firestore';
-
+import { Loading } from '../microcomponents/textComponents';
+import Popup from '../microcomponents/Pop';
 export default function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
     const handleChange = (e) => {
         const { name, value } = e.target;
         if (name === 'email') {
@@ -29,13 +31,15 @@ export default function SignIn() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const auth = getAuth();
+        setLoading(true);
         try {
+           
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-
             const userType = await determineUserType(user.uid);
 
             dispatch(setUser({ user: user.uid, email: user.email, role: userType, super: user }));
+            setLoading(false);
             console.log('User logged in:', user.uid);
 
             if (userType === 'admin') {
@@ -44,6 +48,8 @@ export default function SignIn() {
                 navigate('/');
             }
         } catch (error) {
+            setLoading(false);
+            setError(true)
             console.error('Error logging in user:', error.message);
         }
     };
@@ -83,8 +89,12 @@ export default function SignIn() {
     };
 
     return (
-        <div className={`${styles}`}>
+        <>
+        {
+            loading?<Loading/>:(
+                <div className={`${styles}`}>
             <HeaderLogo text='Welcome to Pedlyfe, sign-In' head='Pedlyfe' />
+            {error && <Popup message='Invalid email or password, user not found' />}
             <form onSubmit={handleSubmit}>
                 <Input
                     type='text'
@@ -115,5 +125,8 @@ export default function SignIn() {
                 </div>
             </form>
         </div>
+            )
+        }
+        </>
     );
 }

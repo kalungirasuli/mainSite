@@ -12,7 +12,7 @@ import {
 } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/authSlice";
-
+import { Loading } from "../microcomponents/textComponents";
 export default function Mother() {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -20,6 +20,8 @@ export default function Mother() {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
+
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -34,6 +36,8 @@ export default function Mother() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setError("");
+    setLoading(true);
 
     try {
       // Create the user account with email and password
@@ -66,15 +70,18 @@ export default function Mother() {
           role: 'mother', 
         }));
       // Redirect or navigate to the verification page
+      setLoading(false);
       navigate("/User/verification");
     } catch (error) {
       setError(error.message);
+      setLoading(false);
     }
   };
 
   return (
     <>
-      <div className={`${styles}`}>
+      loading?<Loading/>:(
+        <div className={`${styles}`}>
         <HeaderLogo text="Welcome to Neonates, sign-up" head="Mothers" />
         <form onSubmit={handleSubmit}>
           {error && <p style={{ color: "red" }}>{error}</p>}{" "}
@@ -141,6 +148,7 @@ export default function Mother() {
           </div>
         </form>
       </div>
+      )
     </>
   );
 }
