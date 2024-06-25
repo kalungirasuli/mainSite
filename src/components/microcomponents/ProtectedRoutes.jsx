@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Navigate, Outlet, useNavigate } from 'react-router-dom';
+import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../firebase/config';
@@ -16,33 +16,31 @@ const ProtectedRoute = ({ allowedRoles, redirectPath = '/User/sign-in' }) => {
             if (user) {
                 try {
                     const uid = user;
+
+                    // Check for admin
                     const adminQuery = query(collection(db, 'admin'), where('uid', '==', uid));
                     const adminSnapshot = await getDocs(adminQuery);
-                    
                     if (!adminSnapshot.empty) {
                         setUserType('admin');
                         setLoading(false);
-                        navigate('/pannel');
                         return;
                     }
 
+                    // Check for doctor
                     const doctorQuery = query(collection(db, 'doctors'), where('uid', '==', uid));
                     const doctorSnapshot = await getDocs(doctorQuery);
-
                     if (!doctorSnapshot.empty) {
                         setUserType('doctor');
                         setLoading(false);
-                        navigate('/');
                         return;
                     }
 
+                    // Check for mother
                     const motherQuery = query(collection(db, 'mothers'), where('uid', '==', uid));
                     const motherSnapshot = await getDocs(motherQuery);
-
                     if (!motherSnapshot.empty) {
                         setUserType('mother');
                         setLoading(false);
-                        navigate('/');
                         return;
                     }
 
@@ -69,7 +67,9 @@ const ProtectedRoute = ({ allowedRoles, redirectPath = '/User/sign-in' }) => {
         return <Navigate to={redirectPath} />;
     }
 
-  
+    if (!allowedRoles.includes(userType)) {
+        return <Navigate to={redirectPath} />;
+    }
 
     return <Outlet />;
 };

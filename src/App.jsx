@@ -1,46 +1,35 @@
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import HomeTemp from "./components/marcocompoonents/HomeTemp";
+import Temp from "./components/marcocompoonents/Temp";
+import Discission from "./components/marcocompoonents/Discission";
+import Mother from "./components/marcocompoonents/mother";
+import Doctor from "./components/marcocompoonents/doctors";
+import Waitingvarification from "./components/marcocompoonents/Waitingvarification";
+import Home from "./components/marcocompoonents/Home";
+import SignIn from "./components/marcocompoonents/Signin";
+import Appointments from "./components/marcocompoonents/Appointments";
+import DoctorAll from "./components/marcocompoonents/DoctorAll";
+import DoctorDesc from "./components/marcocompoonents/DoctorDesc";
+import Booking from "./components/marcocompoonents/Booking";
+import Checkout from "./components/marcocompoonents/Checkout";
+import Message from "./components/marcocompoonents/Messages";
+import Discussion from "./components/marcocompoonents/Discussion";
+import MessageRooms from "./components/marcocompoonents/MessageRooms";
+import AddPost from "./components/marcocompoonents/AddPost";
+import Postsingle from "./components/marcocompoonents/Postsingle";
+import Profile from "./components/marcocompoonents/Profile";
+import EditPassword from "./components/marcocompoonents/EditPassword";
+import ResetPassword from "./components/marcocompoonents/ResetPassword";
+import ViewAppointments from "./components/marcocompoonents/ViewAppointments";
+import AdminHomeTemp from "./components/marcocompoonents/AdminHomeTemp";
+import AdminUsers from "./components/marcocompoonents/AdminUser";
+import AdminDoctors from "./components/marcocompoonents/AdminDoctors";
+import AdminMothers from "./components/marcocompoonents/AdminMothers";
+import ProtectedRoute from "./components/microcomponents/ProtectedRoutes";
+// import ProtectedRoute from "./components/microcomponents/ProtectedRoute";
 
-import { useState, useEffect } from "react"
-import Pageload from "./components/microcomponents/Pageload"
-import { Routes, Route, BrowserRouter } from "react-router-dom"
-import HomeTemp from "./components/marcocompoonents/HomeTemp"
-import Temp from "./components/marcocompoonents/Temp"
-import Discission from "./components/marcocompoonents/Discission"
-import Mother from "./components/marcocompoonents/mother"
-import Doctor from "./components/marcocompoonents/doctors"
-import Waitingvarification from "./components/marcocompoonents/Waitingvarification"
-import Home from "./components/marcocompoonents/Home"
-import SignIn from "./components/marcocompoonents/Signin"
-
-import Appointments from "./components/marcocompoonents/Appointments"
-import DoctorAll from "./components/marcocompoonents/DoctorAll"
-import DoctorDesc from "./components/marcocompoonents/DoctorDesc"
-import Booking from "./components/marcocompoonents/Booking"
-import Checkout from "./components/marcocompoonents/Checkout"
-
-import Message from "./components/marcocompoonents/Messages"
-import Discussion from "./components/marcocompoonents/Discussion"
-import MessageRooms from "./components/marcocompoonents/MessageRooms"
-
-import AddPost from "./components/marcocompoonents/AddPost"
-import Postsingle from "./components/marcocompoonents/Postsingle"
-import Profile from "./components/marcocompoonents/Profile"
-import EditPassword from "./components/marcocompoonents/EditPassword"
-import ResetPassword from "./components/marcocompoonents/ResetPassword"
-// import NewPassword from "./components/marcocompoonents/NewPassword"
-import ViewAppointments from "./components/marcocompoonents/ViewAppointments"
-
-import AdminHomeTemp from "./components/marcocompoonents/AdminHomeTemp"
-import AdminUsers from "./components/marcocompoonents/AdminUser"
-import AdminDoctors from "./components/marcocompoonents/AdminDoctors"
-import AdminMothers from "./components/marcocompoonents/AdminMothers"
-import ProtectedRoute from "./components/microcomponents/ProtectedRoutes"
-
-
-// import Install from "./components/microcomponents/Install"
 function App() {
-
   return (
-    <>
     <div className="div bg-smoke">
       <BrowserRouter>
         <Routes>
@@ -98,9 +87,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </div>
-    </>
-  )
-
+  );
 }
 
-export default App
+export default App;
