@@ -8,6 +8,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
 
 export default function  AdminDoctors() {
   const user = useSelector((state) => state.auth.user);
@@ -40,10 +41,18 @@ export default function  AdminDoctors() {
 
     const fetchDoctors = async () => {
       const doctorsRef = collection(db, "doctors");
-
+    
       try {
         const doctorSnapshot = await getDocs(doctorsRef);
-        setDoctors(doctorSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        const doctorsData = doctorSnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            ...data,
+            id: doc.id,
+            timestamp: data.timestamp ? data.timestamp.toDate().toLocaleString() : null,
+          };
+        });
+        setDoctors(doctorsData);
       } catch (error) {
         console.error("Error fetching doctors:", error);
       }
@@ -72,7 +81,7 @@ export default function  AdminDoctors() {
              key={doctor.id}
              user={'mother'}
              name={doctor.firstName +" " + doctor.secondName} 
-             time={doctor.timestamp}
+             time={doctor.timestamp || "21/03/2024"}
              email={doctor.email}
              doctorId={doctor.uid}
             // this deactives an account 
