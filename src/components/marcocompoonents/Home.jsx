@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Home() {
     const [posts, setPosts] = useState([]);
-    const [loading, setLoading] = useState(true); // Loading state
+    const [loading, setLoading] = useState(false); // Loading state
     const [userType, setUserType] = useState(null); // State to store user type
     const [userDetails, setUserDetails] = useState(null); // State to store user details
     const user = useSelector((state) => state.auth.user);

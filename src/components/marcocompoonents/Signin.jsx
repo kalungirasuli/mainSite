@@ -33,6 +33,7 @@ export default function SignIn() {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
+         if (user && user.emailVerified){
             const userType = await determineUserType(user.uid);
 
             dispatch(setUser({ user: user.uid, email: user.email, role: userType, super: user }));
@@ -43,6 +44,7 @@ export default function SignIn() {
             } else {
                 navigate('/');
             }
+         }
         } catch (error) {
             console.error('Error logging in user:', error.message);
         }

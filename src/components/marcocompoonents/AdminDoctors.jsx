@@ -89,7 +89,7 @@ export default function  AdminDoctors() {
             //  the shows after the doctor has created it
              Description={ doctor.bio || 'Am a doctor the treates people well'}
              show={true}
-             downloadFile={() => window.open(doctor.licenseURL, '_blank')}
+             downloadFile={doctor.licenseURL}
             //  this initlizes a message between mother and admin
              handleMassageClick={console.log('message init')}
             //  the delete the mother form the platform
