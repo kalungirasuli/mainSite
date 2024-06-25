@@ -22,7 +22,7 @@ export default function DoctorListcard(props) {
 
   return (
     <div onClick={handleUserClick}>
-      <div className="div p-3 pt-5 shadow-lg rounded-[10px] w-[160px] mt-5 cursor-pointer">
+      <div className="div p-3 pt-5 shadow-lg rounded-[10px] w-[150px] mt-5 cursor-pointer">
         <div className="div w-[60px] m-auto relative -z-50">
           <img src={props.image} className="rounded-full w-[50px] h-[50px] m-auto" loading="lazy" alt="" />
           {props.online && <span className="absolute top-[5px] right-[2px]"><FaCircle className="fill-green-700" /></span>}
