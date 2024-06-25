@@ -42,7 +42,7 @@ export default function MessageRooms() {
     const fetchMessageRooms = async () => {
       try {
         if (!user) return; // Exit early if user is not available
-
+         
         // Query to fetch message rooms where the logged-in user is a participant
         const q = query(collection(db, "messageRooms"), where("users", "array-contains", user));
 

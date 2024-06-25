@@ -43,12 +43,12 @@ console.log('the booking is', bookingId)
     };
 
     try {
-      const response = await axios.post('http://localhost:3000/pay', paymentDetails);
+      const response = await axios.post('http://api.mindlyfe.org/pay', paymentDetails);
       // console.log('Payment Response:', response.data);
        data.mode==='Online'?generateMeetLink(data.mode):generateMeetId(data.mode);
        const generateMeetLink=()=>{
         if(response.data.paymentStatus && response.data.paymentStatus.status === 'SUCCESSFUL' && data.mode === 'Online') {
-          window.location.href = `http://localhost:3000/?bookingId=${bookingId}`;
+          window.location.href = `http://api.mindlyfe.org/?bookingId=${bookingId}`;
           // if paid not true appoiment should not show
           // then delete appointment
         } else {
