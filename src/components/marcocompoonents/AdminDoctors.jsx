@@ -80,7 +80,7 @@ export default function  AdminDoctors() {
 
              key={doctor.id}
              user={'mother'}
-             name={doctor.firstName +" " + doctor.secondName} 
+             name={doctor.firstName + " " + doctor.secondName} 
              time={doctor.timestamp || "21/03/2024"}
              email={doctor.email}
              doctorId={doctor.uid}
