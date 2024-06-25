@@ -15,7 +15,7 @@ const ProtectedRoute = ({ allowedRoles, redirectPath = '/User/sign-in' }) => {
         const determineUserType = async () => {
             if (user) {
                 try {
-                    const uid = user.uid;
+                    const uid = user;
                     const adminQuery = query(collection(db, 'admin'), where('uid', '==', uid));
                     const adminSnapshot = await getDocs(adminQuery);
                     
