@@ -27,23 +27,23 @@ export default defineConfig({
         "theme_color": "#1066d8",
         "icons": [
           {
-            "src": "/images/logo.png",
+            "src": "/images/pwa-64.png",
             "sizes": "64x64",
             "type": "image/png"
           },
           {
-            "src": "/images/logo.png",
+            "src": "/images/pwa-192.png",
             "sizes": "192x192",
             "type": "image/png"
           },
           {
-            "src": "/images/logo.png",
+            "src": "/images/pwa-512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any"
           },
           {
-            "src": "/images/logo.png",
+            "src": "/images/maskable-icon-512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
