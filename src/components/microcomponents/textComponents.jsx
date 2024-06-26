@@ -315,3 +315,16 @@ export function Select(props) {
     </div>
   );
 }
+
+export function Nodata(props){
+  return(
+    <>
+      <div className="div w-full m-auto text-center">
+        <div className="img w-[50%] h-[400px] m-auto mt-[100px] opacity-30">
+          <img src="/images/post.jpg" alt="loading" loading="lazy" />
+        </div>
+        <p className="text-greytextdark text-center text-[15px]">{props.text}</p>
+      </div>
+    </>
+  )
+}

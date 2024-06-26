@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import { useNavigate } from "react-router-dom";
+import { Nodata } from "../microcomponents/textComponents";
 
 export default function Home() {
     const [posts, setPosts] = useState([]);
@@ -105,7 +106,7 @@ export default function Home() {
     return (
         <div className="post w-full h-full overflow-y-auto">
           {posts.length===0 && loading ? <Pageload /> : console.log("Posts fetched:", posts.length)} 
-            {loading && posts.length===0? <Loading /> : (
+            { posts.length===0? <Nodata text='There is no posts made yet, take this chance to make the first post.'/> : (
                 posts.map((post) => (
                     <PostCard 
                         key={post.id}
