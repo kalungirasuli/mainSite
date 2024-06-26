@@ -11,10 +11,7 @@ export default function Pageload(){
                 </div>
                 <div className='text-center text-bluegreen text-2xl mt-5 font-hand'>
                 <p>Paedlyfe</p>
-                <div className="loading-indicator w-[100px] h-auto  m-auto mt-[100px] p-2">
-                <img src="/images/load-35_128.gif" alt="Loading..." />
-                </div>
-
+               
                 </div>
                </div>
                

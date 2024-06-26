@@ -17,8 +17,8 @@ export default defineConfig({
         enabled: true
       },
       manifest:{
-        "name": "Pedlyfe",
-        "short_name": "Pedlyfe",
+        "name": "Paedlyfe",
+        "short_name": "Paedlyfe",
         "start_url": "/",
         "display": "standalone",
         "background_color": "#ffffff",
@@ -32,24 +32,24 @@ export default defineConfig({
             "type": "image/png"
           },
           {
-            "src": "/images/pwa-192.png",
+            "src": "/images/pwa-192x192.png",
             "sizes": "192x192",
             "type": "image/png"
           },
           {
-            "src": "/images/pwa-512.png",
+            "src": "/images/pwa-512x512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any"
           },
           {
-            "src": "/images/maskable-icon-512.png",
+            "src": "/images/maskable-icon-512x512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
           }
         ],
-        "id": "Pedlyfe@mindlyfe",
+        "id": "Paedlyfe@mindlyfe",
         "description": "This app connects mothers and doctors. Mothers can post there questions or image for more descriptions,then the fellow mother and doctors can respond to the question. They can still book appointments with the doctors and schedule meetings online or physical.",
         "dir": "auto",
         "categories": [

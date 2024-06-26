@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom"
 export default function Temp(){
     return(
         <>
-          <div className="div bg-smoke m-0 h-screen lg:p-[15%] overflow-y-auto overflow-x-hidden xl:p-[50px]">
+          <div className="div h-screen bg-smoke m-0 lg:p-[50px] overflow-x-hidden">
           <Outlet/>
           </div>
         </>

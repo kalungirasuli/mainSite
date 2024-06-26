@@ -38,7 +38,14 @@ export default function Mother() {
     event.preventDefault();
     setError("");
     setLoading(true);
-
+  
+    // Basic client-side validation
+    if (!formData.firstName || !formData.secondName || !formData.email || !formData.password) {
+      setError("All fields are required");
+      setLoading(false);
+      return;
+    }
+  
     try {
       // Create the user account with email and password
       const userCredential = await createUserWithEmailAndPassword(
@@ -46,12 +53,12 @@ export default function Mother() {
         formData.email,
         formData.password
       );
-
+  
       // Access the user data
       const user = userCredential.user;
       console.log(user);
       await sendEmailVerification(user);
-
+  
       // Store additional user data in Firestore
       await addDoc(collection(db, "mothers"), {
         uid: user.uid,
@@ -60,15 +67,16 @@ export default function Mother() {
         email: formData.email,
         role: 'mother'
       });
-
-        // Dispatch user data to Redux store
-        dispatch(setUser({
-          user: {
-            uid: user.uid,
-            email: user.email,
-          },
-          role: 'mother', 
-        }));
+  
+      // Dispatch user data to Redux store
+      dispatch(setUser({
+        user: {
+          uid: user.uid,
+          email: user.email,
+        },
+        role: 'mother', 
+      }));
+  
       // Redirect or navigate to the verification page
       setLoading(false);
       navigate("/User/verification");
@@ -77,12 +85,12 @@ export default function Mother() {
       setLoading(false);
     }
   };
-
+  
   return (
     <>
-      loading?<Loading/>:(
+      {loading?<Loading/>:(
         <div className={`${styles}`}>
-        <HeaderLogo text="Welcome to Neonates, sign-up" head="Mothers" />
+        <HeaderLogo text="Welcome to Paedlyfe, sign-up" head="Mothers" />
         <form onSubmit={handleSubmit}>
           {error && <p style={{ color: "red" }}>{error}</p>}{" "}
           {/* Display the error message */}
@@ -148,7 +156,7 @@ export default function Mother() {
           </div>
         </form>
       </div>
-      )
+      )}
     </>
   );
 }

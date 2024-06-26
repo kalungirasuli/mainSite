@@ -110,7 +110,7 @@ export default function Doctor() {
            {
             loading?<Loading/>:(
                 <div className={`${styles}`}>
-                <HeaderLogo text='Welcome to Neonates, sign-up' head='Pediatricians' />
+                <HeaderLogo text='Welcome to Paedlyfe, sign-up' head='Pediatricians' />
                 <form onSubmit={handleSubmit}>
                     {error && <p style={{ color: 'red',textAlign:'center' }}>{error}</p>} {/* Display error message */}
 

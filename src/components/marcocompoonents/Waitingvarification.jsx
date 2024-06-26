@@ -37,7 +37,7 @@ export default function WaitingVerification() {
 
   return (
     <div className={`${styles}`}>
-      <HeaderLogo head='Neonates' />
+      <HeaderLogo head='Paedlyfe' />
       <div className={`${buttonStyle} bg-white rounded-[10px] shadow-lg p-5 mt-5`}>
         <p className="text-[13px] text-greytextdark md:text-[20px] ">
           {user === 'mother' ? message.mother : message.doctor}

@@ -40,7 +40,7 @@ export default function ResetPassword() {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center h-screen">
+      <div className="flex flex-col items-center justify-center lg:bg-slate-50 p-5 lg:w-[500px] lg:m-auto shadow-md lg:rounded-lg">
         <HeaderLogo head="Forgot Password" />
         <form className="flex flex-col w-[300px] m-auto pt-[20px] md:w-[450px]" onSubmit={handleResetPassword}>
           <Input

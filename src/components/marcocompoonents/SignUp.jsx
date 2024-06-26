@@ -60,7 +60,7 @@ export default function SignUp() {
           {
             loading?<Loading/>:(
                 <div className={`${styles}`}>
-                <HeaderLogo text='Welcome to Neonates, sign-up' head='Neonates' />
+                <HeaderLogo text='Welcome to Paedlyfe, sign-up' head='Paedlyfe' />
                 <form onSubmit={handleSubmit}>
                     {error && <p className='text-red-500 text-[15px]'>{error}</p>} {/* Display the error message */}
                     {err && <Popup message={'Sign-up failed user already exists'}/>} {/* Display the error message popup */}

@@ -95,10 +95,14 @@ export default function SignIn() {
         <>
         {
             loading?<Loading/>:(
-                <div className={`${styles}`}>
-            <HeaderLogo text='Welcome to Pedlyfe, sign-In' head='Pedlyfe' />
-            {error && <Popup message='Invalid email or password, user not found' />}
-            <form onSubmit={handleSubmit}>
+                
+                <div className={`lg:bg-white lg:grid lg:grid-cols-2 lg:gap-5 lg:shadow-xl lg:rounded-[20px] lg:p-[50px] lg:w-[700px] lg:h-[max-content] lg:m-auto lg:mt-[10%] xl:mt-5  `}>
+                <HeaderLogo  head='Paedlyfe' />
+           
+               <form onSubmit={handleSubmit}>
+                <p className='text-center text-[20px] text-greytextdark'>
+                Welcome to Paedlyfe, sign-In
+                </p>
                 <Input
                     type='text'
                     ids='email'
@@ -127,6 +131,7 @@ export default function SignIn() {
                     <Alt highlightText='Sign-up' endText='instead' link='/User' />
                 </div>
             </form>
+            {error && <Popup message='Invalid email or password, user not found' />}
         </div>
             )
         }

@@ -42,16 +42,16 @@ export default function Discission(){
     return(
         <>
          <div className={`${styles}`}>
-            <HeaderLogo text='Choose a user role' head='Neonates'/>
+            <HeaderLogo text='Choose a user role' head='Paedlyfe'/>
             <div className="userroles grid grid-cols-2 gap-[20px] align-center w-[220px] m-auto pt-4 md:w-[420px]">
                 <div className={`${vary==0?'border border-2 border-bluegreen  p-[3px] rounded-[10px]':''} mth relative w-[100px] m-auto  md:w-[200px]`} onClick={mother}>
                     <hr className={`${vary==0?'bg-greendark':'bg-white'} w-[20px] h-[20px] bg-greendark rounded-[50%] absolute top-[5px] left-[5px]`}/>
-                    <img src="/images/mother.png" alt="" className="w-[100%] h-[100%] rounded-[10px]" />
+                    <img src="/images/mother.jpg" alt="" className="w-[100%] h-[100%] rounded-[10px]" />
                     <p className="text-greytextdark text-center text-[15px] md:text-[20px] ">Mother</p>
                 </div>
                 <div className={`${vary==1?'border border-2 border-bluegreen  p-[3px] rounded-[10px]':''} dr relative w-[100px] m-auto md:w-[200px]` } onClick={doctor}>
                     <hr className={`${vary==1?'bg-greendark':'bg-white'} w-[20px] h-[20px]  rounded-[50%] absolute top-[5px] left-[5px]`}/>
-                    <img src="/images/doctor.png" alt="" className="w-[100%] h-[100%] rounded-[10px]" />
+                    <img src="/images/doctor.jpg" alt="" className="w-[100%] h-[100%] rounded-[10px]" />
                     <p className="text-greytextdark text-center text-[15px] md:text-[20px]">Deditricain</p>
                 </div>
             </div>
@@ -62,7 +62,7 @@ export default function Discission(){
                 <p className="text-[13px] text-greytextdark pt-2 md:text-[15px]" >{SelectedRole}</p>
                 
             </div>
-            <div className="continue w-[240px] m-auto pt-[20px] md:w-[450px]">
+            <div className="continue w-[240px] m-auto pt-[20px] md:w-[300px]">
             <RoundedButtonTwo text='CONTINUE' onClick={()=> handleContinue() }/>
             <Alt highlightText='Sign-in' endText='instead' link= '/User/sign-in'/>
             </div>

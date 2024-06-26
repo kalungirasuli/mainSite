@@ -20,15 +20,15 @@ export function Alt(props){
     )
 }
 
-export const styles=' lg:bg-white lg:shadow-xl lg:rounded-[20px] lg:p-[50px] lg:w-[max-content] lg:m-auto lg:mt-[20%] xl:mt-5'
-export const buttonStyle='w-[300px] m-auto pt-[20px] md:w-[450px]'
+export const styles=' lg:bg-white lg:shadow-xl lg:rounded-[20px] lg:p-[50px] lg:w-[500px] lg:h-[max-content] lg:m-auto '
+export const buttonStyle='w-[300px] m-auto pt-[20px] md:w-[100%]'
 
 
 
 
 export function Input(props) {
     return (
-        <div className="div flex flex-col gap-2 w-[300px] m-auto pt-[20px] md:w-[450px]">
+        <div className="div flex flex-col gap-2 w-[300px] m-auto pt-[20px] md:w-[100%] max-w-[450px]">
             <label htmlFor={props.for} className="text-[15px] text-greytextdark text-left pl-3">{props.label}</label>
             <input 
                 type={props.type} 
@@ -45,7 +45,7 @@ export function Input(props) {
 
 export function File(props) {
     return (
-        <div className="flex flex-col gap-2 w-[300px] m-auto pt-[20px] md:w-[450px]">
+        <div className="flex flex-col gap-2 w-[300px] m-auto pt-[20px] md:w-[100%] max-w-[450px]">
             <label htmlFor={props.for} className="text-[15px] text-greytextdark text-left pl-3">
                 {props.label}
             </label>
@@ -319,7 +319,7 @@ export function Select(props) {
 export function Nodata(props){
   return(
     <>
-      <div className="div w-full m-auto text-center">
+      <div className="div w-full m-auto text-center mt-[40%] xl:mt-[10%] ">
         <div className="img w-[50%] h-[400px] m-auto mt-[100px] opacity-30">
           <img src="/images/post.jpg" alt="loading" loading="lazy" />
         </div>

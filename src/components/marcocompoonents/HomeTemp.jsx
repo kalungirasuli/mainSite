@@ -17,7 +17,7 @@ export default function HomeTemp() {
         <>
             <div className="div flex flex-cols-3  w-full bg-white xxl:w-[80%] border-x-[1px] border-x-greytextfade m-auto h-screen">
               
-                 <div className={`left transition-opacity duration-500  ${!isMessagesRoute?'hidden':'block'} fixed bottom-0 left-0 right-0 md:block md:p-[1px] md:border-r-[1px] md:border-r-greytextfade md:w-[100px] md:sticky md:top-0 md:px-3 md:h-screen xl:w-[23%] `}>
+                 <div className={`left transition-opacity duration-500  ${isMessagesRoute?'hidden':'block'} fixed bottom-0 left-0 right-0 md:block md:p-[1px] md:border-r-[1px] md:border-r-greytextfade md:w-[100px] md:sticky md:top-0 md:px-3 md:h-screen xl:w-[23%] `}>
                  <div className="div logo align-left w-[max-content] p-3 rounded-[50%] hover:bg-greytextfade hidden md:block md:m-auto xl:m-0">
                      <svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" className='w-[70px] md:w-[40px]' viewBox="0 0 149 153.49">
                          <g id="Layer_1-2">
