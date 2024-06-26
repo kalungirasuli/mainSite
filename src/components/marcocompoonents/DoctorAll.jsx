@@ -40,7 +40,7 @@ export default function DoctorAll() {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <div className="div w-[90%] m-auto flex flex-wrap justify-between gap-[10px] pt-5">
+          <div className="div w-[90%] m-auto flex flex-wrap  gap-[10px] pt-5">
             {filteredDoctors.map((doctor) => (
               <DoctorListcard
                 key={doctor.id}
