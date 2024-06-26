@@ -4,7 +4,7 @@ import {Doctor} from "../microcomponents/DoctorListcard";
 import HeadWithBack from "../microcomponents/HeadWithBack";
 import { Search } from "../microcomponents/textComponents";
 import AdminUserSingle from "../microcomponents/AdminUserSingle";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -60,6 +60,15 @@ export default function  AdminDoctors() {
 
     checkAdmin();
   }, [user, navigate]);
+
+  const handleDelete = async (doctorId) => {
+    try {
+      await deleteDoc(doc(db, "doctors", doctorId));
+      setDoctors((prevDoctors) => prevDoctors.filter((doctor) => doctor.id !== doctorId));
+    } catch (error) {
+      console.error("Error deleting doctor:", error);
+    }
+  };
   return (
     <>
       <div className="div">
@@ -95,7 +104,7 @@ export default function  AdminDoctors() {
              handleMassageClick={console.log('message init')}
             //  the delete the mother form the platform
               onChangeCheck={console.log('cheing')}
-             handleDelete={console.log('Delete Doctor')}
+              handleDelete={() => handleDelete(doctor.id)}
              />
             ))}
           </div>
