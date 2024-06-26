@@ -74,7 +74,6 @@ export default function  AdminMothers() {
           {mothers.map((mother) => (
              <AdminUserSingle 
              //  the use type group must be retuned please to handle ui logic please isaac
-
              key={mother.id}
              user={'mother'}
              name={mother.firstName +" " + mother.secondName} 
