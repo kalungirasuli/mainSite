@@ -127,8 +127,13 @@ export default function AdminUserSingle(props) {
                   <div className={`${props.show ? 'block' : 'hidden'}`}>
                     <p className="text-[17px] text-greytext ">Status</p>
                     <form className="div flex gap-2">
-                      <input type="checkbox" name="status" id="status" onChange={props.onChangeCheck} />
-                      <label htmlFor="status" className="text-[15px] text-greytextdark">{props.status || 'Deactivated'}</label>
+                      <input type="checkbox" name="status" id="status" onChange={props.onChangeCheck}  htmlFor={`toggle-${props.doctorId}`} />
+                      <label htmlFor="status" className="text-[15px] text-greytextdark"
+                        type="checkbox"
+                        id={`toggle-${props.doctorId}`}
+                        checked={props.status === "Activated"}
+                        onChange={props.onChangeCheck}
+                      >{props.status || 'Deactivated'}</label>
                     </form>
                   </div>
                   <div className="div">

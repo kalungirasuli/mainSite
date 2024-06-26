@@ -1,5 +1,4 @@
-import  { useEffect, useState } from "react";
-
+import { useEffect, useState } from "react";
 import DoctorListcard from "../microcomponents/DoctorListcard";
 import HeadWithBack from "../microcomponents/HeadWithBack";
 import { Search } from "../microcomponents/textComponents";
@@ -13,9 +12,7 @@ export default function DoctorAll() {
     const fetchDoctors = async () => {
       try {
         const doctorsList = await getAllDoctors();
-        // console.log("the doctors list are"+ doctorsList)
-        setDoctors(doctorsList);
-        console.log("the doctors are ",doctors)
+        setDoctors(doctorsList.filter((doctor) => doctor.isActive));
       } catch (error) {
         console.error("Error fetching doctors:", error);
       }
@@ -24,7 +21,7 @@ export default function DoctorAll() {
     fetchDoctors();
   }, []);
 
-  const filteredDoctors = doctors.filter(doctor =>
+  const filteredDoctors = doctors.filter((doctor) =>
     doctor.firstName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -40,19 +37,19 @@ export default function DoctorAll() {
               ids="search"
               classes="rounded-[10px] p-3 w-full border-0 text-left text-[15px] outline-none"
               value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
           <div className="div w-[90%] m-auto flex flex-wrap justify-between gap-[10px] pt-5">
-            {filteredDoctors.map(doctor => (
+            {filteredDoctors.map((doctor) => (
               <DoctorListcard
                 key={doctor.id}
-                name={doctor.firstName + ' ' + doctor.secondName}
+                name={doctor.firstName + " " + doctor.secondName}
                 firstName={doctor.firstName}
                 secondName={doctor.secondName}
                 work={doctor.work}
                 link={`/appointment/doctor/${doctor.id}`}
-                image={doctor.image.lenght > 0 ? doctor.image : "https://via.placeholder.com/150"}
+                image={doctor.image > 0 ? doctor.image : "https://via.placeholder.com/150"}
                 online={doctor.online}
               />
             ))}

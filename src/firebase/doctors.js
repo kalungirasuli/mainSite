@@ -21,18 +21,17 @@ export const getDoctorById = async (doctorId) => {
 
   
 // function for getting all the doctors 
-  export const getAllDoctors = async () => {
-    try {
-      const doctorsCollection = collection(db, 'doctors');
-      const doctorsSnapshot = await getDocs(doctorsCollection);
-      const doctorsList = doctorsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  
-      return doctorsList;
-    } catch (error) {
-      console.error('Error fetching doctors:', error);
-      throw new Error('Failed to fetch doctors');
-    }
+export const getAllDoctors = async () => {
+  try {
+    const doctorsCollection = collection(db, 'doctors');
+    const doctorsSnapshot = await getDocs(doctorsCollection);
+    const doctorsList = doctorsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    return doctorsList;
+  } catch (error) {
+    console.error('Error fetching doctors:', error);
+    throw new Error('Failed to fetch doctors');
   }
+}
   //function for booking a doctor
 
   export const bookAppointment = async (firstName, secondName, description, time, day, documentFile) => {

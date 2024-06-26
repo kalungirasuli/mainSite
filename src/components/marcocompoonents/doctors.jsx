@@ -76,6 +76,7 @@ export default function Doctor() {
                 licenseURL,
                 certificateURL,
                 timestamp: serverTimestamp(),
+                isActive: false
             });
 
             console.log('Data submitted successfully');
@@ -88,6 +89,7 @@ export default function Doctor() {
               email: user.email,
               firstName,
               secondName,
+              
 
             },
             role: 'doctor',

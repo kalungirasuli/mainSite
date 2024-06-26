@@ -4,7 +4,7 @@ import {Doctor} from "../microcomponents/DoctorListcard";
 import HeadWithBack from "../microcomponents/HeadWithBack";
 import { Search } from "../microcomponents/textComponents";
 import AdminUserSingle from "../microcomponents/AdminUserSingle";
-import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import { db } from "../../firebase/config";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -69,6 +69,24 @@ export default function  AdminDoctors() {
       console.error("Error deleting doctor:", error);
     }
   };
+
+
+
+  const handleStatusChange = async (doctorId) => {
+    try {
+      const doctorRef = doc(db, "doctors", doctorId);
+      const doctorSnap = await getDoc(doctorRef);
+      const currentStatus = doctorSnap.data().isActive;
+      await updateDoc(doctorRef, { isActive: !currentStatus });
+      setDoctors((prevDoctors) =>
+        prevDoctors.map((doctor) =>
+          doctor.id === doctorId ? { ...doctor, isActive: !currentStatus } : doctor
+        )
+      );
+    } catch (error) {
+      console.error("Error updating doctor status:", error);
+    }
+  };
   return (
     <>
       <div className="div">
@@ -94,7 +112,7 @@ export default function  AdminDoctors() {
              email={doctor.email}
              doctorId={doctor.uid}
             // this deactives an account 
-             status='Deactived'
+            status={doctor.isActive ? "Activated" : "Deactivated"}
             //  the shows after the doctor has created it
              Description={ doctor.bio || 'Am a doctor the treates people well'}
              show={true}
@@ -103,7 +121,7 @@ export default function  AdminDoctors() {
             //  this initlizes a message between mother and admin
              handleMassageClick={console.log('message init')}
             //  the delete the mother form the platform
-              onChangeCheck={console.log('cheing')}
+            onChangeCheck={() => handleStatusChange(doctor.id)}
               handleDelete={() => handleDelete(doctor.id)}
              />
             ))}
