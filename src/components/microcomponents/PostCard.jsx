@@ -249,7 +249,7 @@ const canDelete = props.userUid === props.postUid || props.userType === 'admin';
                   {comments.length ? (comments.length >= 1000 ? '1000+' : comments.length) : ''}
                 </div>
               </span>
-              <CiShare1 style={style2} className="icon-small" />
+              <CiShare1 style={style2} className="icon-small"  onClick={() => props.handleSavePost(props.postId)} />
               {canDelete && <RiDeleteBin4Line style={style2} className="icon-small" onClick={handleDeletePost} />}
             </div>
           </div>

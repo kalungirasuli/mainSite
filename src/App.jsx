@@ -37,7 +37,7 @@ function App() {
           <Route element={<ProtectedRoute allowedRoles={['doctor', 'mother']} />}>
             <Route path="/" element={<HomeTemp />}>
               <Route index element={<Home />} />
-              <Route path="post" element={<Postsingle />} />
+              <Route path="post/:id" element={<Postsingle />} />
               <Route path="add-post" element={<AddPost />} />
               <Route path="appointment" element={<Appointments />}>
                 <Route index element={<ViewAppointments />} />

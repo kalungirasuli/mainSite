@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { deletePost, fetchPostsWithComments } from "../../firebase/post";
+import { deletePost, fetchPostsWithComments, savePostForUser, unsavePostForUser } from "../../firebase/post";
 import PostCard from "../microcomponents/PostCard";
 import Pageload from "../microcomponents/Pageload"; // Replace with your loading indicator 
 import { Loading } from "../microcomponents/textComponents";
@@ -14,6 +14,7 @@ export default function Home() {
     const [userType, setUserType] = useState(null); // State to store user type
     const [userDetails, setUserDetails] = useState(null); // State to store user details
     const user = useSelector((state) => state.auth.user);
+    const [savedPosts, setSavedPosts] = useState([])
     const navigate = useNavigate()
     useEffect(() => {
      if(user){
@@ -83,6 +84,23 @@ export default function Home() {
             // console.error('Error deleting post:', error);
         }
     };
+
+
+    const handleSavePost = async (postId) => {
+        try {
+            if (!savedPosts.includes(postId)) {
+                // Save the post for the current user
+                await savePostForUser(user, postId);
+                setSavedPosts([...savedPosts, postId]);
+            } else {
+                // Unsave the post for the current user
+                await unsavePostForUser(user, postId);
+                setSavedPosts(savedPosts.filter((id) => id !== postId));
+            }
+        } catch (error) {
+            console.error('Error saving/unsaving post:', error);
+        }
+    };
     
     return (
         <div className="post w-full h-full overflow-y-auto">
@@ -106,6 +124,7 @@ export default function Home() {
                         fileType={post.imageUrls && post.imageUrls[0]? 'image' : 'video'} 
                         comments={post.comments}
                         postId={post.id}
+                        handleSavePost={handleSavePost}
                         userType={userType}
                         handleDeletePost={handleDeletePost}
                         // videoType={post.videoType || 'video/mp4'}

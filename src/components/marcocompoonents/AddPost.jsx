@@ -15,7 +15,7 @@ export default function AddPost() {
   const user = useSelector(state => state.auth.user);
   const [userType, setUserType] = useState(null);
   const navigate = useNavigate();
-
+  const [loading,setLoading]= useState(false)
   useEffect(() => {
     const determineUserType = async () => {
       if (user) {
@@ -58,12 +58,15 @@ export default function AddPost() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("user uid is " + userUid);
+    setLoading(true)
     try {
+      
       await createPost(userUid, content, selectedFiles);
       alert("Post created successfully!");
       setContent("");
       setSelectedFiles([]);
       navigate('/');
+      setLoading(false)
     } catch (error) {
       console.error("Error creating post:", error);
       alert("Failed to create post");
@@ -86,7 +89,8 @@ export default function AddPost() {
             <FilePicker onFileChange={handleFileChange} />
           <div className="div w-[200px] m-auto
           ">
-          <RoundedButton text="Post" onClick={handleSubmit} />
+            { !loading &&
+          <RoundedButton onClick={handleSubmit} text={loading ? "Posting..." : "Post"} disabled={loading} />}
           </div>
           </form>
         </div>
