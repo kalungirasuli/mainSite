@@ -90,6 +90,7 @@ export default function  AdminDoctors() {
              Description={ doctor.bio || 'Am a doctor the treates people well'}
              show={true}
              downloadFile={doctor.licenseURL}
+             downloadCertificate={doctor.certificateURL}
             //  this initlizes a message between mother and admin
              handleMassageClick={console.log('message init')}
             //  the delete the mother form the platform

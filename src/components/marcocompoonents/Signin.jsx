@@ -37,7 +37,7 @@ export default function SignIn() {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
-         if (user && user.emailVerified){
+        //  if (user && user.emailVerified){
             const userType = await determineUserType(user.uid);
 
             dispatch(setUser({ user: user.uid, email: user.email, role: userType, super: user }));
@@ -48,7 +48,7 @@ export default function SignIn() {
                 navigate('/pannel');
             } else {
                 navigate('/');
-            }
+            // }
          }
         } catch (error) {
             setLoading(false);

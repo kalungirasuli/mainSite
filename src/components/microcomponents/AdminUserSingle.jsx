@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from "react";
 import { RiArrowDropDownLine, RiCloseLine } from "react-icons/ri";
 import { TiMessages } from "react-icons/ti";
@@ -11,8 +10,9 @@ import { useSelector } from "react-redux";
 export default function AdminUserSingle(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const modalRef = useRef();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -46,7 +46,7 @@ export default function AdminUserSingle(props) {
           navigate(`/pannel/Messages/${room.id}`);
         } else {
           const newRoom = await addDoc(collection(db, "messageRooms"), {
-            users: [user, props.doctorId ],
+            users: [user, props.doctorId],
             createdAt: new Date(),
           });
           navigate(`/pannel/Messages/${newRoom.id}`);
@@ -55,6 +55,15 @@ export default function AdminUserSingle(props) {
         console.error("Error handling messages click: ", error);
       }
     }
+  };
+
+  const handleDownload = (url) => {
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = url.substring(url.lastIndexOf('/') + 1);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -131,7 +140,10 @@ export default function AdminUserSingle(props) {
                       <TiMessages className="fill-greytextdark" style={{ fontSize: '25px' }} onClick={handleMessagesClick} />
                     </span>
                     <span className={`${props.show ? 'block' : 'hidden'}`}>
-                      <BsFillFileEarmarkArrowDownFill className="fill-greytextdark" style={{ fontSize: '25px' }} onClick={props.downloadFile} />
+                      <BsFillFileEarmarkArrowDownFill className="fill-greytextdark" style={{ fontSize: '25px' }} onClick={() => handleDownload(props.downloadFile)} />
+                    </span>
+                    <span className={`${props.show ? 'block' : 'hidden'}`}>
+                      <BsFillFileEarmarkArrowDownFill className="fill-greytextdark" style={{ fontSize: '25px' }} onClick={() => handleDownload(props. downloadCertificate)} />
                     </span>
                     <span className={`${props.show ? 'block' : 'hidden'} bg-red-500 p-2 text-white text-center text-[15px] rounded-lg`} onClick={props.handleDelete}>
                       DELETE
