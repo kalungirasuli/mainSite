@@ -15,7 +15,7 @@ export default function HomeTemp() {
     const isMessagesRoute = location.pathname === `/Message/${id}`
     return (
         <>
-            <div className="div flex flex-cols-3  w-full bg-white xxl:w-[80%] border-x-[1px] border-x-greytextfade m-auto h-screen">
+            <div className="div flex flex-cols-3 h-screen  w-full bg-white xxl:w-[80%] border-x-[1px] border-x-greytextfade m-auto ">
               
                     <div className={`left transition-opacity duration-500  ${isMessagesRoute?'hidden':'block'} fixed bottom-0 left-0 right-0 md:block md:p-[1px] md:border-r-[1px] md:border-r-greytextfade md:w-[100px] md:sticky md:top-0 md:px-3 md:h-screen xl:w-[23%] `}>
                     <div className="div logo align-left w-[max-content] p-3 rounded-[50%] hover:bg-greytextfade hidden md:block md:m-auto xl:m-0">
