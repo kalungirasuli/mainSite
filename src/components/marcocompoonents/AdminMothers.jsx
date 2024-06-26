@@ -70,7 +70,7 @@ export default function  AdminMothers() {
               classes="rounded-[10px] p-3 w-full border-0 text-left text-[15px] outline-none"
             />
           </div>
-          <div className="div w-[90%] m-auto flex flex-wrap  gap-[10px] pt-5">
+          <div className="div w-[80%] m-auto flex flex-wrap  gap-[10px] pt-5">
           {mothers.map((mother) => (
              <AdminUserSingle 
              //  the use type group must be retuned please to handle ui logic please isaac
