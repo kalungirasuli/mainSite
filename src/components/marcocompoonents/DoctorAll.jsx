@@ -52,7 +52,7 @@ export default function DoctorAll() {
                 secondName={doctor.secondName}
                 work={doctor.work}
                 link={`/appointment/doctor/${doctor.id}`}
-                image={doctor.image}
+                image={doctor.image.lenght > 0 ? doctor.image : "https://via.placeholder.com/150"}
                 online={doctor.online}
               />
             ))}

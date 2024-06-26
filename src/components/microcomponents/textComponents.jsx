@@ -166,7 +166,7 @@ export function FilePicker({ onFileChange }) {
 export function Loading(){
   return(
     <>
-                  <div className="loading-indicator w-[100px] h-auto  m-auto mt-[40%] p-2">
+                  <div className="loading-indicator w-[100px] h-auto  m-auto mt-[10%]  p-2 md:mt-[20%]">
                   <img src="/images/load-35_128.gif" alt="Loading..." />
                   </div>
     </>

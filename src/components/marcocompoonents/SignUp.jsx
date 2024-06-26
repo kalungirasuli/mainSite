@@ -6,13 +6,17 @@ import { buttonStyle, Alt } from "../microcomponents/textComponents";
 import { useNavigate } from 'react-router-dom';
 import { auth} from "../../firebase/config"
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { Loading } from '../microcomponents/textComponents';
+import Popup from '../microcomponents/Pop';
 
 export default function SignUp() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(''); 
+    const [error, setError] = useState('');
+    const [errorMessage, setErrorMessage] = useState(''); 
     const navigate = useNavigate();
-
+    const [loading, setLoading] = useState(false);
+    const[err,setErr]=useState(false);
     const handleChange = (e) => {
         if (e.target.name === 'email') {
             setEmail(e.target.value);
@@ -39,23 +43,27 @@ export default function SignUp() {
             setError('Password should be at least 6 characters');
             return;
         }
-
+       setLoading(true);
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            console.log('User registered successfully:', userCredential.user);
+            setLoading(false);
             navigate('/User/choose_user_role'); 
         } catch (error) {
             console.error('Error registering user:', error.message);
-            setError(error.message); // Display the error message
+            setErrorMessage(error.message);
+            setErr(true); // Display the error message
         }
     };
 
     return (
         <>
-            <div className={`${styles}`}>
+          {
+            loading?<Loading/>:(
+                <div className={`${styles}`}>
                 <HeaderLogo text='Welcome to Neonates, sign-up' head='Neonates' />
                 <form onSubmit={handleSubmit}>
-                    {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display the error message */}
+                    {error && <p className='text-red-500 text-[15px]'>{error}</p>} {/* Display the error message */}
+                    {err && <Popup message={'Sign-up failed user already exists'}/>} {/* Display the error message popup */}
                     <Input 
                         type='text' 
                         ids='email' 
@@ -85,6 +93,8 @@ export default function SignUp() {
                     </div>
                 </form>
             </div>
+            )
+          }
         </>
     );
 }

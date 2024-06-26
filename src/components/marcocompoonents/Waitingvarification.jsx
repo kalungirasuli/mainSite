@@ -11,7 +11,6 @@ export default function WaitingVerification() {
   };
   const buttontext = {
     mother: 'Sign-in into account',
-    doctor: 'Cancel submission',
   };
   const altbuttontext = {
     out: 'Sign out of this account',
@@ -28,8 +27,6 @@ export default function WaitingVerification() {
     if (userRole === 'doctor') {
       setUser(userRole);
       setColor('text-white');
-      setText(buttontext.doctor);
-      setBg('bg-redlight');
     } else {
       setUser(userRole);
       setColor('text-blue');

@@ -1,35 +1,12 @@
-import { useEffect, useState } from "react";
+
 import { Outlet, Link ,useLocation,useParams } from "react-router-dom";
-import { IoNotifications, IoCalendarSharp, IoHomeSharp, IoPerson, IoSearchSharp, IoAddSharp } from "react-icons/io5";
+import { IoCalendarSharp, IoHomeSharp, IoPerson, IoAddSharp } from "react-icons/io5";
 import { MdMessage } from "react-icons/md";
 import { Button3 } from "../microcomponents/RoundedButton";
 import SavePost from "./SavePost";
 
 export default function HomeTemp() {
-    const [scrollDirection, setScrollDirection] = useState(null);
-
-    useEffect(() => {
-        let lastScrollY = window.scrollY;
-
-        const handleScroll = () => {
-            if (window.scrollY > lastScrollY) {
-                // Scrolling down
-                setScrollDirection('down');
-                document.querySelector('.left').setAttribute('disabled', 'true')
-            } else {
-                // Scrolling up
-                setScrollDirection('up');
-                document.querySelector('.left').removeAttribute('disabled')
-            }
-            lastScrollY = window.scrollY;
-        };
-
-        window.addEventListener('scroll', handleScroll);
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
+   
 
     const location = useLocation();
     const { id } = useParams(); // Assuming you are using React Router's useParams hook
@@ -38,9 +15,9 @@ export default function HomeTemp() {
     const isMessagesRoute = location.pathname === `/Message/${id}`
     return (
         <>
-            <div className="div flex flex-cols-3  w-full bg-white xl:w-[80%] border-x-[1px] border-x-greytextfade m-auto h-screen">
+            <div className="div flex flex-cols-3  w-full bg-white xxl:w-[80%] border-x-[1px] border-x-greytextfade m-auto h-screen">
               
-                 <div className={`left ${scrollDirection === 'down' ? 'bg-transparent opacity-50' : 'bg-white opacity-100'} transition-opacity duration-500  ${!isMessagesRoute?'hidden':'block'} fixed bottom-0 left-0 right-0 md:block md:p-[1px] md:border-r-[1px] md:border-r-greytextfade md:w-[100px] md:sticky md:top-0 md:px-3 md:h-screen xl:w-[23%] `}>
+                 <div className={`left transition-opacity duration-500  ${!isMessagesRoute?'hidden':'block'} fixed bottom-0 left-0 right-0 md:block md:p-[1px] md:border-r-[1px] md:border-r-greytextfade md:w-[100px] md:sticky md:top-0 md:px-3 md:h-screen xl:w-[23%] `}>
                  <div className="div logo align-left w-[max-content] p-3 rounded-[50%] hover:bg-greytextfade hidden md:block md:m-auto xl:m-0">
                      <svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" className='w-[70px] md:w-[40px]' viewBox="0 0 149 153.49">
                          <g id="Layer_1-2">
