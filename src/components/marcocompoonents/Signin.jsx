@@ -18,7 +18,6 @@ export default function SignIn() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
     const handleChange = (e) => {
         const { name, value } = e.target;
         if (name === 'email') {
@@ -52,7 +51,6 @@ export default function SignIn() {
          }
         } catch (error) {
             setLoading(false);
-            setError(true)
             console.error('Error logging in user:', error.message);
         }
     };
@@ -86,6 +84,7 @@ export default function SignIn() {
             // Default user type if no match is found
             return 'unknown';
         } catch (error) {
+
             console.error('Error determining user type: ', error);
             return 'unknown';
         }
@@ -131,7 +130,6 @@ export default function SignIn() {
                     <Alt highlightText='Sign-up' endText='instead' link='/User' />
                 </div>
             </form>
-            {error && <Popup message='Invalid email or password, user not found' />}
         </div>
             )
         }
