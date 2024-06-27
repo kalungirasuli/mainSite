@@ -46,9 +46,8 @@ export default function WaitingVerification() {
       </div>
       {user === 'doctor' ? (
         <div className={`${buttonStyle} mt-5`}>
-          <Button3 width='w-full' color='text-blue' bg='bg-bluebutton' text={altbuttontext.in} link='/sign-in'/>
-          <p className="text-center text-greytextdark text-[15] my-2"> or</p>
-          <Button3 width='w-full' color='text-white' bg='bg-blue' text={altbuttontext.out} />
+          <Button3 width='w-full' color='text-blue' bg='bg-bluebutton' text={altbuttontext.in} link='User/sign-in'/>
+  
         </div>
       ) : ''}
     </div>
