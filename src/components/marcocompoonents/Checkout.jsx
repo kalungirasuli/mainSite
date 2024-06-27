@@ -70,6 +70,7 @@ console.log('the booking is', bookingId)
         }
     } catch (error) {
       await deleteAppointment()
+      alert(error.response.data.message)
       console.error('Error making payment request:', error);
     }
   };

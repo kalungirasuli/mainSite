@@ -83,9 +83,9 @@ export default function AppoinmentCard({appointment}) {
               </div>
               <div className=" text-center ">
                 <h1 className=" name break-words text-greytextdark text-[17px]">
-                  {appointment.name || "John Doe"}
+                  {appointment.name}
                 </h1>
-                <p className="mode text-greytextfade text-[15px]"> {appointment.mode || "online"}</p>
+                <p className="mode text-greytextfade text-[15px]"> {appointment.mode}</p>
               </div>
             </div>
            </div>
@@ -101,7 +101,6 @@ export default function AppoinmentCard({appointment}) {
                     className=" text-gray-600 w-[max-content]"
                     onClick={() => {
                       setIsModalOpen(false)
-                      
                     }}
                   >
                     <RiCloseLine className="h-6 w-6" />
@@ -112,15 +111,15 @@ export default function AppoinmentCard({appointment}) {
                             <div className="div">
                                 <div className="div">
                                     <p className="text-[17px] text-greytext">Date</p>
-                                    <p className="text-[15px] text-greytextdark">12th July 2021</p>
+                                    <p className="text-[15px] text-greytextdark">{appointment.date}</p>
                                 </div>
                                 <div className="div">
                                     <p className="text-[17px] text-greytext">Time</p>
-                                    <p className="text-[15px] text-greytextdark">{appointment.time || "2:00pm"}</p>
+                                    <p className="text-[15px] text-greytextdark">{appointment.time}</p>
                                 </div>
                                 <div className="div">
                                     <p className="text-[17px] text-greytext ">Mode</p>
-                                    <p className="text-[15px] text-greytextdark">{appointment.mode || "online"}</p>
+                                    <p className="text-[15px] text-greytextdark">{appointment.mode}</p>
                                 </div>
                                 <div className="div">
                                     <p className="text-[17px] text-greytext ">Appointment ID</p>
@@ -128,21 +127,21 @@ export default function AppoinmentCard({appointment}) {
                                 </div>
                                 <div className="div">
                                     <p className="text-[17px] text-greytext">Appoinment link</p>
-                                    <a href="https://meet.google.com/wkekfkejeifiej" className="text-[15px] text-blue break-words">
-                                    https://meet.google.com/wkekfkejeifiej
+                                    <a href={appointment.link} className="text-[15px] text-blue break-words">
+                                       {appointment.link}
                                     </a>
                                 </div>
                                 <div className="div">
                                     <p className="text-[17px] text-greytext ">Doctor</p>
-                                    <p className="text-[15px] text-greytextdark">Dr { appointment.name || "John Doe"}</p>
+                                    <p className="text-[15px] text-greytextdark">Dr { appointment.name}</p>
                                 </div>
                                 <div className="div">
                                     <p className="text-[17px] text-greytext ">Location</p>
-                                    <p className="text-[15px] text-greytextdark">Kampala, Mulago hispital</p>
+                                    <p className="text-[15px] text-greytextdark">Kampala, Case hispital</p>
                                 </div>
                                 <div className="div">
                                     <p className="text-[17px] text-greytext">Description</p>
-                                    <p className="text-[15px] text-greytextdark breakwords h-[max-content] max-h-[400px] overflow-x-hidden overflow-y-auto">{ appointment.description || "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste ipsum incidunt, assumenda repellendus eligendi itaque dicta enim, aut adipisci quibusdam nihil? Alias, hic temporibus atque quis dolores numquam eius veniam quae voluptatum itaque quos earum animi eligendi dolorum eaque minus perferendis illo saepe deserunt modi repudiandae! Iure iste qui dicta quis nulla quia, cumque architecto porro ipsa, voluptate, repellat possimus non quam sapiente error similique ab cupiditate veniam eum earum. Nisi ad molestias, doloribus accusamus, aut quae, voluptatem ipsum commodi omnis ex nesciunt saepe dolore! Dicta a eveniet nesciunt, consectetur explicabo adipisci! Quae omnis neque cupiditate harum error consequatur itaque vero. Libero eaque suscipit vero autem? Nisi perferendis facere repudiandae ipsam non! Perferendis ullam nostrum repudiandae laboriosam repellat incidunt optio consectetur officiis voluptas blanditiis? Voluptate odio sequi, dolore odit molestias accusantium doloremque explicabo eum vero laudantium, aspernatur qui unde. Rerum tempore tenetur quae illum dolor doloremque, id aut, eos sit modi doloribus cupiditate, ipsa eligendi molestiae dolores voluptate? Laboriosam iusto error mollitia repellat, veritatis reprehenderit nam quod placeat amet sunt adipisci natus architecto quo hic sit nobis praesentium rerum! Quo aliquam, vero voluptates consectetur, aspernatur autem officiis assumenda beatae quas quam enim harum esse quisquam dolores? Officiis nihil qui inventore!"}</p>
+                                    <p className="text-[15px] text-greytextdark breakwords h-[max-content] max-h-[400px] overflow-x-hidden overflow-y-auto">{ appointment.description || 'None specified'}</p>
                                 </div>
                                 <div className="div flex gap-[30px] justify-start pt-10">
                                             <span>
