@@ -29,15 +29,20 @@ const navigate = useNavigate()
     date: bookingDetails.day,
   };
 
+
   const handlePhoneNumberChange = (e) => {
     setPhoneNumber(e.target.value);
   };
 
   const handleClick = async (e) => {
     e.preventDefault();
-console.log('the booking is', bookingId)
+// console.log('the booking is', bookingId)
+console.log('the data is ', data.mode)
+console.log('the from the store is ', bookingDetails.mode)
+
+// console.log('the dispach is', )
     const paymentDetails = {
-      total: 100, // Example total amount
+      total: 10, // Example total amount
       phone: phoneNumber,
       bookingId, // Include the booking ID
     };
@@ -46,6 +51,7 @@ console.log('the booking is', bookingId)
       const response = await axios.post('https://api.mindlyfe.org/pay', paymentDetails);
       // console.log('Payment Response:', response.data);
        bookingDetails.mode === 'Online' ? generateMeetLink():generateMeetId();
+       console.log(response.data.paymentStatus.status);
        const generateMeetLink=()=>{
         if(response.data.paymentStatus && response.data.paymentStatus.status === 'SUCCESSFUL') {
           window.location.href = `https://api.mindlyfe.org/?bookingId=${bookingId}`;
