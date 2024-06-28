@@ -66,9 +66,9 @@ console.log('the booking is', bookingId)
         setShowSuccess(false);
       }, 5000);
       // console.log('Payment Response:', response.data);
-       data.mode==='Online'?generateMeetLink(data.mode):generateMeetId(data.mode);
+       bookingDetails.mode === 'Online' ? generateMeetLink():generateMeetId();
        const generateMeetLink=()=>{
-        if(response.data.paymentStatus && response.data.paymentStatus.status === 'SUCCESSFUL' && data.mode === 'Online') {
+        if(response.data.paymentStatus && response.data.paymentStatus.status === 'SUCCESSFUL') {
           window.location.href = `https://api.mindlyfe.org/?bookingId=${bookingId}`;
           // if paid not true appoiment should not show
           // then delete appointment
@@ -76,7 +76,7 @@ console.log('the booking is', bookingId)
           console.error('Payment was not successful:', response.data);
         }}
         const generateMeetId=async ()=>{
-          if(response.data.paymentStatus && response.data.paymentStatus.status === 'SUCCESSFUL' && data.mode === 'Physical') {
+          if(response.data.paymentStatus && response.data.paymentStatus.status === 'SUCCESSFUL') {
             const meetId = uuidv4();
             //generate meet id instead and save to fire base 
              // if paid not true appoiment should not show
