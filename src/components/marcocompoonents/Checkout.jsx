@@ -45,7 +45,7 @@ console.log('the booking is', bookingId)
     try {
       const response = await axios.post('https://api.mindlyfe.org/pay', paymentDetails);
       // console.log('Payment Response:', response.data);
-       bookingDetails.mode === 'Online' ? generateMeetLink():generateMeetId(data.mode);
+       bookingDetails.mode === 'Online' ? generateMeetLink():generateMeetId();
        const generateMeetLink=()=>{
         if(response.data.paymentStatus && response.data.paymentStatus.status === 'SUCCESSFUL') {
           window.location.href = `https://api.mindlyfe.org/?bookingId=${bookingId}`;
