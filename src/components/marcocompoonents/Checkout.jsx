@@ -60,7 +60,7 @@ export default function Checkout() {
     };
 
     try {
-      const response = await axios.post('http://localhost:3000/pay', paymentDetails);
+      const response = await axios.post('https://api.mindlyfe.org/pay', paymentDetails);
       if (response.status !== 200) {
         setShowWarning(true);
         setTimeout(() => {
