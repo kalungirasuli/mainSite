@@ -5,8 +5,6 @@ import { useState } from "react";
 import { CgFormatSlash } from "react-icons/cg";
 import { FiEdit } from "react-icons/fi";
 
-
-
 export function Alt(props){
     return(
         <>

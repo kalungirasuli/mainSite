@@ -9,6 +9,7 @@ import {v4 as uuidv4} from 'uuid';
 import { setBookingDetails } from '../../redux/userSlice';
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase/config';
+import { Danger,Success,Warning } from '../microcomponents/Toast';
 
 export default function Checkout() {
   const location = useLocation();
@@ -19,6 +20,12 @@ export default function Checkout() {
   const bookingDetails = useSelector(state => state.user.bookingDetails);
 
   const [phoneNumber, setPhoneNumber] = useState('');
+
+  // the toasts
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
+  const [showWarning2, setShowWarning2] = useState(false);
 
   const dispatch = useDispatch()
 const navigate = useNavigate()
@@ -49,6 +56,20 @@ console.log('the from the store is ', bookingDetails.mode)
 
     try {
       const response = await axios.post('https://api.mindlyfe.org/pay', paymentDetails);
+      console.log(response)
+      // check status indicates network error
+      if(response.status !== 200) {
+        setShowWarning(true);
+        setTimeout(() => {
+          setShowWarning(false);
+        }, 5000);
+        await deleteAppointment()
+        return;
+      }
+      setShowSuccess(true);
+      setTimeout(() => {
+        setShowSuccess(false);
+      }, 5000);
       // console.log('Payment Response:', response.data);
        bookingDetails.mode === 'Online' ? generateMeetLink():generateMeetId();
        console.log(response.data.paymentStatus.status);
@@ -86,7 +107,11 @@ console.log('the from the store is ', bookingDetails.mode)
       const bookingRef = doc(db, 'bookings', bookingId);
       await deleteDoc(bookingRef); 
       dispatch(setBookingDetails(null)); 
-      alert('Appointment deleted successfully.');
+      setShowWarning2(true);
+        setTimeout(() => {
+          setShowWarning2(false);
+        }, 5000);
+
       navigate('/appointment')
     } catch (error) {
       console.error('Error deleting appointment:', error);
@@ -97,6 +122,20 @@ console.log('the from the store is ', bookingDetails.mode)
     <>
       <div className="div">
         <HeadWithBack heading='Check out appointment' />
+        <div className="toast absolute top-[50px]">
+          {
+            showSuccess && <Success text='Payment was successful' />
+          }
+          {
+            showError && <Danger text='Payment was not successful' />
+          }
+          {
+            showWarning && <Warning text='Payment was not successful' />
+          }
+          {
+            showWarning2 && <Danger text='Apppoinment has been delected' />
+          }
+        </div>
         <div className="div w-[90%] m-auto mt-10 border-solid border-[1px] border-greytextfade rounded-lg p-5">
           {/* summary of the booking */}
           <div className=" summa p-2 text-center border-solid border-[1px] border-greytextfade rounded-lg ">

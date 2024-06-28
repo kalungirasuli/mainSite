@@ -4,7 +4,6 @@ import { IoCalendarSharp, IoHomeSharp, IoPerson, IoAddSharp } from "react-icons/
 import { MdMessage } from "react-icons/md";
 import { Button3 } from "../microcomponents/RoundedButton";
 import SavePost from "./SavePost";
-
 export default function HomeTemp() {
    
 
