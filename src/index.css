@@ -3,6 +3,17 @@
 @tailwind utilities;
 
 
+body, html {
+  height: 100%;
+  overflow: hidden;
+}
+
+.containing {
+  margin: 0;
+  padding: 0;
+  height: 100vh; /* Ensure full viewport height */
+  overflow: hidden; /* Prevent scrolling on the container itself */
+}
 
 
 ::-webkit-scrollbar{

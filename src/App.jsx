@@ -29,6 +29,7 @@ import ProtectedRoute from "./components/microcomponents/ProtectedRoutes";
 // import ProtectedRoute from "./components/microcomponents/ProtectedRoute";
 
 function App() {
+ 
   return (
     <div className="div bg-smoke">
       <BrowserRouter>

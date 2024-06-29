@@ -255,7 +255,7 @@ const canDelete = props.userUid === props.postUid || props.userType === 'admin';
           </div>
         </div>
         {comment && (
-          <div className="comments w-full h-[510px] align-middle md:h-[650px] border-t-[1px] border-t-greytextfade">
+          <div className="comments w-full h-[400px] align-middle  border-t-[1px] border-t-greytextfade">
             <div className="chats w-[90%] flex flex-col gap-2 m-auto p-3 h-[440px] md:h-[540px] overflow-y-auto overflow-x-hidden">
               {comments.map(comment => (
                 <MessageDoctor

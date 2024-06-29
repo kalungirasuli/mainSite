@@ -8,11 +8,19 @@
     <meta name="theme-color" content="#ffffff">
     <link rel="manifest" href="manifest.webmanifest">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Paedlyfe</title>
   </head>
   <body>
     <div id="root"></div>
+   
     <script src="https://apis.google.com/js/api.js"></script>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      window.addEventListener('scroll', function() {
+   // Hide Safari's toolbar and address bar on scroll
+      document.body.style.height = window.innerHeight + 'px';
+    });
+   </script>
   </body>
 </html>
